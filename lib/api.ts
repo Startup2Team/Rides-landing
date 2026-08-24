@@ -35,8 +35,11 @@ export type WaitlistRole = "CUSTOMER" | "DRIVER";
 export type WaitlistSubmission = {
   role: WaitlistRole;
   name: string;
-  area: string;
-  /** Fully optional — a rider/driver can join with just a name and area. */
+  /**
+   * Fully optional — a rider/driver can join with just a name. Sent exactly
+   * as typed, no country/format restriction (Rwanda + Uganda both use this
+   * form).
+   */
   phone?: string;
   /** Site slug (moto/rifani/cab/hilux/fuso) — mapped to the backend's VEHICLE_BACKEND_CODE before POSTing. */
   vehicle_type?: VehicleSlug;
