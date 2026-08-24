@@ -13,10 +13,6 @@ const items: Item[] = [
     a: "Sign in with your phone number, pick your vehicle, set your pickup and destination, and confirm. A nearby driver accepts in seconds — then you watch them come to you on the map.",
   },
   {
-    q: "What vehicle types are available?",
-    a: "Four. Motos for a quick solo run. Cabs when you want comfort. Hilux pickups for bulky loads and rough roads. Fuso trucks for a full haul. The price scales with what you pick, so you never pay for more vehicle than the trip needs.",
-  },
-  {
     q: "How are fares calculated?",
     a: "Distance, vehicle type, and time of day — and you see the number before you book. Fares can also be negotiated up front in the app, by riders and drivers alike. No surge pricing. No hidden fees.",
   },
@@ -28,19 +24,11 @@ const items: Item[] = [
     q: "Are drivers verified?",
     a: "Every driver submits their ID, vehicle insurance, and a vehicle authorization document before they can take a single trip. Our team reviews and approves each application by hand — nobody signs up automatically.",
   },
-  {
-    q: "What if I need to cancel?",
-    a: "Cancel any time before your driver arrives. Cancel repeatedly once a driver is already on the way and you will hit a short cooldown — that one is for the drivers, who turn down other trips to reach you.",
-  },
-  {
-    q: "How do I become a driver?",
-    a: "Tap Drivers in the menu and start your application. You will need a valid licence, vehicle insurance, and an inspection certificate. Approval usually takes 24–48 hours.",
-  },
 ];
 
 export default function FAQ() {
   return (
-    <section id="faq" className="py-16 sm:py-20 lg:py-28">
+    <section id="faq" className="py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
           {/* Left: intro */}
