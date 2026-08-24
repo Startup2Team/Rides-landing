@@ -1,6 +1,4 @@
-"use client";
-
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 // ── Platform feature list ────────────────────────────────────────────────────
 
@@ -8,32 +6,38 @@ type Feature = { title: string; description: string; icon: ReactNode };
 
 const platformFeatures: Feature[] = [
   {
-    title: "Live tracking",
+    title: "Live Tracking",
     description:
-      "Driver GPS streams to the platform in real time. You watch the trip approach and complete on a live map.",
+      "Track your driver in real time and know exactly when they'll arrive.",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden>
         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
         <circle cx="12" cy="10" r="3" />
       </svg>
     ),
   },
   {
-    title: "Demand heatmaps",
+    title: "Smarter Matching",
     description:
-      "Pickup density updates by area so drivers route toward the next rider. Fewer empty cabs, shorter waits for you.",
+      "Intelligent matching connects you with available drivers nearby for a faster, more reliable experience.",
+    // Was a flame, which read as "heatmap". Now a node graph — one request
+    // reaching several nearby drivers.
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
-        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z" />
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden>
+        <circle cx="6" cy="12" r="2.5" />
+        <circle cx="18" cy="5.5" r="2.5" />
+        <circle cx="18" cy="18.5" r="2.5" />
+        <path d="M8.2 10.8 15.8 6.7" />
+        <path d="M8.2 13.2 15.8 17.3" />
       </svg>
     ),
   },
   {
-    title: "15-second matching",
+    title: "Quick Confirmations",
     description:
-      "Your request fans out to every nearby driver at once. The first to accept gets the trip — usually in under 15 seconds.",
+      "Most ride requests are confirmed within moments, getting you on the road sooner.",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden>
         <circle cx="12" cy="13" r="8" />
         <path d="M12 9v4l2 2" />
         <path d="M9 2h6" />
@@ -42,58 +46,17 @@ const platformFeatures: Feature[] = [
     ),
   },
   {
-    title: "Fair-fare engine",
+    title: "Clear Pricing",
     description:
-      "Suggested fare up front, in-app negotiation, then pay with MoMo, Airtel, or cash. No surge pricing.",
+      "See your fare before your trip starts for a simple and transparent booking experience.",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5" aria-hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden>
         <line x1="12" y1="2" x2="12" y2="22" />
         <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
       </svg>
     ),
   },
 ];
-
-// ── Count-up hook ────────────────────────────────────────────────────────────
-// Smoothly counts from 0 → target once the target element enters the viewport.
-
-function useCountUp<T extends HTMLElement = HTMLElement>(target: number, durationMs = 1200) {
-  const elementRef = useRef<T | null>(null);
-  const [value, setValue] = useState(0);
-  const startedRef = useRef(false);
-
-  const setRef = (node: T | null) => {
-    elementRef.current = node;
-  };
-
-  useEffect(() => {
-    if (!elementRef.current) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry?.isIntersecting || startedRef.current) return;
-        startedRef.current = true;
-
-        const start = performance.now();
-        let raf = 0;
-        const tick = (now: number) => {
-          const t = Math.min(1, (now - start) / durationMs);
-          // Ease-out cubic — fast then slows, feels like a counter
-          const eased = 1 - Math.pow(1 - t, 3);
-          setValue(Math.round(target * eased));
-          if (t < 1) raf = requestAnimationFrame(tick);
-        };
-        raf = requestAnimationFrame(tick);
-        return () => cancelAnimationFrame(raf);
-      },
-      { threshold: 0.35 },
-    );
-    observer.observe(elementRef.current);
-    return () => observer.disconnect();
-  }, [target, durationMs]);
-
-  return [setRef, value] as const;
-}
 
 // ── Stylised SVG map (replaces /maps/map.png) ────────────────────────────────
 
@@ -140,9 +103,6 @@ function StylisedMap() {
 // ── Live-ops dashboard mockup ────────────────────────────────────────────────
 
 function LiveOpsDashboard() {
-  const [activeRidesRef, activeRides] = useCountUp<HTMLSpanElement>(247);
-  const [onlineDriversRef, onlineDrivers] = useCountUp<HTMLDivElement>(89);
-
   return (
     <div className="relative aspect-[5/4] overflow-hidden rounded-3xl border border-border bg-card shadow-2xl shadow-primary/10">
       {/* Top header strip */}
@@ -241,26 +201,19 @@ function LiveOpsDashboard() {
         <span className="block h-2.5 w-2.5 rounded-full bg-foreground ring-[3px] ring-card shadow-sm" />
       </div>
 
-      {/* Floating stat card: Active Rides */}
+      {/* Floating stat card: Active Rides — illustrative only, no real number. */}
       <div className="absolute left-4 top-14 z-30 w-40 rounded-2xl border border-border bg-card/85 p-3 shadow-lg backdrop-blur-xl">
         <div className="flex items-start justify-between">
           <div>
             <div className="text-[8px] font-semibold uppercase tracking-wider text-muted-foreground">
               Active rides
             </div>
-            <div className="mt-1 flex items-baseline gap-1.5">
-              <span
-                ref={activeRidesRef}
-                className="text-xl font-bold tracking-tight tabular-nums text-foreground"
-              >
-                {activeRides}
+            <div className="mt-1 flex items-center gap-1.5">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
               </span>
-              <span className="flex items-center gap-0.5 text-[9px] font-semibold text-primary">
-                <svg viewBox="0 0 24 24" fill="currentColor" className="h-2.5 w-2.5" aria-hidden>
-                  <path d="M7 14l5-5 5 5z" />
-                </svg>
-                12%
-              </span>
+              <span className="text-xs font-bold text-foreground">In progress</span>
             </div>
           </div>
         </div>
@@ -280,18 +233,19 @@ function LiveOpsDashboard() {
         </svg>
       </div>
 
-      {/* Floating stat card: Online Drivers */}
+      {/* Floating stat card: Online Drivers — illustrative only, no real number. */}
       <div className="absolute bottom-4 right-4 z-30 w-44 rounded-2xl border border-border bg-card/85 p-3 shadow-lg backdrop-blur-xl">
         <div className="flex items-start justify-between">
           <div>
             <div className="text-[8px] font-semibold uppercase tracking-wider text-muted-foreground">
               Online drivers
             </div>
-            <div
-              ref={onlineDriversRef}
-              className="mt-1 text-xl font-bold tracking-tight tabular-nums text-foreground"
-            >
-              {onlineDrivers}
+            <div className="mt-1 flex items-center gap-1.5">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+              </span>
+              <span className="text-xs font-bold text-foreground">Nearby</span>
             </div>
           </div>
           <span className="rounded-full bg-primary/15 px-1.5 py-0.5 text-[8px] font-bold uppercase tracking-wider text-primary">
@@ -322,7 +276,7 @@ function LiveOpsDashboard() {
             <div className="text-[8px] font-semibold uppercase tracking-wider text-muted-foreground">
               Hot zones
             </div>
-            <div className="text-xs font-bold text-foreground">3 active</div>
+            <div className="text-xs font-bold text-foreground">High demand</div>
           </div>
         </div>
       </div>
@@ -345,18 +299,17 @@ export default function SmartMobility() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6">
-        <div className="mx-auto max-w-2xl text-center">
+        <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-muted-foreground">
             <span className="h-px w-8 bg-foreground/30" />
             The platform
-            <span className="h-px w-8 bg-foreground/30" />
           </div>
           <h2 className="mt-5 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[3.25rem]">
             Built for real-time movement.
           </h2>
           <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-[1.0625rem]">
-            Live tracking, demand heatmaps, 15-second matching, and a
-            negotiation-friendly fare engine. All running underneath your ride.
+            Live tracking, smarter matching, quick confirmations, and clear
+            pricing. All running underneath your ride.
           </p>
         </div>
 
@@ -372,7 +325,9 @@ export default function SmartMobility() {
                   key={f.title}
                   className="group flex items-start gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
                 >
-                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary ring-1 ring-inset ring-primary/20 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                  {/* Bare glyph — no tile. mt-0.5 optically aligns it with the
+                      title's cap height rather than its line box. */}
+                  <span className="mt-0.5 shrink-0 text-primary">
                     {f.icon}
                   </span>
                   <div className="min-w-0">

@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "rides-landing",
+  "compatibility_date": "2026-08-13",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+
+  // Preview/test address until the real domain is wired up below.
+  "workers_dev": true,
+  "routes": [
+    // Placeholder — Pacifique to fill in the real production domain(s) once
+    // decided (e.g. rides.rw / www.rides.rw). Mirrors kazimobility's pattern:
+    // custom_domain deploys also create the zone's DNS records automatically,
+    // so this heals a re-created Worker without dashboard clicks.
+    // { "pattern": "rides.rw", "custom_domain": true },
+    // { "pattern": "www.rides.rw", "custom_domain": true }
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  }
+
+  // Not enabled yet — mirrors kazimobility's notes. Both need provisioning
+  // before they can be referenced, and a missing resource fails the deploy
+  // rather than degrading:
+  //   - "r2_buckets" NEXT_INC_CACHE_R2_BUCKET, for the ISR incremental cache.
+  //     Create with: wrangler r2 bucket create rides-landing-opennext-cache
+  //   - "services" WORKER_SELF_REFERENCE, required alongside the R2 cache.
+  // See https://opennext.js.org/cloudflare/caching
+}
