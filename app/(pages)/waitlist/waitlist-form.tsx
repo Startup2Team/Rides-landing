@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   submitWaitlist,
@@ -10,13 +10,7 @@ import {
   type WaitlistRole,
 } from "@/lib/api";
 import { renderTemplate } from "@/lib/i18n-template";
-import {
-  VEHICLE_SLUGS,
-  normalizeRwandaMobilePhone,
-  validateRwandaMobilePhone,
-  type VehicleSlug,
-} from "@/lib/driver-registration";
-import { RWANDA_PROVINCES, getDistricts, getSectors } from "@/lib/rwanda-locations";
+import { VEHICLE_SLUGS, type VehicleSlug } from "@/lib/driver-registration";
 import { useTranslations } from "../../i18n/context";
 import { TurnstileWidget, type TurnstileWidgetHandle } from "./turnstile-widget";
 
@@ -44,16 +38,6 @@ const VEHICLE_LABEL_KEY: Record<VehicleSlug, WaitlistVehicleLabelKey> = {
 
 function fillTemplateString(template: string, values: Record<string, string>): string {
   return template.replace(/\{([a-zA-Z]+)\}/g, (_, key: string) => values[key] ?? "");
-}
-
-/**
- * Local 10-digit "0781234567" → E.164 "+250781234567" for SMS delivery.
- * Phone is optional — a blank field must stay blank, never "+250".
- */
-function toE164(rawPhone: string): string | undefined {
-  if (!rawPhone.trim()) return undefined;
-  const digits = normalizeRwandaMobilePhone(rawPhone);
-  return `+250${digits.slice(1)}`;
 }
 
 function ChevronDown({ className }: { className?: string }) {
@@ -131,8 +115,6 @@ function SelectField({
   );
 }
 
-const toOptions = (names: string[]): SelectOption[] => names.map((n) => ({ value: n, label: n }));
-
 export function WaitlistForm() {
   const t = useTranslations("waitlist");
   const searchParams = useSearchParams();
@@ -143,9 +125,6 @@ export function WaitlistForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [province, setProvince] = useState("");
-  const [district, setDistrict] = useState("");
-  const [sector, setSector] = useState("");
   const [vehicleType, setVehicleType] = useState<VehicleSlug | "">("");
   // Defaulted to checked — joining the waitlist already implies "notify me
   // when Rides launches"; the checkbox exists for the rare person who wants
@@ -168,21 +147,10 @@ export function WaitlistForm() {
   const [receipt, setReceipt] = useState<WaitlistReceipt | null>(null);
   const [copied, setCopied] = useState(false);
 
-  const districts = useMemo(
-    () => (province ? getDistricts(province).map((d) => d.name) : []),
-    [province],
-  );
-  const sectors = useMemo(
-    () => (province && district ? getSectors(province, district).map((s) => s.name) : []),
-    [province, district],
-  );
-
-  // Name and area (sector) are the only required fields — phone and email
-  // are both fully optional, so phone format is only checked when non-empty.
-  const errors: Record<"name" | "phone" | "sector" | "vehicleType", string | null> = {
+  // Name is the only required field — phone and email are both fully
+  // optional and unvalidated, so the form stays fast to fill in.
+  const errors: Record<"name" | "vehicleType", string | null> = {
     name: !name.trim() ? t("errNameRequired") : null,
-    phone: phone.trim() && validateRwandaMobilePhone(phone) ? t("errPhoneInvalid") : null,
-    sector: !sector ? t("errSectorRequired") : null,
     vehicleType: role === "DRIVER" && !vehicleType ? t("errVehicleRequired") : null,
   };
   const hasErrors = Object.values(errors).some(Boolean);
@@ -211,7 +179,7 @@ export function WaitlistForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setTouched({ name: true, phone: true, sector: true, vehicleType: true });
+    setTouched({ name: true, vehicleType: true });
     if (hasErrors) return;
     // Fail-open: if Turnstile never loaded/errored, submit anyway with an
     // empty token — the backend accepts a token-less submit, backstopped by
@@ -226,12 +194,12 @@ export function WaitlistForm() {
     setState("sending");
     setServerError(null);
     try {
-      const area = [sector, district].filter(Boolean).join(", ");
       const result = await submitWaitlist({
         role: role as WaitlistRole,
         name: name.trim(),
-        phone: toE164(phone),
-        area,
+        // Sent exactly as typed — no country/format restriction, no +250
+        // normalization. Optional: blank stays undefined, never "".
+        phone: phone.trim() || undefined,
         vehicle_type: role === "DRIVER" ? vehicleType || undefined : undefined,
         email: email.trim() || undefined,
         referred_by: referredBy,
@@ -258,9 +226,6 @@ export function WaitlistForm() {
     setName("");
     setPhone("");
     setEmail("");
-    setProvince("");
-    setDistrict("");
-    setSector("");
     setVehicleType("");
     setConsentLaunch(true);
     setConsentMarketing(false);
@@ -433,16 +398,15 @@ export function WaitlistForm() {
           />
         </FormField>
 
-        <FormField label={t("phoneLabel")} error={showError("phone")}>
+        <FormField label={t("phoneLabel")}>
           <input
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            onBlur={() => setTouched((tt) => ({ ...tt, phone: true }))}
             type="tel"
             inputMode="tel"
             autoComplete="tel"
             placeholder={t("phoneHint")}
-            className={inputClass(Boolean(showError("phone")))}
+            className={inputClass(false)}
           />
         </FormField>
 
@@ -455,46 +419,6 @@ export function WaitlistForm() {
             className={inputClass(false)}
           />
         </FormField>
-
-        <div className="grid gap-6 sm:grid-cols-3">
-          <FormField label={t("provinceLabel")}>
-            <SelectField
-              value={province}
-              options={toOptions(RWANDA_PROVINCES.map((p) => p.name))}
-              placeholder={t("selectProvincePlaceholder")}
-              onChange={(v) => {
-                setProvince(v);
-                setDistrict("");
-                setSector("");
-              }}
-            />
-          </FormField>
-          <FormField label={t("districtLabel")}>
-            <SelectField
-              value={district}
-              options={toOptions(districts)}
-              placeholder={province ? t("selectDistrictPlaceholder") : t("selectDistrictFirstPlaceholder")}
-              disabled={!province}
-              onChange={(v) => {
-                setDistrict(v);
-                setSector("");
-              }}
-            />
-          </FormField>
-          <FormField label={t("sectorLabel")} error={showError("sector")}>
-            <SelectField
-              value={sector}
-              options={toOptions(sectors)}
-              placeholder={district ? t("selectSectorPlaceholder") : t("selectSectorFirstPlaceholder")}
-              disabled={!district}
-              hasError={Boolean(showError("sector"))}
-              onChange={(v) => {
-                setSector(v);
-                setTouched((tt) => ({ ...tt, sector: true }));
-              }}
-            />
-          </FormField>
-        </div>
 
         {role === "DRIVER" ? (
           <FormField label={t("vehicleTypeLabel")} error={showError("vehicleType")}>
