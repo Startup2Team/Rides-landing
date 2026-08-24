@@ -7,8 +7,6 @@ const STEPS = [
   { id: "step-1", num: "01" },
   { id: "step-2", num: "02" },
   { id: "step-3", num: "03" },
-  { id: "step-4", num: "04" },
-  { id: "step-5", num: "05" },
 ] as const;
 
 function Step01() {
@@ -280,139 +278,6 @@ function Step02() {
       data-step="1"
       className="flex scroll-mt-[8rem] flex-col items-center gap-10 lg:flex-row-reverse lg:justify-center lg:gap-16 xl:gap-24"
     >
-      <div className="relative">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 h-72 w-72 sm:h-96 sm:w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-3xl"
-        />
-
-        <div className="relative w-60">
-          {/* Side buttons */}
-          <span aria-hidden className="absolute left-[-3px] top-16 h-6 w-[3px] rounded-l-sm bg-gradient-to-r from-zinc-900 to-zinc-700" />
-          <span aria-hidden className="absolute left-[-3px] top-28 h-10 w-[3px] rounded-l-sm bg-gradient-to-r from-zinc-900 to-zinc-700" />
-          <span aria-hidden className="absolute left-[-3px] top-40 h-10 w-[3px] rounded-l-sm bg-gradient-to-r from-zinc-900 to-zinc-700" />
-          <span aria-hidden className="absolute right-[-3px] top-24 h-14 w-[3px] rounded-r-sm bg-gradient-to-l from-zinc-900 to-zinc-700" />
-
-          <div className="relative overflow-hidden rounded-[3rem] bg-gradient-to-b from-zinc-700 via-zinc-800 to-zinc-950 p-1 shadow-2xl shadow-primary/20 ring-1 ring-inset ring-white/10">
-            <div className="relative aspect-[9/19.5] overflow-hidden rounded-[2.7rem] bg-black p-[3px]">
-              <div className="relative h-full w-full overflow-hidden rounded-[2.55rem] bg-card">
-                {/* Dynamic Island */}
-                <div className="absolute left-1/2 top-2.5 z-20 flex h-[20px] w-[58px] -translate-x-1/2 items-center justify-between rounded-full bg-black px-[6px]">
-                  <span className="h-1 w-1 rounded-full bg-zinc-800" />
-                  <span className="h-[4px] w-[4px] rounded-full bg-zinc-700 ring-1 ring-inset ring-zinc-600" />
-                </div>
-
-                {/* Status bar (light theme) */}
-                <div className="absolute inset-x-0 top-[14px] z-10 grid grid-cols-[1fr_66px_1fr] items-center px-4 text-foreground">
-                  <span className="flex items-center justify-end gap-1 pr-2 leading-none">
-                    <span className="text-[10px] font-semibold tracking-tight tabular-nums leading-none">
-                      13:44
-                    </span>
-                  </span>
-                  <div />
-                  <div className="flex items-center justify-start gap-1 pl-2">
-                    <svg viewBox="0 0 20 12" fill="currentColor" className="h-[10px]" aria-hidden>
-                      <rect x="0" y="8" width="3.6" height="4" rx="0.9" />
-                      <rect x="5.5" y="5.5" width="3.6" height="6.5" rx="0.9" />
-                      <rect x="11" y="2.5" width="3.6" height="9.5" rx="0.9" />
-                      <rect x="16.5" y="0" width="3.6" height="12" rx="0.9" opacity="0.4" />
-                    </svg>
-                    <svg viewBox="0 0 18 14" fill="none" className="h-[11px]" aria-hidden>
-                      <path d="M1.5 5.5 C 4 2.5, 6 1, 9 1 C 12 1, 14 2.5, 16.5 5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                      <path d="M4.5 8.5 C 6 7, 7.5 6.5, 9 6.5 C 10.5 6.5, 12 7, 13.5 8.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-                      <circle cx="9" cy="11" r="1.3" fill="currentColor" />
-                    </svg>
-                    {/* Charging battery */}
-                    <span aria-hidden className="relative ml-0.5 flex items-center">
-                      <span className="flex h-[11px] w-[22px] items-center justify-start rounded-[3px] border border-foreground/40 p-[1px]">
-                        <span className="h-full w-[60%] rounded-[1.5px] bg-emerald-500" />
-                      </span>
-                      <span className="ml-[1px] h-[4px] w-[1.5px] rounded-r-[1px] bg-foreground/40" />
-                      <svg viewBox="0 0 24 24" fill="currentColor" className="absolute left-1/2 top-1/2 h-[8px] w-[6px] -translate-x-1/2 -translate-y-1/2 text-foreground" aria-hidden>
-                        <path d="M13 2 L 4 14 L 11 14 L 9 22 L 20 10 L 13 10 Z" />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-
-                {/* Center content: pulsing rings + moto */}
-                <div className="absolute inset-0 flex flex-col px-4 pt-14 pb-4">
-                  <div className="relative flex flex-1 items-center justify-center">
-                    {/* Pulse rings */}
-                    <span aria-hidden className="absolute h-56 w-56 rounded-full border border-primary/15" />
-                    <span aria-hidden className="absolute h-40 w-40 rounded-full border border-primary/25" />
-                    <span aria-hidden className="absolute h-28 w-28 rounded-full border border-primary/40" />
-                    {/* Center disc */}
-                    <span className="relative z-10 flex h-20 w-20 items-center justify-center rounded-full bg-primary shadow-[0_0_40px_rgba(0,122,255,0.35)]">
-                      <MotoDetailedIcon className="h-10 w-10 text-white" />
-                    </span>
-                  </div>
-
-                  {/* Heading */}
-                  <div className="text-center">
-                    <p className="text-[13px] font-bold tracking-tight text-foreground">
-                      Finding your driver
-                    </p>
-                    <p className="mt-1 text-[9px] text-muted-foreground">
-                      Connecting you with nearby moto riders
-                    </p>
-                  </div>
-
-                  {/* Location card */}
-                  <div className="mt-3 rounded-2xl bg-surface px-2.5 py-2 ring-1 ring-inset ring-border">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 shrink-0 rounded-full bg-primary" />
-                      <span className="truncate text-[9px] font-medium text-foreground">
-                        KG 98 Street, Kigali
-                      </span>
-                    </div>
-                    <div className="my-1.5 h-px bg-border" />
-                    <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 shrink-0 rounded-full bg-red-500" />
-                      <span className="truncate text-[9px] font-medium text-foreground">
-                        Kimironko, Kigali, Rwanda
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Cancel button */}
-                  <div className="mt-3 flex h-9 items-center justify-center rounded-full bg-surface text-[10px] font-bold text-foreground ring-1 ring-inset ring-border">
-                    Cancel Search
-                  </div>
-                </div>
-
-                {/* Home indicator */}
-                <div className="absolute bottom-1.5 left-1/2 h-1 w-20 -translate-x-1/2 rounded-full bg-foreground/30" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-lg">
-        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          <span className="h-px w-8 bg-primary" />
-          Step 02
-        </p>
-        <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
-          Driver Confirmed
-        </h3>
-        <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
-          Your request is securely matched with available drivers. Once
-          accepted, you can track your driver in real time.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function Step03() {
-  return (
-    <div
-      id="step-3"
-      data-step="2"
-      className="flex scroll-mt-[8rem] flex-col items-center gap-10 lg:flex-row lg:justify-center lg:gap-16 xl:gap-24"
-    >
       <div className="relative w-full max-w-80 sm:w-auto sm:max-w-none">
         <div
           aria-hidden
@@ -547,7 +412,7 @@ function Step03() {
       <div className="max-w-lg">
         <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
           <span className="h-px w-8 bg-primary" />
-          Step 03
+          Step 02
         </p>
         <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
           Confirm Your Fare
@@ -584,203 +449,11 @@ function StarIcon({
   );
 }
 
-function Step04() {
+function Step03() {
   return (
     <div
-      id="step-4"
-      data-step="3"
-      className="flex scroll-mt-[8rem] flex-col items-center gap-10 lg:flex-row-reverse lg:justify-center lg:gap-16 xl:gap-24"
-    >
-      <div className="relative w-full max-w-80 sm:w-auto sm:max-w-none">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-64 sm:h-80 sm:w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-3xl"
-        />
-
-        <div className="relative w-full sm:w-96">
-          {/* Keeps its ratio at every width — the contents are an SVG map that
-              scales cleanly, so there's no text to clip. */}
-          <div className="relative aspect-[5/6] overflow-hidden rounded-3xl border border-border bg-card shadow-2xl shadow-primary/10">
-            <svg
-              viewBox="0 0 200 240"
-              preserveAspectRatio="xMidYMid slice"
-              aria-hidden
-              className="absolute inset-0 h-full w-full"
-            >
-              <rect width="100%" height="100%" className="fill-card" />
-
-              <rect x="10" y="10" width="45" height="25" rx="2" className="fill-zinc-200" />
-              <rect x="60" y="10" width="30" height="20" rx="2" className="fill-zinc-200" />
-              <rect x="95" y="10" width="35" height="30" rx="2" className="fill-zinc-200" />
-              <rect x="135" y="10" width="55" height="25" rx="2" className="fill-zinc-200" />
-
-              <rect x="10" y="40" width="25" height="20" rx="2" className="fill-zinc-200" />
-              <rect x="40" y="40" width="50" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="95" y="45" width="35" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="135" y="40" width="55" height="22" rx="2" className="fill-zinc-200" />
-
-              <path
-                d="M 78 75 Q 110 70 132 88 Q 138 110 116 118 L 84 112 Z"
-                className="fill-primary/15"
-              />
-
-              <rect x="10" y="68" width="32" height="25" rx="2" className="fill-zinc-200" />
-              <rect x="46" y="70" width="26" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="155" y="70" width="35" height="25" rx="2" className="fill-zinc-200" />
-
-              <rect x="10" y="98" width="28" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="42" y="100" width="32" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="138" y="125" width="22" height="25" rx="2" className="fill-zinc-200" />
-              <rect x="165" y="122" width="25" height="28" rx="2" className="fill-zinc-200" />
-
-              <rect x="10" y="128" width="32" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="46" y="128" width="25" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="75" y="128" width="32" height="22" rx="2" className="fill-zinc-200" />
-
-              <rect x="10" y="158" width="38" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="52" y="158" width="28" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="84" y="160" width="32" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="120" y="158" width="38" height="25" rx="2" className="fill-zinc-200" />
-              <rect x="162" y="160" width="28" height="22" rx="2" className="fill-zinc-200" />
-
-              <rect x="10" y="188" width="34" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="48" y="190" width="42" height="20" rx="2" className="fill-zinc-200" />
-              <rect x="94" y="188" width="32" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="130" y="190" width="60" height="20" rx="2" className="fill-zinc-200" />
-
-              <rect x="10" y="215" width="45" height="20" rx="2" className="fill-zinc-200" />
-              <rect x="60" y="213" width="36" height="22" rx="2" className="fill-zinc-200" />
-              <rect x="100" y="215" width="32" height="20" rx="2" className="fill-zinc-200" />
-              <rect x="138" y="217" width="52" height="18" rx="2" className="fill-zinc-200" />
-
-              <path
-                d="M 50 200 Q 95 180 100 140 Q 105 90 150 70"
-                className="stroke-primary/30"
-                strokeWidth="6"
-                fill="none"
-                strokeLinecap="round"
-              />
-              <path
-                d="M 50 200 Q 95 180 100 140 Q 105 90 150 70"
-                className="stroke-primary"
-                strokeWidth="3"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg>
-
-            <div className="absolute inset-x-3 top-3 z-20 flex items-center gap-2 rounded-2xl border border-border bg-card/85 p-2.5 shadow-lg backdrop-blur-xl">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
-              </span>
-              <div className="flex-1 text-xs font-semibold text-foreground">
-                Aiden is on the way
-              </div>
-              <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
-                3 min
-              </span>
-            </div>
-
-            <div
-              className="absolute z-10"
-              style={{ top: "44%", left: "50%", transform: "translate(-50%, -50%)" }}
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary shadow-lg shadow-primary/40 ring-4 ring-card">
-                <CarIcon className="h-5 w-5 text-primary-foreground" />
-              </div>
-            </div>
-
-            <div
-              className="absolute z-10"
-              style={{ top: "23%", left: "72%", transform: "translate(-50%, -50%)" }}
-            >
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-card shadow-md ring-2 ring-primary">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4 text-primary"
-                  aria-hidden
-                >
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z" />
-                  <circle cx="12" cy="10" r="3" fill="currentColor" />
-                </svg>
-              </div>
-            </div>
-
-            <div className="absolute inset-x-3 bottom-3 z-20 flex items-center gap-3 rounded-2xl border border-border bg-card p-3 shadow-lg">
-              <span className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15 ring-2 ring-primary/40">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-5 w-5 text-primary"
-                  aria-hidden
-                >
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M5 20a7 7 0 0 1 14 0" />
-                </svg>
-                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-primary ring-2 ring-card" />
-              </span>
-              <div className="min-w-0 flex-1">
-                <div className="text-sm font-semibold tracking-tight text-foreground">
-                  Aiden
-                </div>
-                <div className="mt-0.5 text-xs text-muted-foreground">
-                  RAB 123 D · Toyota Hilux
-                </div>
-              </div>
-              <button
-                type="button"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm shadow-primary/30"
-              >
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="h-4 w-4"
-                  aria-hidden
-                >
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-lg">
-        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-          <span className="h-px w-8 bg-primary" />
-          Step 04
-        </p>
-        <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
-          Track Every Mile
-        </h3>
-        <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
-          Follow your driver in real time and share your trip with trusted
-          contacts for added peace of mind.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function Step05() {
-  return (
-    <div
-      id="step-5"
-      data-step="4"
+      id="step-3"
+      data-step="2"
       className="flex scroll-mt-[8rem] flex-col items-center gap-10 lg:flex-row lg:justify-center lg:gap-16 xl:gap-24"
     >
       <div className="relative">
@@ -885,7 +558,7 @@ function Step05() {
       <div className="max-w-lg">
         <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
           <span className="h-px w-8 bg-primary" />
-          Step 05
+          Step 03
         </p>
         <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
           Rate Your Experience
@@ -922,7 +595,7 @@ export default function HowItWorks() {
   }, []);
 
   return (
-    <section id="how-it-works" className="relative py-20 lg:py-28">
+    <section id="how-it-works" className="relative py-14 lg:py-20">
       <div className="mx-auto max-w-7xl px-6">
         {/* Intro */}
         <div className="max-w-2xl">
@@ -933,10 +606,10 @@ export default function HowItWorks() {
             How it works
           </div>
           <h2 className="mt-5 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[3.25rem]">
-            From request to rating, in 5 steps.
+            From request to rating, in 3 steps.
           </h2>
           <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-[1.0625rem]">
-            Book, agree on a fair fare, ride, pay, rate. Every step on your
+            Book, agree on a fair fare, ride, then rate. Every step on your
             terms.
           </p>
         </div>
@@ -968,12 +641,10 @@ export default function HowItWorks() {
           </nav>
         </div>
 
-        <div className="mt-16 space-y-20 lg:mt-20 lg:space-y-28">
+        <div className="mt-10 space-y-14 lg:mt-14 lg:space-y-20">
           <Step01 />
           <Step02 />
           <Step03 />
-          <Step04 />
-          <Step05 />
         </div>
       </div>
     </section>
