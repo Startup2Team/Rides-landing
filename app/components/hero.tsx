@@ -4,6 +4,7 @@ import Link from "next/link";
 import { IphoneMockup } from "./iphone-mockup";
 import { RiderScreen, DriverScreen } from "./phone-screens";
 import { useTranslations } from "../i18n/context";
+import { StoreBadges } from "./store-badges";
 
 function ArrowRightIcon() {
   return (
@@ -16,7 +17,7 @@ function ArrowRightIcon() {
 export default function Hero() {
   const t = useTranslations("hero");
   return (
-    <section className="relative flex h-[calc(100svh-4rem)] items-center overflow-hidden sm:h-[calc(100svh-5rem)]">
+    <section className="relative -mt-14 flex h-[100svh] items-center overflow-hidden pt-14 sm:-mt-16 sm:pt-16">
       {/* Real Kigali street map background — fades out at edges */}
       <div
         aria-hidden
@@ -135,7 +136,7 @@ export default function Hero() {
         <div className="max-w-2xl">
           {/* Headline — SF Pro Display proportions: Semibold (not Bold), -0.022em tracking, ~1.07 leading */}
           <h1
-            className="hero-rise text-balance text-[2.25rem] font-semibold leading-[1.1] tracking-[-0.022em] text-muted-foreground sm:text-[2.75rem] lg:text-[3.25rem]"
+            className="hero-rise type-display"
             style={{ animationDelay: "80ms" }}
           >
             {t("headlineLine1")}<br />
@@ -155,45 +156,13 @@ export default function Hero() {
             className="hero-rise mt-9 flex flex-wrap items-center gap-3"
             style={{ animationDelay: "240ms" }}
           >
-            <Link
+            <StoreBadges
+              appStoreEyebrow={t("appStoreEyebrow")}
+              appStoreLabel={t("appStoreLabel")}
+              googlePlayEyebrow={t("googlePlayEyebrow")}
+              googlePlayLabel={t("googlePlayLabel")}
               href="/waitlist"
-              aria-label="Download on the App Store"
-              className="inline-flex h-[3.25rem] items-center gap-2.5 rounded-2xl bg-primary px-5 text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] hover:bg-foreground hover:text-background active:scale-[0.98]"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6 fill-current">
-                <path d="M17.05 12.5c-.03-2.94 2.4-4.36 2.51-4.43-1.37-2-3.5-2.27-4.25-2.3-1.81-.18-3.53 1.07-4.45 1.07-.93 0-2.34-1.04-3.85-1.01-1.98.03-3.81 1.15-4.83 2.92-2.06 3.58-.53 8.86 1.48 11.76 1 1.42 2.18 3.01 3.74 2.95 1.5-.06 2.07-.97 3.89-.97s2.34.97 3.93.94c1.62-.03 2.65-1.45 3.65-2.88 1.15-1.65 1.62-3.25 1.65-3.33-.04-.02-3.16-1.21-3.19-4.72z M14.45 4.07c.83-1 1.39-2.4 1.23-3.78-1.19.05-2.63.79-3.48 1.79-.77.89-1.44 2.31-1.26 3.67 1.32.1 2.68-.67 3.51-1.68z" />
-              </svg>
-              <span className="flex flex-col leading-none">
-                <span className="text-[9.5px] tracking-[0.04em] opacity-90">{t("appStoreEyebrow")}</span>
-                <span className="mt-0.5 text-[15px] font-semibold tracking-[-0.01em]">{t("appStoreLabel")}</span>
-              </span>
-            </Link>
-            <Link
-              href="/waitlist"
-              aria-label="Get it on Google Play"
-              className="inline-flex h-[3.25rem] items-center gap-2.5 rounded-2xl bg-primary px-5 text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] hover:bg-foreground hover:text-background active:scale-[0.98]"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6">
-                <defs>
-                  <linearGradient id="gp-a" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stopColor="#00d4ff" />
-                    <stop offset="1" stopColor="#0066ff" />
-                  </linearGradient>
-                  <linearGradient id="gp-b" x1="0" y1="1" x2="1" y2="0">
-                    <stop offset="0" stopColor="#ff3b30" />
-                    <stop offset="1" stopColor="#ffcc00" />
-                  </linearGradient>
-                </defs>
-                <path d="M3.6 1.8 14 12 3.6 22.2c-.4-.3-.6-.8-.6-1.4V3.2c0-.6.2-1.1.6-1.4z" fill="url(#gp-a)" />
-                <path d="M14 12 3.6 1.8c.3-.2.7-.3 1.1-.2L17.1 8 14 12z" fill="#00f078" />
-                <path d="M14 12l3.1 4L4.7 22.4c-.4.1-.8 0-1.1-.2L14 12z" fill="url(#gp-b)" />
-                <path d="m17.1 8 4 2.3c.9.5.9 1.9 0 2.4L17.1 16 14 12l3.1-4z" fill="#ffce00" />
-              </svg>
-              <span className="flex flex-col leading-none">
-                <span className="text-[9.5px] tracking-[0.04em] opacity-90">{t("googlePlayEyebrow")}</span>
-                <span className="mt-0.5 text-[15px] font-semibold tracking-[-0.01em]">{t("googlePlayLabel")}</span>
-              </span>
-            </Link>
+            />
           </div>
 
           {/* Waitlist CTA — not live in every area yet; the shareable pre-launch signup link. */}
@@ -203,7 +172,7 @@ export default function Hero() {
           >
             <Link
               href="/waitlist"
-              className="inline-flex h-12 items-center gap-2 rounded-2xl border-2 border-foreground/15 px-5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary active:scale-[0.98]"
+              className="inline-flex h-12 items-center gap-2 rounded-2xl border-2 border-foreground/15 px-5 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary-text active:scale-[0.98]"
             >
               {t("waitlistCta")}
               <ArrowRightIcon />

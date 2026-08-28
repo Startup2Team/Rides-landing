@@ -3,6 +3,17 @@
 import { useEffect, useState } from "react";
 import { CarIcon, FusoIcon, HiluxIcon, MotoIcon, MotoDetailedIcon } from "./vehicle-icons";
 
+// Kigali map illustration palette — resolves to --map-* tokens in globals.css.
+// `var()` is unreliable in SVG presentation attributes, so these go via `style`.
+const mapFill = {
+  paper: { fill: "var(--map-paper)" },
+  block: { fill: "var(--map-block)" },
+  block2: { fill: "var(--map-block-2)" },
+  label: { fill: "var(--map-label)" },
+} as const;
+const mapStroke = { water: { stroke: "var(--map-water)" } } as const;
+
+
 const STEPS = [
   { id: "step-1", num: "01" },
   { id: "step-2", num: "02" },
@@ -111,7 +122,7 @@ function Step01() {
                   </div>
 
                   {/* Map area */}
-                  <div className="relative flex-1 overflow-hidden bg-[#efe7d8]">
+                  <div className="relative flex-1 overflow-hidden bg-[var(--map-paper)]">
                     {/* Stylised street network */}
                     <svg
                       viewBox="0 0 200 280"
@@ -119,10 +130,10 @@ function Step01() {
                       className="absolute inset-0 h-full w-full"
                       aria-hidden
                     >
-                      <rect width="200" height="280" fill="#efe7d8" />
-                      <path d="M 130 0 L 200 0 L 200 60 L 145 75 Z" fill="#e5dccb" opacity="0.6" />
-                      <path d="M 0 200 L 50 230 L 30 280 L 0 280 Z" fill="#e5dccb" opacity="0.5" />
-                      <path d="M 130 0 Q 120 100, 150 180 T 170 280" stroke="#c8d2db" strokeWidth="10" fill="none" />
+                      <rect width="200" height="280" style={mapFill.paper} />
+                      <path d="M 130 0 L 200 0 L 200 60 L 145 75 Z" style={mapFill.block} opacity="0.6" />
+                      <path d="M 0 200 L 50 230 L 30 280 L 0 280 Z" style={mapFill.block} opacity="0.5" />
+                      <path d="M 130 0 Q 120 100, 150 180 T 170 280" style={mapStroke.water} strokeWidth="10" fill="none" />
                       <path d="M 130 0 Q 120 100, 150 180 T 170 280" stroke="white" strokeWidth="9" fill="none" />
                       <path d="M 0 50 Q 80 30, 200 60" stroke="white" strokeWidth="3" fill="none" />
                       <path d="M 0 95 Q 50 70, 130 100" stroke="white" strokeWidth="3" fill="none" />
@@ -131,12 +142,12 @@ function Step01() {
                       <path d="M 60 0 Q 70 80, 50 200 T 80 280" stroke="white" strokeWidth="3" fill="none" />
                       <path d="M 120 0 Q 100 60, 90 130 T 70 280" stroke="white" strokeWidth="3" fill="none" />
                       <path d="M 180 0 Q 160 90, 175 200 T 200 280" stroke="white" strokeWidth="3" fill="none" />
-                      <text x="22" y="48" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 124 STREET</text>
-                      <text x="20" y="93" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 122 STREET</text>
-                      <text x="100" y="62" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 27 AVENUE</text>
-                      <text x="100" y="135" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600" transform="rotate(80 100 135)">KG 96 STREET</text>
-                      <text x="58" y="178" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 86 STREET</text>
-                      <text x="155" y="200" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600" transform="rotate(78 155 200)">KG 20 AVENUE</text>
+                      <text x="22" y="48" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 124 STREET</text>
+                      <text x="20" y="93" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 122 STREET</text>
+                      <text x="100" y="62" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 27 AVENUE</text>
+                      <text x="100" y="135" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600" transform="rotate(80 100 135)">KG 96 STREET</text>
+                      <text x="58" y="178" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 86 STREET</text>
+                      <text x="155" y="200" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600" transform="rotate(78 155 200)">KG 20 AVENUE</text>
                     </svg>
 
                     {/* Motorcycle marker */}
@@ -145,7 +156,7 @@ function Step01() {
                         <MotoDetailedIcon className="h-7 w-7 text-zinc-900" />
                       </span>
                       <div className="mt-0.5 flex justify-center">
-                        <span className="rounded-full bg-primary px-1.5 py-0.5 text-[7px] font-bold leading-none text-primary-foreground shadow">
+                        <span className="rounded-full bg-primary-strong px-1.5 py-0.5 text-[7px] font-bold leading-none text-primary-foreground shadow">
                           1 min
                         </span>
                       </div>
@@ -218,7 +229,7 @@ function Step01() {
                     </div>
 
                     {/* Continue button */}
-                    <div className="mt-3 flex h-9 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-md shadow-primary/30">
+                    <div className="mt-3 flex h-9 items-center justify-center rounded-full bg-primary-strong text-[10px] font-bold text-primary-foreground shadow-md shadow-primary/30">
                       Continue with Moto
                     </div>
 
@@ -256,11 +267,11 @@ function Step01() {
       </div>
 
       <div className="max-w-lg">
-        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+        <p className="inline-flex items-center gap-2 type-eyebrow">
           <span className="h-px w-8 bg-primary" />
           Step 01
         </p>
-        <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
+        <h3 className="mt-4 type-feature-title">
           Book in Seconds
         </h3>
         <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
@@ -390,11 +401,11 @@ function Step02() {
       </div>
 
       <div className="max-w-lg">
-        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+        <p className="inline-flex items-center gap-2 type-eyebrow">
           <span className="h-px w-8 bg-primary" />
           Step 02
         </p>
-        <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
+        <h3 className="mt-4 type-feature-title">
           Driver Confirmed
         </h3>
         <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
@@ -494,7 +505,7 @@ function Step03() {
               </div>
 
               <div className="flex justify-end">
-                <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary px-3.5 py-1.5 text-primary-foreground shadow-sm shadow-primary/30">
+                <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary-strong px-3.5 py-1.5 text-primary-foreground shadow-sm shadow-primary/30">
                   <div className="text-base font-bold leading-none">4,500 RWF</div>
                   <div className="mt-1 text-[9px] opacity-80">Initial offer</div>
                 </div>
@@ -510,14 +521,14 @@ function Step03() {
               </div>
 
               <div className="flex justify-end">
-                <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary px-3.5 py-1.5 text-primary-foreground shadow-sm shadow-primary/30">
+                <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary-strong px-3.5 py-1.5 text-primary-foreground shadow-sm shadow-primary/30">
                   <div className="text-base font-bold leading-none">4,000 RWF</div>
                   <div className="mt-1 text-[9px] opacity-80">Counter offer</div>
                 </div>
               </div>
 
               <div className="flex justify-end">
-                <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary px-3.5 py-1.5 text-primary-foreground shadow-sm shadow-primary/30 ring-2 ring-primary/40">
+                <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary-strong px-3.5 py-1.5 text-primary-foreground shadow-sm shadow-primary/30 ring-2 ring-primary/40">
                   <div className="text-base font-bold leading-none">3,800 RWF</div>
                   <div className="mt-1 inline-flex items-center gap-1 rounded-full bg-white/90 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-primary">
                     Final offer
@@ -535,7 +546,7 @@ function Step03() {
               </button>
               <button
                 type="button"
-                className="flex-[1.5] rounded-xl bg-primary py-2.5 text-xs font-semibold text-primary-foreground shadow-sm shadow-primary/30"
+                className="flex-[1.5] rounded-xl bg-primary-strong py-2.5 text-xs font-semibold text-primary-foreground shadow-sm shadow-primary/30"
               >
                 Accept 3,800 RWF
               </button>
@@ -545,11 +556,11 @@ function Step03() {
       </div>
 
       <div className="max-w-lg">
-        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+        <p className="inline-flex items-center gap-2 type-eyebrow">
           <span className="h-px w-8 bg-primary" />
           Step 03
         </p>
-        <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
+        <h3 className="mt-4 type-feature-title">
           Confirm Your Fare
         </h3>
         <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
@@ -677,7 +688,7 @@ function Step04() {
               <div className="flex-1 text-xs font-semibold text-foreground">
                 Aiden is on the way
               </div>
-              <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
+              <span className="rounded-full bg-primary/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary-text">
                 3 min
               </span>
             </div>
@@ -739,7 +750,7 @@ function Step04() {
               </div>
               <button
                 type="button"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-sm shadow-primary/30"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-strong text-primary-foreground shadow-sm shadow-primary/30"
               >
                 <svg
                   viewBox="0 0 24 24"
@@ -760,11 +771,11 @@ function Step04() {
       </div>
 
       <div className="max-w-lg">
-        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+        <p className="inline-flex items-center gap-2 type-eyebrow">
           <span className="h-px w-8 bg-primary" />
           Step 04
         </p>
-        <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
+        <h3 className="mt-4 type-feature-title">
           Track Every Mile
         </h3>
         <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
@@ -819,7 +830,7 @@ function Step05() {
                     <div className="relative flex items-center justify-center">
                       <span className="absolute h-20 w-20 rounded-full bg-primary/10" />
                       <span className="absolute h-16 w-16 rounded-full bg-primary/20" />
-                      <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg shadow-primary/40">
+                      <span className="relative flex h-12 w-12 items-center justify-center rounded-full bg-primary-strong text-primary-foreground shadow-lg shadow-primary/40">
                         <svg
                           viewBox="0 0 24 24"
                           fill="none"
@@ -869,7 +880,7 @@ function Step05() {
                   </div>
 
                   <div className="pt-3">
-                    <div className="flex h-11 items-center justify-center rounded-2xl bg-primary text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30">
+                    <div className="flex h-11 items-center justify-center rounded-2xl bg-primary-strong text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30">
                       Submit
                     </div>
                   </div>
@@ -883,11 +894,11 @@ function Step05() {
       </div>
 
       <div className="max-w-lg">
-        <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+        <p className="inline-flex items-center gap-2 type-eyebrow">
           <span className="h-px w-8 bg-primary" />
           Step 05
         </p>
-        <h3 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[2.75rem]">
+        <h3 className="mt-4 type-feature-title">
           Rate Your Experience
         </h3>
         <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
@@ -932,7 +943,7 @@ export default function HowItWorks() {
             <span className="h-px w-8 bg-foreground/30" />
             How it works
           </div>
-          <h2 className="mt-5 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[3.25rem]">
+          <h2 className="mt-5 type-section-title">
             From request to rating, in 5 steps.
           </h2>
           <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-[1.0625rem]">

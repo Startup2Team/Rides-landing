@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "features": "Features",
+    "company": "Company",
     "howItWorks": "How It Works",
     "drivers": "Drivers",
     "about": "About",
@@ -20,10 +21,11 @@
   },
   "footer": {
     "tagline": "People-powered mobility and logistics — connecting riders, drivers, and communities across Africa and beyond.",
-    "quote": "“Driven by People, Powered by Choice.”",
+    "quote": "Driven by People, Powered by Choice",
     "product": "Product",
     "company": "Company",
     "legal": "Legal",
+    "follow": "Follow",
     "privacyPolicy": "Privacy Policy",
     "termsOfService": "Terms of Service",
     "rightsReserved": "All rights reserved.",

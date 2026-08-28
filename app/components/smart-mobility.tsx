@@ -1,5 +1,18 @@
 import type { ReactNode } from "react";
 
+// Kigali map illustration palette — resolves to --map-* tokens in globals.css.
+// `var()` is unreliable in SVG presentation attributes, so these go via `style`.
+const mapFill = {
+  paper: { fill: "var(--map-paper)" },
+  block: { fill: "var(--map-block)" },
+  block2: { fill: "var(--map-block-2)" },
+  label: { fill: "var(--map-label)" },
+} as const;
+const mapStroke = { water: { stroke: "var(--map-water)" } } as const;
+
+const heatStop = { stopColor: "var(--warning)" } as const;
+
+
 // ── Platform feature list ────────────────────────────────────────────────────
 
 type Feature = { title: string; description: string; icon: ReactNode };
@@ -69,14 +82,14 @@ function StylisedMap() {
       aria-hidden
     >
       {/* Map base */}
-      <rect width="400" height="320" fill="#efe7d8" />
+      <rect width="400" height="320" style={mapFill.paper} />
       {/* Subtle district tints */}
-      <path d="M 260 0 L 400 0 L 400 110 L 290 130 Z" fill="#e5dccb" opacity="0.55" />
-      <path d="M 0 230 L 110 270 L 70 320 L 0 320 Z" fill="#e5dccb" opacity="0.5" />
-      <path d="M 0 0 L 100 0 L 80 80 L 0 100 Z" fill="#e8e0cf" opacity="0.45" />
+      <path d="M 260 0 L 400 0 L 400 110 L 290 130 Z" style={mapFill.block} opacity="0.55" />
+      <path d="M 0 230 L 110 270 L 70 320 L 0 320 Z" style={mapFill.block} opacity="0.5" />
+      <path d="M 0 0 L 100 0 L 80 80 L 0 100 Z" style={mapFill.block2} opacity="0.45" />
 
       {/* Highway — heavier double-stroke */}
-      <path d="M 260 0 Q 240 110 280 200 T 320 320" stroke="#c8d2db" strokeWidth="12" fill="none" />
+      <path d="M 260 0 Q 240 110 280 200 T 320 320" style={mapStroke.water} strokeWidth="12" fill="none" />
       <path d="M 260 0 Q 240 110 280 200 T 320 320" stroke="white" strokeWidth="10" fill="none" />
 
       {/* Street network — horizontal-ish */}
@@ -91,11 +104,11 @@ function StylisedMap() {
       <path d="M 350 0 Q 320 100 340 220 T 370 320" stroke="white" strokeWidth="3" fill="none" />
 
       {/* Street labels (sparse — just enough to feel like a real map) */}
-      <text x="20" y="58" fontSize="7" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 124 ST</text>
-      <text x="22" y="108" fontSize="7" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 122 ST</text>
-      <text x="170" y="68" fontSize="7" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 27 AVE</text>
-      <text x="118" y="193" fontSize="7" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 86 ST</text>
-      <text x="220" y="248" fontSize="7" fill="#9a9486" fontFamily="sans-serif" fontWeight="600" transform="rotate(2 220 248)">KG 20 AVE</text>
+      <text x="20" y="58" fontSize="7" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 124 ST</text>
+      <text x="22" y="108" fontSize="7" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 122 ST</text>
+      <text x="170" y="68" fontSize="7" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 27 AVE</text>
+      <text x="118" y="193" fontSize="7" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 86 ST</text>
+      <text x="220" y="248" fontSize="7" style={mapFill.label} fontFamily="sans-serif" fontWeight="600" transform="rotate(2 220 248)">KG 20 AVE</text>
     </svg>
   );
 }
@@ -149,9 +162,9 @@ function LiveOpsDashboard() {
             <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
           </radialGradient>
           <radialGradient id="heat-warm" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.5" />
-            <stop offset="60%" stopColor="#f59e0b" stopOpacity="0.15" />
-            <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+            <stop offset="0%" style={heatStop} stopOpacity="0.5" />
+            <stop offset="60%" style={heatStop} stopOpacity="0.15" />
+            <stop offset="100%" style={heatStop} stopOpacity="0" />
           </radialGradient>
         </defs>
 
@@ -304,7 +317,7 @@ export default function SmartMobility() {
             <span className="h-px w-8 bg-foreground/30" />
             The platform
           </div>
-          <h2 className="mt-5 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[3.25rem]">
+          <h2 className="mt-5 type-section-title">
             Built for real-time movement.
           </h2>
           <p className="mt-5 text-pretty text-base leading-relaxed text-muted-foreground lg:text-[1.0625rem]">

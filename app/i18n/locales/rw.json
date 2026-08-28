@@ -2,6 +2,7 @@
   "nav": {
     "home": "Ahabanza",
     "features": "Ibiranga",
+    "company": "Ikigo",
     "howItWorks": "Uko bikora",
     "drivers": "Abashoferi",
     "about": "Abo turi bo",
@@ -20,10 +21,11 @@
   },
   "footer": {
     "tagline": "Ubwikorezi n'ibikorwa bishingiye ku bantu — duhuza abagenzi, abashoferi n'imiryango muri Afurika no hanze yayo.",
-    "quote": "\"Bikorwa n'abantu, bishyigikiwe no guhitamo.\"",
+    "quote": "Bikorwa n'abantu, bishyigikiwe no guhitamo",
     "product": "Ibicuruzwa",
     "company": "Ikigo",
     "legal": "Amategeko",
+    "follow": "Dukurikire",
     "privacyPolicy": "Politiki y'ibanga",
     "termsOfService": "Amabwiriza y'ikoreshwa",
     "rightsReserved": "Uburenganzira bwose burabitswe.",

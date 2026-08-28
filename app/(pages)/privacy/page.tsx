@@ -1156,7 +1156,7 @@ function ContactSection({ content }: { content: PolicyItem[] }) {
             {/* CTA Button */}
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-primary-strong px-6 text-sm font-semibold text-primary-foreground shadow-md shadow-primary/20 transition-all hover:-translate-y-0.5 hover:shadow-lg hover:shadow-primary/30"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden>
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -1413,7 +1413,7 @@ export default function PrivacyPage() {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5 text-primary" aria-hidden>
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
-                <span className="text-xs font-semibold tracking-wide text-primary">Privacy &amp; Data Protection</span>
+                <span className="text-xs font-semibold tracking-wide text-primary-text">Privacy &amp; Data Protection</span>
               </div>
 
               {/* Headline */}
@@ -1438,7 +1438,7 @@ export default function PrivacyPage() {
               <div className="mt-9 flex flex-wrap items-center gap-6 border-t border-border pt-8">
                 <a
                   href="#your-rights"
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary underline-offset-4 hover:underline"
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-primary-text underline-offset-4 hover:underline"
                 >
                   View your rights
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5" aria-hidden>
@@ -1514,7 +1514,7 @@ export default function PrivacyPage() {
                     )}
                     <div className="flex items-center gap-3">
                       {section.num && (
-                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">
+                        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary-text">
                           {section.num}
                         </span>
                       )}
@@ -1522,7 +1522,7 @@ export default function PrivacyPage() {
                         className={`text-balance font-bold tracking-[-0.02em] text-foreground ${
                           section.num
                             ? "text-2xl sm:text-3xl"
-                            : "text-xl sm:text-2xl text-muted-foreground"
+                            : "text-xl sm:text-2xl text-heading"
                         }`}
                       >
                         {section.title}

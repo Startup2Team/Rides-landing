@@ -8,6 +8,8 @@
  * at the bottom.
  */
 
+import { RidesWordmark } from "./rides-logo";
+
 function StatusBar({ time = "9:41" }: { time?: string }) {
   return (
     <div className="relative z-20 flex items-center justify-between px-4 pt-[6px] text-foreground">
@@ -67,11 +69,7 @@ export function RiderScreen() {
         {/* Brand lockup, matching the navbar exactly. Note this instance is
             15px — below the large-text threshold — so the pink sits under
             4.5:1 here; kept for brand consistency in a decorative mockup. */}
-        <span className="text-[15px] font-black tracking-[-0.04em]">
-          <span className="text-[#007aff]">R</span>
-          <span className="text-[#e55189]">id</span>
-          <span className="text-emerald-600">es</span>
-        </span>
+        <RidesWordmark className="text-[15px]" />
       </div>
     </div>
   );

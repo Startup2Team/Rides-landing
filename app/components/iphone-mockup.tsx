@@ -58,7 +58,7 @@ export function IphoneMockup({
         style={{
           borderRadius: "42px",
           background:
-            "linear-gradient(145deg, #3a3d46 0%, #1a1c22 22%, #0d0f14 50%, #1a1c22 78%, #3a3d46 100%)",
+            "linear-gradient(145deg, var(--device-edge) 0%, var(--device-edge-dark) 22%, var(--device-edge-deep) 50%, var(--device-edge-dark) 78%, var(--device-edge) 100%)",
           padding: "6px",
           boxShadow: [
             // Big soft cast — light from top-left
@@ -87,8 +87,8 @@ export function IphoneMockup({
             inset: "6px",
             borderRadius: "37px",
             boxShadow: [
-              "inset 0 0 0 1.5px #000",
-              "inset 0 0 0 2.5px #2a2d35",
+              "inset 0 0 0 1.5px var(--device-bezel-inner)",
+              "inset 0 0 0 2.5px var(--device-bezel-outer)",
               "inset 0 1px 0 3.5px rgba(180,190,210,0.25)",
             ].join(","),
           }}
@@ -161,7 +161,7 @@ export function IphoneMockup({
                   className="block h-[5px] w-[5px] rounded-full"
                   style={{
                     background:
-                      "radial-gradient(circle at 30% 30%, #2a2a3a, #0a0a14 60%)",
+                      "radial-gradient(circle at 30% 30%, var(--device-lens-from), var(--device-lens-to) 60%)",
                     boxShadow: "inset 0 0 0 0.5px rgba(255,255,255,0.08)",
                   }}
                 />
@@ -221,7 +221,7 @@ export function IphoneMockup({
             width: "3px",
             height: "26px",
             borderRadius: "1.5px 0 0 1.5px",
-            background: "linear-gradient(to right, #2a2d35, #16181d)",
+            background: "linear-gradient(to right, var(--device-bezel-outer), var(--device-side))",
             boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.4)",
           }}
         />
@@ -234,7 +234,7 @@ export function IphoneMockup({
             width: "3px",
             height: "44px",
             borderRadius: "1.5px 0 0 1.5px",
-            background: "linear-gradient(to right, #2a2d35, #16181d)",
+            background: "linear-gradient(to right, var(--device-bezel-outer), var(--device-side))",
             boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.4)",
           }}
         />
@@ -247,7 +247,7 @@ export function IphoneMockup({
             width: "3px",
             height: "44px",
             borderRadius: "1.5px 0 0 1.5px",
-            background: "linear-gradient(to right, #2a2d35, #16181d)",
+            background: "linear-gradient(to right, var(--device-bezel-outer), var(--device-side))",
             boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.4)",
           }}
         />
@@ -262,7 +262,7 @@ export function IphoneMockup({
             width: "3px",
             height: "62px",
             borderRadius: "0 1.5px 1.5px 0",
-            background: "linear-gradient(to left, #2a2d35, #16181d)",
+            background: "linear-gradient(to left, var(--device-bezel-outer), var(--device-side))",
             boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.4)",
           }}
         />
@@ -275,7 +275,7 @@ export function IphoneMockup({
             width: "3px",
             height: "32px",
             borderRadius: "0 1.5px 1.5px 0",
-            background: "linear-gradient(to left, #2a2d35, #16181d)",
+            background: "linear-gradient(to left, var(--device-bezel-outer), var(--device-side))",
             boxShadow: "inset 0 0 0 0.5px rgba(0,0,0,0.4)",
           }}
         />

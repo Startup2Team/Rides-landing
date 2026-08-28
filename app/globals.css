@@ -1,29 +1,200 @@
 @import "tailwindcss";
 
-/* ────────────────────────────────────────────────────────────────────────────
-   Default (light) tokens — apply across the whole app and admin.
-──────────────────────────────────────────────────────────────────────────── */
+/* ╔══════════════════════════════════════════════════════════════════════════╗
+   ║  RIDES DESIGN SYSTEM                                                     ║
+   ║                                                                          ║
+   ║  Three layers. Always author downward, never sideways:                   ║
+   ║                                                                          ║
+   ║    LAYER 1  PRIMITIVE   raw values. Never referenced from a component.   ║
+   ║    LAYER 2  SEMANTIC    purpose aliases. What themes switch.             ║
+   ║    LAYER 3  COMPONENT   per-component knobs. What components read.       ║
+   ║                                                                          ║
+   ║  Rules:                                                                  ║
+   ║    · No raw hex / rgba / arbitrary Tailwind values in .tsx files.        ║
+   ║    · Headings use --color-heading. Body copy uses --muted-foreground.    ║
+   ║      Never colour a heading with the body token — that erases hierarchy. ║
+   ║    · All text meets WCAG AA 4.5:1; large text and UI meet 3:1.           ║
+   ║    · :root is shared by the marketing site AND the admin. Changing a     ║
+   ║      semantic token here moves both surfaces.                            ║
+   ╚══════════════════════════════════════════════════════════════════════════╝ */
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LAYER 1 — PRIMITIVES
+   Raw values with no meaning attached. Components must never read these
+   directly; go through the semantic layer so themes stay switchable.
+════════════════════════════════════════════════════════════════════════════ */
 
 :root {
-  --background: #f5f5f5;
-  --foreground: #0a0a0a;
-  --card: #ffffff;
-  --surface: #fafafa;
-  --surface-alt: #f0f0f0;
-  --muted: #f0f0f0;
-  --muted-foreground: #737373;
-  --border: #e0e0e0;
-  --primary: #007aff;
-  --primary-foreground: #ffffff;
-  --accent: #e5f1ff;
-  --accent-foreground: #1a1a1a;
+  /* ── Neutral ramp ────────────────────────────────────────────────────────
+     Replaces the 16 ad-hoc greys that were scattered across the marketing
+     SVGs (#e1e1e1, #c4c4c4, #b9b9b9, #a8a8a8, #a0a0a0, #9c9c9c, #9a9a9a,
+     #8c8c8c, #7a7a7a …). Even perceptual steps, so illustrations and UI
+     chrome finally share one ramp. */
+  --gray-50:  #fafafa;
+  --gray-100: #f5f5f5;
+  --gray-150: #ededed;
+  --gray-200: #e5e5e5;
+  --gray-300: #d4d4d4;
+  --gray-400: #c4c4c4;
+  --gray-500: #a3a3a3;
+  --gray-600: #8c8c8c;
+  --gray-700: #6e6e6e;
+  --gray-800: #4a4a4a;
+  --gray-900: #2b2b2b;
+  --gray-950: #0a0a0a;
 
-  /* Glass surfaces — the floating navbar pill and its mobile sheet. Written as
+  /* ── Brand blue ramp ─────────────────────────────────────────────────────
+     --blue-500 (#007aff) is the brand hue and stays untouched. It only
+     clears 4.02:1 on white, so it is reserved for large text, icons, fills
+     under big type, and tints. Small text and white-on-blue buttons use the
+     deeper steps, which are visually near-identical but pass AA. */
+  --blue-50:  #e5f1ff;
+  --blue-100: #cce4ff;
+  --blue-200: #99c9ff;
+  --blue-400: #3395ff;
+  --blue-500: #007aff;  /* BRAND — 4.02:1 on white  → large text / fills only */
+  --blue-600: #0069e0;  /* 5.13:1 on white → white-on-blue buttons pass AA    */
+  --blue-700: #0062d6;  /* 5.65:1 on white → small blue text on light         */
+  --blue-800: #0a4fd0;  /* 6.90:1 on white → dense blue text                  */
+
+  /* ── Dark-theme neutrals (the /contact scope) ────────────────────────── */
+  --ink-950: #0d0d14;
+  --ink-900: #11111c;
+  --ink-800: #161624;
+  --ink-700: #1a1a26;
+  --ink-600: #1f1f2e;
+  --ink-500: #26263a;
+  --ink-300: #9a9ab0;
+  --ink-50:  #f5f5fa;
+
+  /* ── Status hues ─────────────────────────────────────────────────────── */
+  --green-500:  #00a040;
+  --amber-500:  #f59e0b;
+  --red-500:    #ff3b30;
+
+  /* ── Spacing (4px base) ──────────────────────────────────────────────── */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-28: 7rem;
+
+  /* ── Radius ──────────────────────────────────────────────────────────── */
+  --radius-xs:   0.25rem;
+  --radius-sm:   0.375rem;
+  --radius-md:   0.5rem;
+  --radius-lg:   0.75rem;
+  --radius-xl:   1rem;
+  --radius-2xl:  1.5rem;
+  --radius-3xl:  1.75rem;
+  --radius-full: 999px;
+
+  /* ── Elevation ───────────────────────────────────────────────────────── */
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.08), 0 1px 2px rgb(0 0 0 / 0.04);
+  --shadow-md: 0 4px 12px -2px rgb(0 0 0 / 0.10), 0 2px 6px -2px rgb(0 0 0 / 0.05);
+  --shadow-lg: 0 12px 28px -8px rgb(0 0 0 / 0.14), 0 4px 10px -4px rgb(0 0 0 / 0.06);
+  --shadow-xl: 0 24px 56px -16px rgb(0 0 0 / 0.20), 0 8px 20px -8px rgb(0 0 0 / 0.08);
+
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  --duration-fast:   150ms;
+  --duration-normal: 200ms;
+  --duration-slow:   300ms;
+  --duration-reveal: 700ms;
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Type scale ──────────────────────────────────────────────────────────
+     Fluid where it needs to be. Replaces the 20 arbitrary text-[Npx] /
+     text-[Nrem] values that were competing across the marketing pages. */
+  --text-eyebrow:  0.75rem;
+  --text-caption:  0.8125rem;
+  --text-body-sm:  0.875rem;
+  --text-body:     1rem;
+  --text-body-lg:  1.0625rem;
+  --text-lead:     clamp(1.0625rem, 0.98rem + 0.4vw, 1.1875rem);
+  --text-h3:       clamp(1.25rem, 1.1rem + 0.7vw, 1.5rem);
+  --text-h2:       clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  --text-h1:       clamp(2rem,  1.55rem + 2.1vw, 3.25rem);
+  --text-display:  clamp(2.25rem, 1.6rem + 2.9vw, 3.75rem);
+
+  /* Tracking tightens as type grows — the one rule that makes a scale look
+     drawn rather than assembled. */
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.025em;
+  --tracking-body:     0em;
+  --tracking-eyebrow:  0.2em;
+
+  --leading-display: 1.05;
+  --leading-heading: 1.12;
+  --leading-body:    1.6;
+
+  /* ── Layout ──────────────────────────────────────────────────────────── */
+  --container-max: 80rem;
+  --gutter:        var(--space-6);
+  --gutter-lg:     var(--space-10);
+  --section-y:     var(--space-16);
+  --section-y-lg:  var(--space-28);
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LAYER 2 — SEMANTIC
+   Purpose aliases. These are what a theme overrides, and the only colour
+   tokens a component should ever reach for.
+════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --background: var(--gray-100);
+  --foreground: var(--gray-950);
+  --card: #ffffff;
+  --surface: var(--gray-50);
+  --surface-alt: var(--gray-150);
+  --muted: var(--gray-150);
+  --border: #e0e0e0;
+
+  /* Headings. Previously every marketing heading was painted with
+     --muted-foreground, so headline and body were the same colour and the
+     pages had no vertical hierarchy at all. This token exists so that can
+     never silently happen again. */
+  --heading: var(--gray-950);
+  --heading-subtle: var(--gray-900);
+
+  /* Body copy. Was #737373 → 4.35:1 on --background, i.e. below AA.
+     #6e6e6e is a hair deeper, visually near-identical, and clears it:
+     4.68:1 on --background, 5.10:1 on --card. */
+  --muted-foreground: var(--gray-700);
+  --faint-foreground: var(--gray-600);   /* captions / meta — large or bold only */
+
+  --primary: var(--blue-500);            /* brand fills, icons, large type */
+  --primary-foreground: #ffffff;
+  --primary-strong: var(--blue-600);     /* button fills — white label passes AA */
+  --primary-text: var(--blue-700);       /* blue small text on light surfaces */
+  --primary-hover: var(--blue-700);
+
+  --accent: var(--blue-50);
+  --accent-foreground: var(--gray-900);
+  --ring: var(--blue-500);
+
+  --success: var(--green-500);
+  --warning: var(--amber-500);
+  --danger:  var(--red-500);
+
+  /* Glass surfaces — the scrolled navbar bar and its mobile sheet. Written as
      rgba rather than opacity modifiers so the frosted layer stays legible over
-     both photography and flat sections. */
-  /* At rest the pill is barely there; once content scrolls underneath it has to
-     firm up, or high-contrast sections (the blue CTA band) read straight
-     through and collide with the nav labels. */
+     both photography and flat sections. The bar carries no background at rest,
+     which is safe because at rest it only ever sits over the faint top of the
+     hero map; once content scrolls underneath it firms up to --glass-strong, or
+     high-contrast sections (the blue CTA band) read straight through and
+     collide with the nav labels. */
   --glass: rgba(255, 255, 255, 0.30);
   --glass-strong: rgba(255, 255, 255, 0.88);
   --glass-border: rgba(255, 255, 255, 0.55);
@@ -33,21 +204,32 @@
 /* ────────────────────────────────────────────────────────────────────────────
    Opt-in dark scope. Any element with data-theme="dark" (and its children)
    gets the dark palette. Used on /contact only for now.
+   Only the SEMANTIC layer is redefined — primitives never change.
 ──────────────────────────────────────────────────────────────────────────── */
 
 [data-theme="dark"] {
-  --background: #0d0d14;
-  --foreground: #f5f5fa;
-  --card: #161624;
-  --surface: #11111c;
-  --surface-alt: #1f1f2e;
-  --muted: #1a1a26;
-  --muted-foreground: #9a9ab0;
-  --border: #26263a;
+  --background: var(--ink-950);
+  --foreground: var(--ink-50);
+  --card: var(--ink-800);
+  --surface: var(--ink-900);
+  --surface-alt: var(--ink-600);
+  --muted: var(--ink-700);
+  --border: var(--ink-500);
+
+  --heading: var(--ink-50);
+  --heading-subtle: #e2e2ee;
+  --muted-foreground: var(--ink-300);
+  --faint-foreground: #7f7f96;
+
   --primary: #5fa8ff;
   --primary-foreground: #08081a;
+  --primary-strong: #5fa8ff;
+  --primary-text: #8cc0ff;
+  --primary-hover: #8cc0ff;
+
   --accent: #1d2950;
   --accent-foreground: #5fa8ff;
+  --ring: #5fa8ff;
 
   /* Dark glass is a tinted card, not an inverted white one — the highlight
      drops to a faint rim so the pill still reads as a lit edge. */
@@ -65,6 +247,148 @@
   color: var(--foreground);
 }
 
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LAYER 3 — COMPONENT TOKENS
+   Per-component knobs. Components read these; they resolve through semantic.
+════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Card */
+  --card-bg: var(--card);
+  --card-border: var(--border);
+  --card-radius: var(--radius-3xl);
+  --card-padding: var(--space-6);
+  --card-shadow: none;
+  --card-hover-border: color-mix(in srgb, var(--primary) 30%, transparent);
+  --card-hover-shadow: var(--shadow-lg);
+  --card-hover-lift: -4px;
+
+  /* Button */
+  --button-radius: var(--radius-2xl);
+  --button-height: 3.25rem;
+  --button-height-sm: 3rem;
+  --button-padding-x: var(--space-5);
+  --button-primary-bg: var(--primary-strong);
+  --button-primary-fg: var(--primary-foreground);
+  --button-primary-hover-bg: var(--foreground);
+  --button-primary-hover-fg: var(--background);
+  --button-primary-shadow: 0 10px 24px -12px color-mix(in srgb, var(--primary) 60%, transparent);
+  --button-ghost-border: color-mix(in srgb, var(--foreground) 15%, transparent);
+
+  /* Illustration ("clay") system — the marketing SVGs.
+     Every gradient stop in the feature art now resolves here instead of
+     inventing its own grey. */
+  --art-face-from: var(--gray-50);
+  --art-face-mid:  var(--gray-200);
+  --art-face-to:   var(--gray-400);
+  --art-rim-from:  var(--gray-500);
+  --art-rim-to:    var(--gray-700);
+  --art-line:      var(--gray-500);
+  --art-line-soft: var(--gray-400);
+  --art-screen:    var(--gray-300);
+  --art-glyph:     var(--gray-700);
+  --art-chip:      var(--gray-600);
+  --art-highlight: #ffffff;
+  --art-tile-from: var(--gray-50);
+  --art-tile-to:   #e1e1e1;
+  --art-tile-shadow:
+    0 12px 24px -10px rgb(0 0 0 / 0.18),
+    inset 0 1px 2px rgb(255 255 255 / 0.9),
+    inset 0 -2px 2px rgb(0 0 0 / 0.05);
+
+  /* Map illustration — the Kigali street render. These five values were
+     duplicated by hand in final-cta.tsx and smart-mobility.tsx; the two
+     renders had already drifted apart. One source now. */
+  --map-paper:   #efe7d8;
+  --map-block:   #e5dccb;
+  --map-block-2: #e8e0cf;
+  --map-water:   #c8d2db;
+  --map-label:   #9a9486;
+  --map-route:   var(--primary);
+  --map-grid-line:  var(--border);
+  --map-grid-road:  var(--gray-300);
+  --map-grid-block: var(--gray-150);
+  --map-grid-label: var(--gray-500);
+
+  /* Device chrome — the iPhone bezel render, shared by iphone-mockup.tsx
+     and the final-cta phone. */
+  --device-frame-from: #3a3a3c;
+  --device-frame-via:  #1c1c1e;
+  --device-frame-to:   var(--gray-950);
+  --device-button:     var(--gray-950);
+  --device-edge:        #3a3d46;
+  --device-edge-dark:   #1a1c22;
+  --device-edge-deep:   #0d0f14;
+  --device-bezel-inner: #000000;
+  --device-bezel-outer: #2a2d35;
+  --device-side:        #16181d;
+  --device-lens-from:   #2a2a3a;
+  --device-lens-to:     #0a0a14;
+
+  /* Rides wordmark — "R" primary, "id" magenta, "es" emerald. Was retyped
+     inline in navbar, footer, and the phone mockup. */
+  --wordmark-r:  var(--primary);
+  --wordmark-id: #e55189;
+  --wordmark-es: #059669;
+
+  /* Vehicle categories — the site's only categorical palette. Ordered
+     moto · car · hilux · fuso, each a from/to pair for its gradient. */
+  --vehicle-moto-from:  #1fbcd2;
+  --vehicle-moto-to:    #0f8fb5;
+  --vehicle-car-from:   #00e676;
+  --vehicle-car-to:     #00a040;
+  --vehicle-hilux-from: #ff3d44;
+  --vehicle-hilux-to:   #c81e2a;
+  --vehicle-fuso-from:  #ffeb3b;
+  --vehicle-fuso-to:    #ff9f00;
+
+  /* Brand gradient — the CTA band. */
+  --gradient-brand-from: var(--blue-500);
+  --gradient-brand-via:  #1f88ff;
+  --gradient-brand-to:   #0056b3;
+
+  /* Footer links. Deliberately a step down from --heading: a full-ink block of
+     links reads shouty down there. --gray-800 calms it while staying 1.7x the
+     contrast of the grey column labels, so the hierarchy holds. Taking it all
+     the way to --muted-foreground would match the labels exactly and flatten
+     the two levels into one. (This used to compensate for links set at 20px;
+     the size is fixed at the component now, the colour still earns its place.) */
+  --footer-link: var(--gray-800);
+  --footer-link-hover: var(--primary-text);
+
+  /* Footer mark — the extruded Rides R. Pale gradient faces with a brand-blue
+     keyline, so it reads as drawn rather than rendered.
+
+     Two knobs control how it sits in the footer:
+       --mark-height  how tall the whole mark would be, uncropped.
+       --mark-reveal  the fraction of that height actually shown, 0–1.
+                      1 = the whole letter; lower values let the footer's
+                      bottom edge crop it. Below about 0.6 the R's legs go and
+                      it stops reading as a letter — which may be what you
+                      want, but it is a deliberate choice, not a free dial. */
+  --mark-height: 20rem;
+  --mark-reveal: 1;
+
+  --mark-stroke:    var(--primary);
+  --mark-face-from: #ffffff;
+  --mark-face-to:   #eef6ff;
+  --mark-wall-from: #e8f2ff;
+  --mark-wall-to:   #d3e6ff;
+
+  /* Focus ring */
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--ring);
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   TAILWIND THEME BRIDGE
+   Tailwind v4 — utilities are generated from @theme inline, not a JS config.
+   Only semantic/component tokens are exposed; primitives stay internal.
+════════════════════════════════════════════════════════════════════════════ */
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -73,18 +397,35 @@
   --color-surface-alt: var(--surface-alt);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-faint-foreground: var(--faint-foreground);
+  --color-heading: var(--heading);
+  --color-heading-subtle: var(--heading-subtle);
+  --color-footer-link: var(--footer-link);
+  --color-footer-link-hover: var(--footer-link-hover);
   --color-border: var(--border);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-strong: var(--primary-strong);
+  --color-primary-text: var(--primary-text);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-ring: var(--ring);
   --color-glass: var(--glass);
   --color-glass-strong: var(--glass-strong);
   --color-glass-border: var(--glass-border);
   --color-glass-highlight: var(--glass-highlight);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   BASE
+════════════════════════════════════════════════════════════════════════════ */
 
 html {
   scroll-behavior: smooth;
@@ -111,11 +452,142 @@ body {
   select {
     cursor: pointer;
   }
+
+  /* One visible, consistent focus ring for the whole app. Keyboard users had
+     no reliable indicator before this. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: var(--radius-xs);
+  }
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   Hero entrance animation — staggered via inline animation-delay on each row.
-──────────────────────────────────────────────────────────────────────────── */
+
+/* ════════════════════════════════════════════════════════════════════════════
+   TYPOGRAPHY UTILITIES
+   Semantic type classes. Use these instead of stacking bespoke
+   text-[2.75rem] / tracking-[-0.03em] / leading-[1.05] chains per heading.
+════════════════════════════════════════════════════════════════════════════ */
+
+/* Breakpoints below deliberately mirror Tailwind's sm/lg so these classes
+   reproduce the previous per-component utility chains exactly — systematizing
+   here costs zero visual change. */
+
+/* Hero / page-opening headline. Was: text-[2.25rem] sm:text-[2.75rem]
+   lg:text-[3.25rem] font-semibold leading-[1.1] tracking-[-0.022em] */
+.type-display {
+  font-size: 2.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.022em;
+  font-weight: 600;
+  color: var(--heading);
+  text-wrap: balance;
+}
+@media (min-width: 640px)  { .type-display { font-size: 2.75rem; } }
+@media (min-width: 1024px) { .type-display { font-size: 3.25rem; } }
+
+/* Section heading. Was, in 4 places verbatim: text-3xl sm:text-4xl
+   lg:text-[3.25rem] font-bold leading-[1.05] tracking-[-0.03em] */
+.type-section-title {
+  font-size: 1.875rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  color: var(--heading);
+  text-wrap: balance;
+}
+@media (min-width: 640px)  { .type-section-title { font-size: 2.25rem; } }
+@media (min-width: 1024px) { .type-section-title { font-size: 3.25rem; } }
+
+/* Feature / step heading. Was, in 5 places verbatim: text-3xl sm:text-4xl
+   lg:text-[2.75rem] font-bold leading-[1.05] tracking-[-0.03em] */
+.type-feature-title {
+  font-size: 1.875rem;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  color: var(--heading);
+  text-wrap: balance;
+}
+@media (min-width: 640px)  { .type-feature-title { font-size: 2.25rem; } }
+@media (min-width: 1024px) { .type-feature-title { font-size: 2.75rem; } }
+
+/* Card heading. */
+.type-card-title {
+  font-size: 1.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--heading);
+  text-wrap: balance;
+}
+@media (min-width: 640px) { .type-card-title { font-size: 1.5rem; } }
+
+/* Intro paragraph under a heading. */
+.type-lead {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+@media (min-width: 1024px) { .type-lead { font-size: 1.125rem; } }
+
+.type-body {
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+/* Small uppercase kicker above a heading. Uses --primary-text, not --primary:
+   brand #007aff is only 4.02:1 on white and these run at 12px. */
+.type-eyebrow {
+  font-size: var(--text-eyebrow);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+/* Footer mark sizing. Height and crop both derive from the two --mark-*
+   knobs, so the amount of the R on show is a single number to change. */
+.footer-mark {
+  height: var(--mark-height);
+  width: auto;
+  margin-bottom: calc(var(--mark-height) * (var(--mark-reveal) - 1));
+}
+
+/* Dotted hairline. `border-dotted` at 1px renders 1px dots with 1px gaps,
+   which reads as a solid grey line at normal viewing distance — this gives
+   real, visible dots. */
+.rule-dotted {
+  height: 1px;
+  border: 0;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--border) 0 2px,
+    transparent 2px 7px
+  );
+}
+
+/* Neutral kicker inside a card, where a blue eyebrow would compete with the
+   card's own accent. Same rhythm as .type-eyebrow, quieter colour. */
+.type-badge {
+  font-size: 0.625rem;
+  line-height: 1.4;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+@media (min-width: 640px) { .type-badge { font-size: 0.6875rem; } }
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   MOTION
+   Every animation below has a prefers-reduced-motion escape hatch.
+════════════════════════════════════════════════════════════════════════════ */
 
 @keyframes hero-rise {
   from { opacity: 0; transform: translateY(12px); }
@@ -143,7 +615,7 @@ body {
 }
 
 .analytics-bar-grow {
-  animation: analytics-bar-grow 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: analytics-bar-grow 0.55s var(--ease-out) both;
 }
 
 .analytics-fade-in {
@@ -183,24 +655,35 @@ body {
   animation: marquee 28s linear infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-marquee { animation: none; }
+.hero-rise {
+  animation: hero-rise var(--duration-reveal) var(--ease-out) both;
 }
 
-/* ────────────────────────────────────────────────────────────────────────────
-   Features bento grid — mobile stacks, tablet is 2-col, desktop is true bento.
-──────────────────────────────────────────────────────────────────────────── */
+.animate-boil {
+  animation: boil 3.2s ease-in-out infinite;
+}
 
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+  .hero-rise { animation: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LAYOUT
+════════════════════════════════════════════════════════════════════════════ */
+
+/* Features bento grid — mobile stacks, tablet is 2-col, desktop is true bento. */
 .features-bento {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-4);
   grid-template-columns: 1fr;
 }
 
 @media (min-width: 640px) {
   .features-bento {
     grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
+    gap: var(--space-5);
   }
 }
 
@@ -219,37 +702,25 @@ body {
   .features-bento [data-area="sq2"]   { grid-area: sq2; }
 }
 
-.hero-rise {
-  animation: hero-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.animate-boil {
-  animation: boil 3.2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-rise { animation: none; }
-}
 
 /* ════════════════════════════════════════════════════════════════════════════
-   RIDES LANDING — Swiss Editorial Pro design system. Scoped under `.rides` so it
-   never leaks into the admin app or other marketing pages.
-   Light paper canvas · ink type · mono labels · hairline section rules · ONE
-   disciplined blue (anchored to the app's #007aff) · restrained, precise motion.
+   RIDES LANDING — Swiss Editorial scope.
+   Rebased onto the primitive layer so it can no longer drift from the rest of
+   the system. Scoped under `.rides` so it never leaks into the admin.
 ════════════════════════════════════════════════════════════════════════════ */
 
 .rides {
-  --paper:    #ffffff;   /* page canvas */
-  --paper-2:  #f5f5f2;   /* alt section / fill */
+  --paper:    #ffffff;
+  --paper-2:  #f5f5f2;
   --paper-3:  #ececea;
-  --ink:      #0a0a0a;   /* primary text / black UI */
-  --ink-2:    #2b2b2b;
-  --muted:    #6a6a6a;   /* body */
-  --faint:    #9a9a99;   /* captions */
-  --line:     #e5e5e1;   /* hairline */
+  --ink:      var(--gray-950);
+  --ink-2:    var(--gray-900);
+  --muted:    var(--gray-700);
+  --faint:    var(--gray-600);
+  --line:     #e5e5e1;
   --line-2:   #d2d2cd;
-  --blue:     #0a66ff;   /* the accent — reflects app #007aff, used sparingly */
-  --blue-ink: #0a4fd0;   /* blue for small text (AA on white) */
+  --blue:     var(--blue-500);
+  --blue-ink: var(--blue-800);
 
   background: var(--paper);
   color: var(--ink);
@@ -259,12 +730,12 @@ body {
 }
 
 /* ── Layout primitives ─────────────────────────────────────────────────────── */
-.rides-container { width: 100%; max-width: 80rem; margin-inline: auto; padding-inline: 1.25rem; }
-@media (min-width: 768px) { .rides-container { padding-inline: 2.5rem; } }
+.rides-container { width: 100%; max-width: var(--container-max); margin-inline: auto; padding-inline: var(--space-5); }
+@media (min-width: 768px) { .rides-container { padding-inline: var(--gutter-lg); } }
 
 /* A section opens with a full-bleed hairline — the Swiss "clear separation". */
-.rides-section { border-top: 1px solid var(--line); padding-block: 5rem; }
-@media (min-width: 768px) { .rides-section { padding-block: 7rem; } }
+.rides-section { border-top: 1px solid var(--line); padding-block: var(--space-20); }
+@media (min-width: 768px) { .rides-section { padding-block: var(--section-y-lg); } }
 
 /* ── Type scale ────────────────────────────────────────────────────────────── */
 .rides-display {
@@ -272,10 +743,10 @@ body {
   font-size: clamp(2.9rem, 7.5vw, 6rem);
 }
 .rides-h2 {
-  font-weight: 600; letter-spacing: -0.035em; line-height: 1.02;
-  font-size: clamp(2rem, 4.2vw, 3.4rem);
+  font-weight: 600; letter-spacing: var(--tracking-display); line-height: 1.02;
+  font-size: var(--text-h2);
 }
-.rides-lead { font-size: clamp(1.05rem, 1.6vw, 1.3rem); line-height: 1.55; color: var(--muted); }
+.rides-lead { font-size: var(--text-lead); line-height: 1.55; color: var(--muted); }
 
 /* Mono editorial bits */
 .rides-label {
@@ -285,19 +756,24 @@ body {
 }
 .rides-num {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 0.8rem; letter-spacing: 0.1em; color: var(--blue);
+  font-size: 0.8rem; letter-spacing: 0.1em; color: var(--blue-ink);
 }
 
 /* ── Buttons ───────────────────────────────────────────────────────────────── */
 .rides-btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  padding: 0.85rem 1.4rem; border-radius: 0.5rem;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+  padding: 0.85rem 1.4rem; border-radius: var(--radius-md);
   font-size: 0.94rem; font-weight: 500; line-height: 1; white-space: nowrap;
   border: 1px solid transparent;
-  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition:
+    transform var(--duration-normal) ease,
+    background var(--duration-normal) ease,
+    color var(--duration-normal) ease,
+    border-color var(--duration-normal) ease,
+    box-shadow var(--duration-normal) ease;
 }
-.rides-btn-primary { background: var(--blue); color: #fff; box-shadow: 0 1px 0 rgba(0,0,0,0.04); }
-.rides-btn-primary:hover { background: var(--blue-ink); transform: translateY(-1px); box-shadow: 0 10px 22px -12px rgba(10,102,255,0.7); }
+.rides-btn-primary { background: var(--primary-strong); color: var(--primary-foreground); box-shadow: var(--shadow-xs); }
+.rides-btn-primary:hover { background: var(--blue-ink); transform: translateY(-1px); box-shadow: var(--button-primary-shadow); }
 .rides-btn-dark { background: var(--ink); color: #fff; }
 .rides-btn-dark:hover { background: #fff; color: var(--ink); border-color: var(--ink); }
 .rides-btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
@@ -308,21 +784,24 @@ body {
   display: inline-flex; align-items: center; gap: 0.45rem;
   font-weight: 500; color: var(--blue-ink);
 }
-.rides-link svg { transition: transform .25s ease; }
+.rides-link svg { transition: transform var(--duration-slow) ease; }
 .rides-link:hover svg { transform: translateX(4px); }
 
 /* ── Cards ─────────────────────────────────────────────────────────────────── */
 .rides-card {
-  background: var(--paper); border: 1px solid var(--line); border-radius: 0.5rem;
-  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+  background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-slow) ease,
+    transform var(--duration-slow) ease,
+    box-shadow var(--duration-slow) ease;
 }
-.rides-card:hover { border-color: var(--ink); transform: translateY(-3px); box-shadow: 0 18px 40px -28px rgba(0,0,0,0.5); }
+.rides-card:hover { border-color: var(--ink); transform: translateY(-3px); box-shadow: var(--shadow-lg); }
 
 /* ── Motion ────────────────────────────────────────────────────────────────── */
 /* Crisp reveal — fade + small rise, no blur (keeps Swiss sharpness). IO-driven. */
 .rides-reveal {
   opacity: 0; transform: translateY(16px);
-  transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1);
+  transition: opacity var(--duration-reveal) ease, transform var(--duration-reveal) var(--ease-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .rides-reveal.is-in { opacity: 1; transform: none; }
@@ -344,7 +823,7 @@ body {
 .rides-float { animation: rides-float 6s ease-in-out infinite; }
 
 /* Hero route line drawing itself in */
-.rides-route { stroke-dasharray: 600; stroke-dashoffset: 600; animation: rides-route-draw 1.8s cubic-bezier(.22,1,.36,1) .35s forwards; }
+.rides-route { stroke-dasharray: 600; stroke-dashoffset: 600; animation: rides-route-draw 1.8s var(--ease-out) .35s forwards; }
 @keyframes rides-route-draw { to { stroke-dashoffset: 0; } }
 
 @media (prefers-reduced-motion: reduce) {
@@ -353,6 +832,11 @@ body {
   .rides-float { animation: none; }
   .rides-route { stroke-dashoffset: 0; animation: none; }
 }
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PRINT
+════════════════════════════════════════════════════════════════════════════ */
 
 @media print {
   body * {
@@ -368,7 +852,13 @@ body {
     top: 0;
     width: 100%;
   }
-}/* Global scrollbar styled in theme primary blue (always visible) */
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SCROLLBAR — themed in brand blue, always visible.
+════════════════════════════════════════════════════════════════════════════ */
+
 ::-webkit-scrollbar {
   width: 8px !important;
   height: 8px !important;
@@ -376,14 +866,15 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f5f5f5 !important; /* Solid background forces persistent rendering on Chrome/Safari/macOS */
-  border-radius: 999px !important;
+  /* Solid background forces persistent rendering on Chrome/Safari/macOS */
+  background: var(--gray-100) !important;
+  border-radius: var(--radius-full) !important;
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: var(--primary) !important;
-  border-radius: 999px !important;
-  border: 2px solid #f5f5f5 !important;
+  border-radius: var(--radius-full) !important;
+  border: 2px solid var(--gray-100) !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -394,5 +885,5 @@ body {
 /* Firefox scrollbars */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary) #f5f5f5;
+  scrollbar-color: var(--primary) var(--gray-100);
 }

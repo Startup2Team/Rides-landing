@@ -9,28 +9,12 @@ const items: Item[] = [
     a: "Rides is one app for every way you move. A moto when you're late. A cab when it matters. A hilux for the rough road. A fuso for moving day. You choose the vehicle, you see the fare before you book, and you follow the driver the whole way.",
   },
   {
-    q: "How do I book a ride?",
-    a: "Sign in with your phone number, pick your vehicle, set your pickup and destination, and confirm. A nearby driver accepts in seconds — then you watch them come to you on the map.",
-  },
-  {
     q: "What vehicle types are available?",
     a: "Four. Motos for a quick solo run. Cabs when you want comfort. Hilux pickups for bulky loads and rough roads. Fuso trucks for a full haul. The price scales with what you pick, so you never pay for more vehicle than the trip needs.",
   },
   {
-    q: "How are fares calculated?",
-    a: "Distance, vehicle type, and time of day — and you see the number before you book. Fares can also be negotiated up front in the app, by riders and drivers alike. No surge pricing. No hidden fees.",
-  },
-  {
-    q: "How do I pay?",
-    a: "MTN Mobile Money or Airtel Money, straight from the app. Prefer cash? Pay the driver directly — the same fare either way.",
-  },
-  {
     q: "Are drivers verified?",
     a: "Every driver submits their ID, vehicle insurance, and a vehicle authorization document before they can take a single trip. Our team reviews and approves each application by hand — nobody signs up automatically.",
-  },
-  {
-    q: "What if I need to cancel?",
-    a: "Cancel any time before your driver arrives. Cancel repeatedly once a driver is already on the way and you will hit a short cooldown — that one is for the drivers, who turn down other trips to reach you.",
   },
   {
     q: "How do I become a driver?",
@@ -49,12 +33,12 @@ export default function FAQ() {
               <span className="h-px w-8 bg-foreground/30" />
               FAQ
             </div>
-            <h2 className="mt-5 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[3.25rem]">
+            <h2 className="mt-5 type-section-title">
               Frequently asked questions
             </h2>
             <p className="mt-5 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Everything you need to know about riding, driving, paying, and
-              staying safe with Rides. Still not finding it?{" "}
+              What Rides is, the vehicles we run, and how every driver is
+              vetted before their first trip. Still not finding it?{" "}
               <a
                 href="/contact"
                 className="font-medium text-primary underline-offset-4 hover:underline"
