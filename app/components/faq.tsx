@@ -49,7 +49,7 @@ export default function FAQ() {
               <span className="h-px w-8 bg-foreground/30" />
               FAQ
             </div>
-            <h2 className="mt-5 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[3.25rem]">
+            <h2 className="mt-5 type-section-title">
               Frequently asked questions
             </h2>
             <p className="mt-5 text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">

@@ -1,6 +1,29 @@
 import Link from "next/link";
 import { CarIcon, FusoIcon, HiluxIcon, MotoDetailedIcon, MotoIcon } from "./vehicle-icons";
 
+// Kigali map illustration palette — resolves to --map-* tokens in globals.css.
+// `var()` is unreliable in SVG presentation attributes, so these go via `style`.
+const mapFill = {
+  paper: { fill: "var(--map-paper)" },
+  block: { fill: "var(--map-block)" },
+  block2: { fill: "var(--map-block-2)" },
+  label: { fill: "var(--map-label)" },
+} as const;
+const mapStroke = { water: { stroke: "var(--map-water)" } } as const;
+
+// Vehicle category palette — resolves to --vehicle-* tokens in globals.css.
+const vehicle = {
+  motoFrom: { stopColor: "var(--vehicle-moto-from)" },
+  motoTo: { stopColor: "var(--vehicle-moto-to)" },
+  carFrom: { stopColor: "var(--vehicle-car-from)" },
+  carTo: { stopColor: "var(--vehicle-car-to)" },
+  hiluxFrom: { stopColor: "var(--vehicle-hilux-from)" },
+  hiluxTo: { stopColor: "var(--vehicle-hilux-to)" },
+  fusoFrom: { stopColor: "var(--vehicle-fuso-from)" },
+  fusoTo: { stopColor: "var(--vehicle-fuso-to)" },
+} as const;
+
+
 function StarRow() {
   return (
     <span className="inline-flex items-center gap-0.5 text-amber-300">
@@ -23,7 +46,7 @@ export default function FinalCTA() {
   return (
     <section id="download" className="py-12 sm:py-16 lg:py-20">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary via-[#1F88FF] to-[#0056B3] shadow-2xl shadow-primary/40 ring-1 ring-inset ring-white/10">
+        <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-[var(--gradient-brand-from)] via-[var(--gradient-brand-via)] to-[var(--gradient-brand-to)] shadow-2xl shadow-primary/40 ring-1 ring-inset ring-white/10">
           {/* Mesh + glow backdrop */}
           <div
             aria-hidden
@@ -103,20 +126,20 @@ export default function FinalCTA() {
                   <svg viewBox="0 0 24 24" className="relative h-7 w-7" aria-hidden>
                     <defs>
                       <linearGradient id="gp-blue" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stopColor="#1FBCD2" />
-                        <stop offset="1" stopColor="#0F8FB5" />
+                        <stop offset="0" style={vehicle.motoFrom} />
+                        <stop offset="1" style={vehicle.motoTo} />
                       </linearGradient>
                       <linearGradient id="gp-green" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stopColor="#00E676" />
-                        <stop offset="1" stopColor="#00A040" />
+                        <stop offset="0" style={vehicle.carFrom} />
+                        <stop offset="1" style={vehicle.carTo} />
                       </linearGradient>
                       <linearGradient id="gp-red" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stopColor="#FF3D44" />
-                        <stop offset="1" stopColor="#C81E2A" />
+                        <stop offset="0" style={vehicle.hiluxFrom} />
+                        <stop offset="1" style={vehicle.hiluxTo} />
                       </linearGradient>
                       <linearGradient id="gp-yellow" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stopColor="#FFEB3B" />
-                        <stop offset="1" stopColor="#FF9F00" />
+                        <stop offset="0" style={vehicle.fusoFrom} />
+                        <stop offset="1" style={vehicle.fusoTo} />
                       </linearGradient>
                     </defs>
                     {/* Back wing (blue) */}
@@ -160,15 +183,15 @@ export default function FinalCTA() {
                 className="absolute -inset-x-8 -inset-y-12 rounded-full bg-white/10 blur-2xl"
               />
 
-              <div className="relative rounded-[3.25rem] bg-gradient-to-b from-[#3a3a3c] via-[#1c1c1e] to-[#0a0a0a] p-[4px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6),0_0_0_0.5px_rgba(255,255,255,0.06)_inset] ring-1 ring-inset ring-white/[0.08]">
+              <div className="relative rounded-[3.25rem] bg-gradient-to-b from-[var(--device-frame-from)] via-[var(--device-frame-via)] to-[var(--device-frame-to)] p-[4px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.6),0_0_0_0.5px_rgba(255,255,255,0.06)_inset] ring-1 ring-inset ring-white/[0.08]">
                 {/* Side buttons — iPhone 16 Pro layout (inside the rotated frame so they tilt with it) */}
                 {/* Left: Action button · Volume up · Volume down */}
-                <span aria-hidden className="absolute left-[-2px] top-[5.5rem] z-10 h-6 w-[2px] rounded-l-sm bg-[#0a0a0a]" />
-                <span aria-hidden className="absolute left-[-2px] top-[8rem] z-10 h-11 w-[2px] rounded-l-sm bg-[#0a0a0a]" />
-                <span aria-hidden className="absolute left-[-2px] top-[12.25rem] z-10 h-11 w-[2px] rounded-l-sm bg-[#0a0a0a]" />
+                <span aria-hidden className="absolute left-[-2px] top-[5.5rem] z-10 h-6 w-[2px] rounded-l-sm bg-[var(--device-button)]" />
+                <span aria-hidden className="absolute left-[-2px] top-[8rem] z-10 h-11 w-[2px] rounded-l-sm bg-[var(--device-button)]" />
+                <span aria-hidden className="absolute left-[-2px] top-[12.25rem] z-10 h-11 w-[2px] rounded-l-sm bg-[var(--device-button)]" />
                 {/* Right: Power · Camera Control (new on 16 Pro) */}
-                <span aria-hidden className="absolute right-[-2px] top-[7rem] z-10 h-13 w-[2px] rounded-r-sm bg-[#0a0a0a]" style={{ height: "3.25rem" }} />
-                <span aria-hidden className="absolute right-[-2px] top-[14rem] z-10 h-7 w-[2px] rounded-r-sm bg-[#0a0a0a]" />
+                <span aria-hidden className="absolute right-[-2px] top-[7rem] z-10 h-13 w-[2px] rounded-r-sm bg-[var(--device-button)]" style={{ height: "3.25rem" }} />
+                <span aria-hidden className="absolute right-[-2px] top-[14rem] z-10 h-7 w-[2px] rounded-r-sm bg-[var(--device-button)]" />
                 {/* Inner titanium highlight */}
                 <span
                   aria-hidden
@@ -252,7 +275,7 @@ export default function FinalCTA() {
                       </div>
 
                       {/* Map area */}
-                      <div className="relative flex-1 overflow-hidden bg-[#efe7d8]">
+                      <div className="relative flex-1 overflow-hidden bg-[var(--map-paper)]">
                         {/* Stylised street network */}
                         <svg
                           viewBox="0 0 200 280"
@@ -261,11 +284,11 @@ export default function FinalCTA() {
                           aria-hidden
                         >
                           {/* Background tints */}
-                          <rect width="200" height="280" fill="#efe7d8" />
-                          <path d="M 130 0 L 200 0 L 200 60 L 145 75 Z" fill="#e5dccb" opacity="0.6" />
-                          <path d="M 0 200 L 50 230 L 30 280 L 0 280 Z" fill="#e5dccb" opacity="0.5" />
+                          <rect width="200" height="280" style={mapFill.paper} />
+                          <path d="M 130 0 L 200 0 L 200 60 L 145 75 Z" style={mapFill.block} opacity="0.6" />
+                          <path d="M 0 200 L 50 230 L 30 280 L 0 280 Z" style={mapFill.block} opacity="0.5" />
                           {/* Highway */}
-                          <path d="M 130 0 Q 120 100, 150 180 T 170 280" stroke="#c8d2db" strokeWidth="10" fill="none" />
+                          <path d="M 130 0 Q 120 100, 150 180 T 170 280" style={mapStroke.water} strokeWidth="10" fill="none" />
                           <path d="M 130 0 Q 120 100, 150 180 T 170 280" stroke="white" strokeWidth="9" fill="none" />
                           {/* Street network — horizontal-ish */}
                           <path d="M 0 50 Q 80 30, 200 60" stroke="white" strokeWidth="3" fill="none" />
@@ -277,12 +300,12 @@ export default function FinalCTA() {
                           <path d="M 120 0 Q 100 60, 90 130 T 70 280" stroke="white" strokeWidth="3" fill="none" />
                           <path d="M 180 0 Q 160 90, 175 200 T 200 280" stroke="white" strokeWidth="3" fill="none" />
                           {/* Street labels */}
-                          <text x="22" y="48" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 124 STREET</text>
-                          <text x="20" y="93" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 122 STREET</text>
-                          <text x="100" y="62" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 27 AVENUE</text>
-                          <text x="100" y="135" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600" transform="rotate(80 100 135)">KG 96 STREET</text>
-                          <text x="58" y="178" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600">KG 86 STREET</text>
-                          <text x="155" y="200" fontSize="6" fill="#9a9486" fontFamily="sans-serif" fontWeight="600" transform="rotate(78 155 200)">KG 20 AVENUE</text>
+                          <text x="22" y="48" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 124 STREET</text>
+                          <text x="20" y="93" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 122 STREET</text>
+                          <text x="100" y="62" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 27 AVENUE</text>
+                          <text x="100" y="135" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600" transform="rotate(80 100 135)">KG 96 STREET</text>
+                          <text x="58" y="178" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600">KG 86 STREET</text>
+                          <text x="155" y="200" fontSize="6" style={mapFill.label} fontFamily="sans-serif" fontWeight="600" transform="rotate(78 155 200)">KG 20 AVENUE</text>
                         </svg>
 
                         {/* Motorcycle marker */}
@@ -291,7 +314,7 @@ export default function FinalCTA() {
                             <MotoDetailedIcon className="h-8 w-8 text-zinc-900" />
                           </span>
                           <div className="mt-0.5 flex justify-center">
-                            <span className="rounded-full bg-primary px-1.5 py-0.5 text-[7px] font-bold leading-none text-primary-foreground shadow">
+                            <span className="rounded-full bg-primary-strong px-1.5 py-0.5 text-[7px] font-bold leading-none text-primary-foreground shadow">
                               1 min
                             </span>
                           </div>
@@ -364,7 +387,7 @@ export default function FinalCTA() {
                         </div>
 
                         {/* Continue button */}
-                        <div className="mt-3 flex h-9 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-md shadow-primary/30">
+                        <div className="mt-3 flex h-9 items-center justify-center rounded-full bg-primary-strong text-[10px] font-bold text-primary-foreground shadow-md shadow-primary/30">
                           Continue with Moto
                         </div>
 

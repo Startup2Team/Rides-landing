@@ -268,7 +268,7 @@ export function Chatbot() {
         type="button"
         onClick={() => { setOpen((v) => !v); setHasNew(false); }}
         aria-label={open ? "Close chat" : "Open chat with Rides"}
-        className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-2xl shadow-primary/40 transition-all duration-300 hover:scale-[1.05] active:scale-[0.95]"
+        className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-primary-strong text-primary-foreground shadow-2xl shadow-primary/40 transition-all duration-300 hover:scale-[1.05] active:scale-[0.95]"
       >
         {/* Close icon */}
         <span className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${open ? "scale-100 opacity-100" : "scale-0 opacity-0"}`}>

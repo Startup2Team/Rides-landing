@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LanguageSwitcher } from "./language-switcher";
 import { useTranslations } from "../i18n/context";
+import { RidesWordmark } from "./rides-logo";
 
 function isLinkActive(
   href: string,
@@ -216,11 +217,7 @@ export default function Navbar() {
         <Link href="/" className="group relative flex items-center">
           {/* One typeface throughout, three brand colours: blue R, pink id,
               green es. All clear the 3:1 large-text bar at this size. */}
-          <span className="text-xl font-black tracking-[-0.04em] sm:text-2xl">
-            <span className="text-primary">R</span>
-            <span className="text-[#e55189]">id</span>
-            <span className="text-emerald-600">es</span>
-          </span>
+          <RidesWordmark className="text-xl sm:text-2xl" />
         </Link>
 
         <nav
@@ -269,7 +266,7 @@ export default function Navbar() {
           <Link
             href="/#download"
             onClick={(e) => handleNavClick(e, "/#download")}
-            className="hidden h-11 items-center justify-center rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:bg-foreground active:scale-[0.98] sm:inline-flex"
+            className="hidden h-11 items-center justify-center rounded-full bg-primary-strong px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:bg-foreground active:scale-[0.98] sm:inline-flex"
           >
             {t("download")}
           </Link>
@@ -347,7 +344,7 @@ export default function Navbar() {
                 handleNavClick(e, "/#download");
               }}
               tabIndex={mobileOpen ? 0 : -1}
-              className="mt-2 flex h-12 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground shadow-md shadow-primary/30 sm:hidden"
+              className="mt-2 flex h-12 items-center justify-center rounded-full bg-primary-strong text-sm font-semibold text-primary-foreground shadow-md shadow-primary/30 sm:hidden"
             >
               {t("download")}
             </Link>

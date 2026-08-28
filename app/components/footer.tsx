@@ -1,156 +1,184 @@
 "use client";
 
 import Link from "next/link";
-import { useTranslations } from "../i18n/context";
+import type { ReactNode } from "react";
+import { useTranslations, type Dictionary } from "../i18n/context";
+import { FacebookIcon, InstagramIcon, TikTokIcon } from "./social-icons";
+import { FooterMark } from "./footer-mark";
+import { RidesWordmark } from "./rides-logo";
 
-const productLinks = [
-  { labelKey: "features", href: "/#features" },
-  { labelKey: "howItWorks", href: "/#how-it-works" },
-  { labelKey: "drivers", href: "/drivers" },
-  { labelKey: "download", href: "/#download" },
-] as const;
+/* ────────────────────────────────────────────────────────────────────────────
+   Site footer.
 
-const companyLinks = [
-  { labelKey: "about", href: "/about" },
-  { labelKey: "contact", href: "/contact" },
-] as const;
+   Rendered once, from app/(pages)/layout.tsx. Note it is NOT rendered on
+   /contact, which has its own layout carrying only Navbar + Chatbot.
+
+   Layout: brand and the extruded mark on the left, three link columns on the
+   right. The mark is shown whole rather than cropped — a letterform stops
+   reading as a letter the moment you cut it, so unlike the abstract marks this
+   pattern is usually built around, it cannot bleed off the edge. Below lg it is
+   dropped entirely; at that width it would take the whole viewport.
+
+   Everything visible comes from ROUTES, COLUMNS and SOCIAL_LINKS.
+──────────────────────────────────────────────────────────────────────────── */
+
+/** Single source for destinations referenced from more than one place. */
+const ROUTES = {
+  privacy: "/privacy",
+  terms: "/terms",
+} as const;
+
+type NavKey = keyof Dictionary["nav"];
+type FooterKey = keyof Dictionary["footer"];
+
+/* Labels come from two dictionaries: the shared `nav` namespace (so footer and
+   navbar can't drift apart) and `footer` for legal wording. The discriminated
+   union keeps both sides type-checked against en.json — a typo or a key missing
+   from fr/rw fails the build rather than rendering blank. */
+type FooterLink =
+  | { ns: "nav"; labelKey: NavKey; href: string }
+  | { ns: "footer"; labelKey: FooterKey; href: string }
+  | { ns: "raw"; label: string; href: string; external: true; icon: ReactNode };
+
+type FooterColumnSpec = {
+  headingKey: FooterKey;
+  links: readonly FooterLink[];
+};
+
+/* TODO: the social hrefs are still placeholders — swap for the real profile
+   URLs. Kept here so it is a three-line edit when the accounts exist. */
+const ICON = "h-[1.15em] w-[1.15em] shrink-0";
+
+const SOCIAL_LINKS: readonly FooterLink[] = [
+  { ns: "raw", label: "Facebook", href: "#", external: true, icon: <FacebookIcon className={ICON} /> },
+  { ns: "raw", label: "Instagram", href: "#", external: true, icon: <InstagramIcon className={ICON} /> },
+  { ns: "raw", label: "TikTok", href: "#", external: true, icon: <TikTokIcon className={ICON} /> },
+];
+
+const COLUMNS: readonly FooterColumnSpec[] = [
+  {
+    headingKey: "product",
+    links: [
+      { ns: "nav", labelKey: "features", href: "/#features" },
+      { ns: "nav", labelKey: "howItWorks", href: "/#how-it-works" },
+      { ns: "nav", labelKey: "drivers", href: "/drivers" },
+      { ns: "nav", labelKey: "download", href: "/#download" },
+    ],
+  },
+  {
+    headingKey: "company",
+    links: [
+      { ns: "nav", labelKey: "about", href: "/about" },
+      { ns: "nav", labelKey: "contact", href: "/contact" },
+      { ns: "footer", labelKey: "privacyPolicy", href: ROUTES.privacy },
+      { ns: "footer", labelKey: "termsOfService", href: ROUTES.terms },
+    ],
+  },
+  { headingKey: "follow", links: SOCIAL_LINKS },
+];
+
+/* Uppercase letterspaced micro-type — the tagline, column headings and the
+   copyright line all share it. Colour is --muted-foreground (5.10:1 on the
+   white footer) rather than the lighter grey the reference uses, which would
+   land near 3.5:1 and fail AA at this size. */
+const MICRO = "text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground";
+
+// ── Pieces ───────────────────────────────────────────────────────────────────
+
+function FooterColumn({
+  heading,
+  links,
+}: {
+  heading: string;
+  links: readonly { label: string; href: string; external?: boolean; icon?: ReactNode }[];
+}) {
+  return (
+    <div>
+      <p className={MICRO}>{heading}</p>
+      <ul className="mt-5 space-y-4 lg:space-y-7">
+        {links.map((link) => {
+          const className =
+            "inline-flex items-center gap-2.5 text-base leading-tight text-footer-link transition-colors hover:text-footer-link-hover sm:text-lg lg:text-xl";
+          const body = (
+            <>
+              {link.icon}
+              {link.label}
+            </>
+          );
+          return (
+            <li key={link.label}>
+              {link.external ? (
+                <a href={link.href} target="_blank" rel="noreferrer" className={className}>
+                  {body}
+                </a>
+              ) : (
+                <Link href={link.href} className={className}>
+                  {body}
+                </Link>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+// ── Component ────────────────────────────────────────────────────────────────
 
 export default function Footer() {
   const year = new Date().getFullYear();
   const t = useTranslations("nav");
   const tf = useTranslations("footer");
-  const legalLinks = [
-    { label: tf("privacyPolicy"), href: "/privacy" },
-    { label: tf("termsOfService"), href: "/terms" },
-  ];
+
+  const resolve = (link: FooterLink) => {
+    if (link.ns === "raw")
+      return { label: link.label, href: link.href, external: true, icon: link.icon };
+    const label = link.ns === "nav" ? t(link.labelKey) : tf(link.labelKey);
+    return { label, href: link.href };
+  };
 
   return (
-    <footer className="border-t border-border bg-background">
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:py-20">
-        <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+    <footer id="site-footer" className="relative overflow-hidden border-t border-border bg-card">
+      <div className="relative mx-auto max-w-7xl px-6 pt-14 lg:pt-20">
+        <div className="grid gap-12 lg:grid-cols-2 lg:gap-8">
+          {/* ── Left: brand, tagline, and the mark that bleeds ── */}
+          <div className="relative">
             <Link href="/" className="inline-flex items-center">
-              <span className="text-xl font-black tracking-[-0.04em]">
-                <span className="text-primary">R</span>
-                <span className="text-[#e55189]">id</span>
-                <span className="text-emerald-600">es</span>
-              </span>
+              <RidesWordmark className="text-3xl" />
             </Link>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              {tf("tagline")}
-            </p>
-            <p className="mt-2 text-xs italic text-muted-foreground/60">
-              {tf("quote")}
-            </p>
+            <p className={`mt-4 max-w-sm ${MICRO}`}>{tf("quote")}</p>
 
-            <div className="mt-6 flex items-center gap-2">
-              <Link
-                href="#"
-                aria-label="Twitter"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
-              </Link>
-              <Link
-                href="#"
-                aria-label="Instagram"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden>
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" />
-                </svg>
-              </Link>
-              <Link
-                href="#"
-                aria-label="LinkedIn"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:border-primary/30 hover:text-primary"
-              >
-                <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden>
-                  <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zm1.78 13.02H3.56V9h3.56z" />
-                </svg>
-              </Link>
-            </div>
+            {/* Sizing and crop both come from --mark-height / --mark-reveal
+                in globals.css — see .footer-mark. */}
+            <FooterMark className="footer-mark pointer-events-none mt-10 hidden lg:block" />
           </div>
 
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-7">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-foreground">
-                {tf("product")}
-              </p>
-              <ul className="mt-4 space-y-3">
-                {productLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {t(link.labelKey)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+          {/* ── Right: columns, rule, copyright ── */}
+          <div>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
+              {COLUMNS.map((column) => (
+                <FooterColumn
+                  key={column.headingKey}
+                  heading={tf(column.headingKey)}
+                  links={column.links.map(resolve)}
+                />
+              ))}
             </div>
 
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-foreground">
-                {tf("company")}
+            {/* Rule and copyright stay inside the right half, aligned to the
+                columns — not a full-width bar. */}
+            <div className="mt-14 lg:mt-20">
+              <div className="rule-dotted" />
+              <p className={`mt-6 ${MICRO}`}>
+                © {year} Rides. {tf("rightsReserved")}
               </p>
-              <ul className="mt-4 space-y-3">
-                {companyLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {t(link.labelKey)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-foreground">
-                {tf("legal")}
-              </p>
-              <ul className="mt-4 space-y-3">
-                {legalLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
             </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col-reverse items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
-          <p className="text-xs text-muted-foreground">
-            © {year} Rides. {tf("rightsReserved")}
-          </p>
-          <div className="flex items-center gap-4">
-            <Link href="/privacy" className="text-xs text-muted-foreground transition-colors hover:text-foreground">
-              {tf("privacy")}
-            </Link>
-            <span className="h-3 w-px bg-border" />
-            <Link href="/terms" className="text-xs text-muted-foreground transition-colors hover:text-foreground">
-              {tf("terms")}
-            </Link>
-            <span className="h-3 w-px bg-border" />
-            <Link href="/about" className="text-xs text-muted-foreground transition-colors hover:text-foreground">
-              {t("about")}
-            </Link>
-          </div>
-        </div>
+        {/* Floor the mark bleeds into before the footer edge crops it. */}
+        <div className="h-14 lg:h-0" />
       </div>
     </footer>
   );
