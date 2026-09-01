@@ -87,7 +87,7 @@ export function ContactForm() {
   if (state === "success") {
     return (
       <div className="rounded-2xl border border-primary/30 bg-primary/[0.04] p-8 backdrop-blur-sm">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-lg shadow-primary/40">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary-strong text-primary-foreground shadow-lg shadow-primary/40">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6" aria-hidden>
             <polyline points="20 6 9 17 4 12" />
           </svg>
@@ -184,7 +184,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={state === "sending"}
-          className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary px-10 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-primary sm:w-auto"
+          className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary-strong px-10 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-primary-strong sm:w-auto"
         >
           {state === "sending" ? (
             <>

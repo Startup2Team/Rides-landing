@@ -2,6 +2,19 @@
 
 import { useEffect, useRef } from "react";
 
+// Schematic map-grid palette — resolves to --map-grid-* tokens in globals.css.
+const gridStroke = {
+  line: { stroke: "var(--map-grid-line)" },
+  road: { stroke: "var(--map-grid-road)" },
+  route: { stroke: "var(--map-route)" },
+} as const;
+const gridFill = {
+  block: { fill: "var(--map-grid-block)" },
+  label: { fill: "var(--map-grid-label)" },
+  route: { fill: "var(--map-route)" },
+} as const;
+
+
 export function MapGrid() {
   const pathRef = useRef<SVGPathElement>(null);
 
@@ -42,7 +55,7 @@ export function MapGrid() {
         aria-hidden
       >
         {/* ── Grid lines ── */}
-        <g stroke="#e0e0e0" strokeWidth="1" opacity="0.6">
+        <g style={gridStroke.line} strokeWidth="1" opacity="0.6">
           {/* Vertical */}
           {[50, 100, 150, 200, 250, 300, 350, 400, 450].map((x) => (
             <line key={`v${x}`} x1={x} y1="0" x2={x} y2="500" />
@@ -54,7 +67,7 @@ export function MapGrid() {
         </g>
 
         {/* ── Road highlights (thicker streets) ── */}
-        <g stroke="#d0d0d0" strokeWidth="2.5" opacity="0.8">
+        <g style={gridStroke.road} strokeWidth="2.5" opacity="0.8">
           <line x1="150" y1="0" x2="150" y2="500" />
           <line x1="350" y1="0" x2="350" y2="500" />
           <line x1="0" y1="150" x2="500" y2="150" />
@@ -62,7 +75,7 @@ export function MapGrid() {
         </g>
 
         {/* ── Blocks (subtle filled rects) ── */}
-        <g fill="#f0f0f0" opacity="0.5">
+        <g style={gridFill.block} opacity="0.5">
           <rect x="52" y="52" width="96" height="96" rx="4" />
           <rect x="202" y="52" width="96" height="96" rx="4" />
           <rect x="352" y="52" width="96" height="96" rx="4" />
@@ -78,7 +91,7 @@ export function MapGrid() {
         <path
           d="M 100 400 L 100 350 L 150 350 L 150 250 L 250 250 L 250 150 L 350 150 L 350 100 L 400 100"
           fill="none"
-          stroke="#007aff"
+          style={gridStroke.route}
           strokeWidth="8"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -89,29 +102,29 @@ export function MapGrid() {
           ref={pathRef}
           d="M 100 400 L 100 350 L 150 350 L 150 250 L 250 250 L 250 150 L 350 150 L 350 100 L 400 100"
           fill="none"
-          stroke="#007aff"
+          style={gridStroke.route}
           strokeWidth="3"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
 
         {/* ── Start pin ── */}
-        <circle cx="100" cy="400" r="6" fill="#007aff" opacity="0.9" />
-        <circle cx="100" cy="400" r="12" fill="#007aff" opacity="0.2" />
+        <circle cx="100" cy="400" r="6" style={gridFill.route} opacity="0.9" />
+        <circle cx="100" cy="400" r="12" style={gridFill.route} opacity="0.2" />
 
         {/* ── End destination pin ── */}
         <g>
           {/* Pulse rings */}
-          <circle cx="400" cy="100" r="18" fill="#007aff" opacity="0.08">
+          <circle cx="400" cy="100" r="18" style={gridFill.route} opacity="0.08">
             <animate attributeName="r" values="12;22;12" dur="2s" repeatCount="indefinite" />
             <animate attributeName="opacity" values="0.15;0;0.15" dur="2s" repeatCount="indefinite" />
           </circle>
-          <circle cx="400" cy="100" r="8" fill="#007aff" opacity="0.9" />
+          <circle cx="400" cy="100" r="8" style={gridFill.route} opacity="0.9" />
           <circle cx="400" cy="100" r="4" fill="white" />
         </g>
 
         {/* ── Moving car dot along route ── */}
-        <circle r="5" fill="#007aff" stroke="white" strokeWidth="2">
+        <circle r="5" style={gridFill.route} stroke="white" strokeWidth="2">
           <animateMotion
             dur="3s"
             repeatCount="indefinite"
@@ -123,11 +136,11 @@ export function MapGrid() {
         {[
           [150, 350], [150, 250], [250, 250], [250, 150], [350, 150], [350, 100],
         ].map(([cx, cy]) => (
-          <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3" fill="#007aff" opacity="0.3" />
+          <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="3" style={gridFill.route} opacity="0.3" />
         ))}
 
         {/* ── Street labels ── */}
-        <g fill="#a0a0a0" fontSize="9" fontFamily="sans-serif" fontWeight="600">
+        <g style={gridFill.label} fontSize="9" fontFamily="sans-serif" fontWeight="600">
           <text x="155" y="148" transform="rotate(-90 155 148)">KG 12 AVE</text>
           <text x="255" y="148" transform="rotate(-90 255 148)">KG 24 AVE</text>
           <text x="355" y="148" transform="rotate(-90 355 148)">KG 36 AVE</text>

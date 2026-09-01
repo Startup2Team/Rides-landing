@@ -223,10 +223,10 @@ export default function AboutPage() {
 
           {/* Left — narrative */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
+            <p className="type-eyebrow">
               {about.eyebrow}
             </p>
-            <h1 className="mt-3 text-3xl font-bold leading-[1.12] tracking-[-0.02em] text-muted-foreground sm:text-4xl lg:text-[2.35rem]">
+            <h1 className="mt-3 text-3xl font-bold leading-[1.12] tracking-[-0.02em] text-heading sm:text-4xl lg:text-[2.35rem]">
               {about.heroHeadline}
             </h1>
             <p className="mt-6 text-pretty text-sm leading-[1.65] text-muted-foreground sm:text-[15px]">
@@ -247,7 +247,7 @@ export default function AboutPage() {
           <div className="mx-auto w-full max-w-md lg:max-w-none">
             <div className="ml-auto mr-2 w-56 rounded-2xl bg-card p-5 shadow-xl shadow-foreground/15 sm:mr-4">
               <div className="flex items-center gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary-strong text-primary-foreground">
                   <Icon name="users" className="h-5 w-5" />
                 </span>
                 <p className="text-sm font-bold text-foreground">{about.purposeTitle}</p>
@@ -269,10 +269,10 @@ export default function AboutPage() {
           <div className="space-y-10 lg:pl-4">
             <div className="border-b border-border pb-10">
               <div className="flex items-center gap-4">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary-strong text-primary-foreground">
                   <Icon name="eye" className="h-6 w-6" />
                 </span>
-                <h2 className="text-xl font-bold text-muted-foreground sm:text-2xl">
+                <h2 className="text-xl font-bold text-heading sm:text-2xl">
                   {about.visionTitle}
                 </h2>
               </div>
@@ -293,7 +293,7 @@ export default function AboutPage() {
                 <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-primary/15 text-primary">
                   <Icon name="target" className="h-6 w-6" />
                 </span>
-                <h2 className="text-xl font-bold text-muted-foreground sm:text-2xl">
+                <h2 className="text-xl font-bold text-heading sm:text-2xl">
                   {about.missionTitle}
                 </h2>
               </div>
@@ -344,7 +344,7 @@ export default function AboutPage() {
         >
           {/* Values grid */}
           <div>
-            <h2 className="text-2xl font-bold tracking-[-0.02em] text-muted-foreground sm:text-3xl">
+            <h2 className="text-2xl font-bold tracking-[-0.02em] text-heading sm:text-3xl">
               {about.valuesHeading}
             </h2>
             <ul className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2">
@@ -368,7 +368,7 @@ export default function AboutPage() {
 
           {/* Impact panel */}
           <aside className="rounded-3xl bg-accent p-7 sm:p-8">
-            <h2 className="text-xl font-bold tracking-[-0.02em] text-muted-foreground sm:text-2xl">
+            <h2 className="text-xl font-bold tracking-[-0.02em] text-heading sm:text-2xl">
               {about.impactHeading}
             </h2>
             <p className="mt-4 text-pretty text-sm leading-[1.65] text-muted-foreground">
@@ -394,7 +394,7 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
-            <h3 className="mt-7 text-lg font-bold text-muted-foreground">
+            <h3 className="mt-7 text-lg font-bold text-heading">
               {about.promiseHeading}
             </h3>
             <p className="mt-3 text-pretty text-sm leading-[1.65] text-muted-foreground">

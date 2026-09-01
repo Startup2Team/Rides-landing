@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSection, useTranslations } from "../../i18n/context";
+import { StoreBadges } from "../../components/store-badges";
 
 
 /* ───────────────────────────────────────────────────────────────────────── */
@@ -65,7 +66,7 @@ export default function DriversPage() {
 
           {/* ── Right: copy + downloads ── */}
           <div className="order-1 text-center lg:order-2 lg:text-left">
-            <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-muted-foreground sm:text-5xl lg:text-[3.75rem]">
+            <h1 className="text-balance text-4xl font-semibold leading-[1.05] tracking-[-0.035em] text-heading sm:text-5xl lg:text-[3.75rem]">
               {t("heroHeadline")}
             </h1>
             <p className="mx-auto mt-6 max-w-xl text-pretty text-base leading-relaxed text-muted-foreground lg:mx-0 lg:text-[1.0625rem]">
@@ -74,45 +75,14 @@ export default function DriversPage() {
 
           {/* App Store + Play Store buttons */}
           <div className="mt-9 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
-            <Link
+            <StoreBadges
+              appStoreEyebrow={th("appStoreEyebrow")}
+              appStoreLabel={th("appStoreLabel")}
+              googlePlayEyebrow={th("googlePlayEyebrow")}
+              googlePlayLabel={th("googlePlayLabel")}
               href="/waitlist"
-              aria-label="Download on the App Store"
-              className="inline-flex h-[3.25rem] items-center gap-2.5 rounded-2xl bg-foreground px-5 text-background transition-all hover:scale-[1.02] hover:bg-primary hover:text-primary-foreground active:scale-[0.98]"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6 fill-current">
-                <path d="M17.05 12.5c-.03-2.94 2.4-4.36 2.51-4.43-1.37-2-3.5-2.27-4.25-2.3-1.81-.18-3.53 1.07-4.45 1.07-.93 0-2.34-1.04-3.85-1.01-1.98.03-3.81 1.15-4.83 2.92-2.06 3.58-.53 8.86 1.48 11.76 1 1.42 2.18 3.01 3.74 2.95 1.5-.06 2.07-.97 3.89-.97s2.34.97 3.93.94c1.62-.03 2.65-1.45 3.65-2.88 1.15-1.65 1.62-3.25 1.65-3.33-.04-.02-3.16-1.21-3.19-4.72z M14.45 4.07c.83-1 1.39-2.4 1.23-3.78-1.19.05-2.63.79-3.48 1.79-.77.89-1.44 2.31-1.26 3.67 1.32.1 2.68-.67 3.51-1.68z" />
-              </svg>
-              <span className="flex flex-col leading-none">
-                <span className="text-[9.5px] tracking-[0.04em] opacity-70">{th("appStoreEyebrow")}</span>
-                <span className="mt-0.5 text-[15px] font-semibold tracking-[-0.01em]">{th("appStoreLabel")}</span>
-              </span>
-            </Link>
-            <Link
-              href="/waitlist"
-              aria-label="Get it on Google Play"
-              className="inline-flex h-[3.25rem] items-center gap-2.5 rounded-2xl bg-foreground px-5 text-background transition-all hover:scale-[1.02] hover:bg-primary hover:text-primary-foreground active:scale-[0.98]"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6">
-                <defs>
-                  <linearGradient id="gp-drivers-a" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stopColor="#00d4ff" />
-                    <stop offset="1" stopColor="#0066ff" />
-                  </linearGradient>
-                  <linearGradient id="gp-drivers-b" x1="0" y1="1" x2="1" y2="0">
-                    <stop offset="0" stopColor="#ff3b30" />
-                    <stop offset="1" stopColor="#ffcc00" />
-                  </linearGradient>
-                </defs>
-                <path d="M3.6 1.8 14 12 3.6 22.2c-.4-.3-.6-.8-.6-1.4V3.2c0-.6.2-1.1.6-1.4z" fill="url(#gp-drivers-a)" />
-                <path d="M14 12 3.6 1.8c.3-.2.7-.3 1.1-.2L17.1 8 14 12z" fill="#00f078" />
-                <path d="M14 12l3.1 4L4.7 22.4c-.4.1-.8 0-1.1-.2L14 12z" fill="url(#gp-drivers-b)" />
-                <path d="m17.1 8 4 2.3c.9.5.9 1.9 0 2.4L17.1 16 14 12l3.1-4z" fill="#ffce00" />
-              </svg>
-              <span className="flex flex-col leading-none">
-                <span className="text-[9.5px] tracking-[0.04em] opacity-70">{th("googlePlayEyebrow")}</span>
-                <span className="mt-0.5 text-[15px] font-semibold tracking-[-0.01em]">{th("googlePlayLabel")}</span>
-              </span>
-            </Link>
+              variant="inverse"
+            />
           </div>
 
           <p className="mt-8 text-center text-xs text-muted-foreground lg:text-left">
@@ -131,7 +101,7 @@ export default function DriversPage() {
               {t("whyEyebrow")}
               <span className="h-px w-8 bg-border" />
             </div>
-            <h2 className="mt-5 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-muted-foreground sm:text-4xl lg:text-[3.25rem]">
+            <h2 className="mt-5 type-section-title">
               {t("whyHeading")}
             </h2>
           </div>
@@ -154,7 +124,7 @@ export default function DriversPage() {
                       <path d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 011.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z" />
                     </svg>
                   </span>
-                  <h3 className="mt-4 text-lg font-bold tracking-tight text-muted-foreground sm:text-xl">
+                  <h3 className="mt-4 text-lg font-bold tracking-tight text-heading sm:text-xl">
                     {b.title}
                   </h3>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -173,7 +143,7 @@ export default function DriversPage() {
                 {t("howEyebrow")}
                 <span className="h-px w-8 bg-border" />
               </div>
-              <h3 className="mt-5 text-balance text-2xl font-bold leading-tight tracking-[-0.02em] text-muted-foreground sm:text-3xl">
+              <h3 className="mt-5 text-balance text-2xl font-bold leading-tight tracking-[-0.02em] text-heading sm:text-3xl">
                 {t("howHeading")}
               </h3>
             </div>
@@ -201,45 +171,14 @@ export default function DriversPage() {
 
             {/* Final CTAs */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link
-                href="/waitlist"
-                aria-label="Download on the App Store"
-                className="inline-flex h-[3.25rem] items-center gap-2.5 rounded-2xl bg-foreground px-5 text-background transition-all hover:scale-[1.02] hover:bg-primary hover:text-primary-foreground active:scale-[0.98]"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6 fill-current">
-                  <path d="M17.05 12.5c-.03-2.94 2.4-4.36 2.51-4.43-1.37-2-3.5-2.27-4.25-2.3-1.81-.18-3.53 1.07-4.45 1.07-.93 0-2.34-1.04-3.85-1.01-1.98.03-3.81 1.15-4.83 2.92-2.06 3.58-.53 8.86 1.48 11.76 1 1.42 2.18 3.01 3.74 2.95 1.5-.06 2.07-.97 3.89-.97s2.34.97 3.93.94c1.62-.03 2.65-1.45 3.65-2.88 1.15-1.65 1.62-3.25 1.65-3.33-.04-.02-3.16-1.21-3.19-4.72z M14.45 4.07c.83-1 1.39-2.4 1.23-3.78-1.19.05-2.63.79-3.48 1.79-.77.89-1.44 2.31-1.26 3.67 1.32.1 2.68-.67 3.51-1.68z" />
-                </svg>
-                <span className="flex flex-col leading-none">
-                  <span className="text-[9.5px] tracking-[0.04em] opacity-70">{th("appStoreEyebrow")}</span>
-                  <span className="mt-0.5 text-[15px] font-semibold tracking-[-0.01em]">{th("appStoreLabel")}</span>
-                </span>
-              </Link>
-              <Link
-                href="/waitlist"
-                aria-label="Get it on Google Play"
-                className="inline-flex h-[3.25rem] items-center gap-2.5 rounded-2xl bg-foreground px-5 text-background transition-all hover:scale-[1.02] hover:bg-primary hover:text-primary-foreground active:scale-[0.98]"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6">
-                  <defs>
-                    <linearGradient id="gp-drivers-bottom-a" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stopColor="#00d4ff" />
-                      <stop offset="1" stopColor="#0066ff" />
-                    </linearGradient>
-                    <linearGradient id="gp-drivers-bottom-b" x1="0" y1="1" x2="1" y2="0">
-                      <stop offset="0" stopColor="#ff3b30" />
-                      <stop offset="1" stopColor="#ffcc00" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M3.6 1.8 14 12 3.6 22.2c-.4-.3-.6-.8-.6-1.4V3.2c0-.6.2-1.1.6-1.4z" fill="url(#gp-drivers-bottom-a)" />
-                  <path d="M14 12 3.6 1.8c.3-.2.7-.3 1.1-.2L17.1 8 14 12z" fill="#00f078" />
-                  <path d="M14 12l3.1 4L4.7 22.4c-.4.1-.8 0-1.1-.2L14 12z" fill="url(#gp-drivers-bottom-b)" />
-                  <path d="m17.1 8 4 2.3c.9.5.9 1.9 0 2.4L17.1 16 14 12l3.1-4z" fill="#ffce00" />
-                </svg>
-                <span className="flex flex-col leading-none">
-                  <span className="text-[9.5px] tracking-[0.04em] opacity-70">{th("googlePlayEyebrow")}</span>
-                  <span className="mt-0.5 text-[15px] font-semibold tracking-[-0.01em]">{th("googlePlayLabel")}</span>
-                </span>
-              </Link>
+              <StoreBadges
+              appStoreEyebrow={th("appStoreEyebrow")}
+              appStoreLabel={th("appStoreLabel")}
+              googlePlayEyebrow={th("googlePlayEyebrow")}
+              googlePlayLabel={th("googlePlayLabel")}
+              href="/waitlist"
+              variant="inverse"
+            />
             </div>
 
             <p className="mt-5 text-center text-xs text-muted-foreground">

@@ -2,22 +2,52 @@ import type { ReactNode } from "react";
 import { CarIcon, FusoIcon, HiluxIcon, MotoIcon } from "./vehicle-icons";
 
 // ── Shared claymorphism filter / gradient defs ────────────────────────────────
+//
+// Every colour here resolves to an --art-* component token in globals.css.
+// `var()` is unreliable inside SVG presentation attributes, so the tokens are
+// applied through `style` (a real CSS declaration block) instead.
+
+const artFace = {
+  from: { stopColor: "var(--art-face-from)" },
+  mid: { stopColor: "var(--art-face-mid)" },
+  to: { stopColor: "var(--art-face-to)" },
+} as const;
+
+const artHighlight = { stopColor: "var(--art-highlight)" } as const;
+const artRim = {
+  from: { stopColor: "var(--art-rim-from)" },
+  to: { stopColor: "var(--art-rim-to)" },
+} as const;
+
+const stroke = {
+  line: { stroke: "var(--art-line)" },
+  soft: { stroke: "var(--art-line-soft)" },
+} as const;
+
+const fill = {
+  screen: { fill: "var(--art-screen)" },
+  line: { fill: "var(--art-line)" },
+  chip: { fill: "var(--art-chip)" },
+  glyph: { fill: "var(--art-glyph)" },
+  highlight: { fill: "var(--art-highlight)" },
+  faceFrom: { fill: "var(--art-face-from)" },
+} as const;
 
 function ClayDefs({ id }: { id: string }) {
   return (
     <defs>
       <linearGradient id={`${id}-base`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stopColor="#fafafa" />
-        <stop offset="0.55" stopColor="#e5e5e5" />
-        <stop offset="1" stopColor="#b9b9b9" />
+        <stop offset="0" style={artFace.from} />
+        <stop offset="0.55" style={artFace.mid} />
+        <stop offset="1" style={artFace.to} />
       </linearGradient>
       <radialGradient id={`${id}-hi`} cx="0.35" cy="0.3" r="0.55">
-        <stop offset="0" stopColor="#ffffff" stopOpacity="0.9" />
-        <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
+        <stop offset="0" style={artHighlight} stopOpacity="0.9" />
+        <stop offset="1" style={artHighlight} stopOpacity="0" />
       </radialGradient>
       <linearGradient id={`${id}-rim`} x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stopColor="#9a9a9a" />
-        <stop offset="1" stopColor="#666666" />
+        <stop offset="0" style={artRim.from} />
+        <stop offset="1" style={artRim.to} />
       </linearGradient>
       <filter id={`${id}-soft`} x="-50%" y="-50%" width="200%" height="200%">
         <feDropShadow dx="0" dy="10" stdDeviation="9" floodColor="#000" floodOpacity="0.18" />
@@ -34,10 +64,10 @@ function LiveTrackingArt() {
     <svg viewBox="0 0 240 240" className="h-full w-full" aria-hidden>
       <ClayDefs id={id} />
       {/* Ground pulse ovals */}
-      <ellipse cx="120" cy="186" rx="80" ry="14" fill="none" stroke="#c4c4c4" strokeWidth="1" opacity="0.55" />
-      <ellipse cx="120" cy="186" rx="52" ry="9" fill="none" stroke="#a8a8a8" strokeWidth="1" opacity="0.65" />
+      <ellipse cx="120" cy="186" rx="80" ry="14" fill="none" style={stroke.soft} strokeWidth="1" opacity="0.55" />
+      <ellipse cx="120" cy="186" rx="52" ry="9" fill="none" style={stroke.line} strokeWidth="1" opacity="0.65" />
       {/* Dotted route */}
-      <path d="M 22 220 Q 80 178 130 195 T 220 152" fill="none" stroke="#9a9a9a" strokeWidth="2" strokeDasharray="4 6" strokeLinecap="round" opacity="0.6" />
+      <path d="M 22 220 Q 80 178 130 195 T 220 152" fill="none" style={stroke.line} strokeWidth="2" strokeDasharray="4 6" strokeLinecap="round" opacity="0.6" />
       {/* Pin */}
       <g filter={`url(#${id}-soft)`}>
         <path d="M120 50 C 92 50 70 72 70 100 C 70 142 120 192 120 192 C 120 192 170 142 170 100 C 170 72 148 50 120 50 Z" fill={`url(#${id}-base)`} />
@@ -58,13 +88,13 @@ function NegotiateArt() {
       <g filter={`url(#${id}-soft)`} transform="translate(56 64) rotate(-14 60 60)">
         <ellipse cx="60" cy="60" rx="55" ry="55" fill={`url(#${id}-base)`} />
         <ellipse cx="60" cy="60" rx="55" ry="55" fill={`url(#${id}-hi)`} opacity="0.6" />
-        <ellipse cx="60" cy="60" rx="38" ry="38" fill="none" stroke="#9a9a9a" strokeWidth="2" opacity="0.55" />
+        <ellipse cx="60" cy="60" rx="38" ry="38" fill="none" style={stroke.line} strokeWidth="2" opacity="0.55" />
       </g>
       {/* Front coin */}
       <g filter={`url(#${id}-soft)`} transform="translate(104 100) rotate(10 60 60)">
         <ellipse cx="60" cy="60" rx="60" ry="60" fill={`url(#${id}-base)`} />
         <ellipse cx="60" cy="60" rx="60" ry="60" fill={`url(#${id}-hi)`} opacity="0.7" />
-        <text x="60" y="72" textAnchor="middle" fontSize="34" fontWeight="800" fill="#7a7a7a">₣</text>
+        <text x="60" y="72" textAnchor="middle" fontSize="34" fontWeight="800" style={fill.glyph}>₣</text>
       </g>
     </svg>
   );
@@ -78,15 +108,15 @@ function PayArt() {
       <g filter={`url(#${id}-soft)`} transform="translate(80 32) rotate(-5 40 88)">
         <rect x="0" y="0" width="80" height="176" rx="16" fill={`url(#${id}-base)`} />
         <rect x="0" y="0" width="80" height="176" rx="16" fill={`url(#${id}-hi)`} opacity="0.55" />
-        <rect x="6" y="14" width="68" height="148" rx="8" fill="#d4d4d4" />
-        <rect x="14" y="22" width="50" height="3" rx="1.5" fill="#a0a0a0" opacity="0.7" />
-        <rect x="14" y="36" width="50" height="6" rx="3" fill="#8c8c8c" />
-        <rect x="14" y="48" width="36" height="4" rx="2" fill="#a8a8a8" />
-        <circle cx="40" cy="92" r="22" fill="#ffffff" />
+        <rect x="6" y="14" width="68" height="148" rx="8" style={fill.screen} />
+        <rect x="14" y="22" width="50" height="3" rx="1.5" style={fill.line} opacity="0.7" />
+        <rect x="14" y="36" width="50" height="6" rx="3" style={fill.chip} />
+        <rect x="14" y="48" width="36" height="4" rx="2" style={fill.line} />
+        <circle cx="40" cy="92" r="22" style={fill.highlight} />
         <circle cx="40" cy="92" r="22" fill={`url(#${id}-hi)`} opacity="0.7" />
-        <text x="40" y="100" textAnchor="middle" fontSize="20" fontWeight="800" fill="#7a7a7a">$</text>
-        <rect x="14" y="128" width="50" height="20" rx="10" fill="#9c9c9c" />
-        <text x="39" y="142" textAnchor="middle" fontSize="9" fontWeight="700" fill="#fafafa">PAY</text>
+        <text x="40" y="100" textAnchor="middle" fontSize="20" fontWeight="800" style={fill.glyph}>$</text>
+        <rect x="14" y="128" width="50" height="20" rx="10" style={fill.chip} />
+        <text x="39" y="142" textAnchor="middle" fontSize="9" fontWeight="700" style={fill.faceFrom}>PAY</text>
       </g>
     </svg>
   );
@@ -126,9 +156,8 @@ function ClayTile({ children, className = "" }: { children: ReactNode; className
     <span
       className={`flex items-center justify-center rounded-2xl ${className}`}
       style={{
-        background: "linear-gradient(to bottom, #fafafa, #e1e1e1)",
-        boxShadow:
-          "0 12px 24px -10px rgba(0,0,0,0.18), inset 0 1px 2px rgba(255,255,255,0.9), inset 0 -2px 2px rgba(0,0,0,0.05)",
+        background: "linear-gradient(to bottom, var(--art-tile-from), var(--art-tile-to))",
+        boxShadow: "var(--art-tile-shadow)",
       }}
     >
       {children}
@@ -140,7 +169,7 @@ function ClayTile({ children, className = "" }: { children: ReactNode; className
 
 function Badge({ children }: { children: ReactNode }) {
   return (
-    <p className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-muted-foreground sm:text-[11px]">
+    <p className="inline-flex items-center gap-2 type-badge">
       <span className="h-px w-6 bg-muted-foreground/40" />
       {children}
     </p>
@@ -155,10 +184,10 @@ export default function Features() {
       <div className="mx-auto max-w-7xl px-6">
         {/* Intro */}
         <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+          <p className="type-eyebrow">
             Built for the trip
           </p>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-[-0.02em] text-muted-foreground sm:text-4xl lg:text-5xl">
+          <h2 className="mt-3 text-balance text-3xl font-bold tracking-[-0.02em] text-heading sm:text-4xl lg:text-5xl">
             Everything you need, on your terms
           </h2>
           <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">

@@ -146,7 +146,7 @@ function DriverPhone() {
                       <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
                     </span>
-                    <span className="text-xs font-bold uppercase tracking-wider text-primary">
+                    <span className="type-eyebrow">
                       Online
                     </span>
                   </div>
@@ -190,7 +190,7 @@ function DriverPhone() {
                       <circle cx="140" cy="32" r="10" className="fill-primary/25" />
                       <circle cx="140" cy="32" r="5" className="fill-primary/40" />
                     </svg>
-                    <span className="absolute bottom-1 right-1.5 rounded-full bg-primary px-1.5 py-0.5 text-[8px] font-bold text-primary-foreground">
+                    <span className="absolute bottom-1 right-1.5 rounded-full bg-primary-strong px-1.5 py-0.5 text-[8px] font-bold text-primary-foreground">
                       2 zones hot
                     </span>
                   </div>
@@ -209,7 +209,7 @@ function DriverPhone() {
                     </div>
                     <div className="flex items-center justify-center gap-0.5 text-sm font-bold text-foreground">
                       4.9
-                      <svg viewBox="0 0 24 24" fill="#f59e0b" className="h-3 w-3" aria-hidden>
+                      <svg viewBox="0 0 24 24" style={{ fill: "var(--warning)" }} className="h-3 w-3" aria-hidden>
                         <path d="M12 2 L14.4 8.6 L21 9 L16 13.6 L17.5 20 L12 16.5 L6.5 20 L8 13.6 L3 9 L9.6 8.6 Z" />
                       </svg>
                     </div>
@@ -231,7 +231,7 @@ export default function Drivers() {
     <section id="drivers" className="relative py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
+          <p className="type-eyebrow">
             For Drivers
           </p>
           <h2 className="mt-3 text-balance text-3xl font-bold tracking-[-0.02em] text-foreground sm:text-4xl lg:text-5xl">
@@ -268,7 +268,7 @@ export default function Drivers() {
 
             <Link
               href="/drivers"
-              className="mt-10 inline-flex h-12 items-center justify-center rounded-2xl bg-primary px-7 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:scale-[1.02] active:scale-[0.98]"
+              className="mt-10 inline-flex h-12 items-center justify-center rounded-2xl bg-primary-strong px-7 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform hover:scale-[1.02] active:scale-[0.98]"
             >
               Become a Driver
             </Link>
@@ -287,7 +287,7 @@ export default function Drivers() {
                 key={v.name}
                 className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
               >
-                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary ring-1 ring-inset ring-primary/20 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/15 text-primary ring-1 ring-inset ring-primary/20 transition-colors group-hover:bg-primary-strong group-hover:text-primary-foreground">
                   {v.icon}
                 </span>
                 <span className="text-sm font-semibold text-foreground">
