@@ -5,7 +5,7 @@ import { WaitlistForm } from "./waitlist-form";
 export const metadata: Metadata = {
   title: "Join the Rides Waitlist",
   description:
-    "Be first in line when Rides launches in your area — as a rider or a driver.",
+    "Be first in line when Rides launches in your area as a rider or a driver.",
 };
 
 function WaitlistFallback() {
@@ -25,7 +25,10 @@ function WaitlistFallback() {
 export default function WaitlistPage() {
   return (
     <main className="relative flex-1 overflow-hidden">
-      <section className="mx-auto max-w-2xl px-5 py-12 sm:px-6 sm:py-16 lg:py-24">
+      {/* The page carries the site footer beneath it, so its own padding is the
+          only slack there is: at lg:py-24 the document came to 894px and any
+          laptop under that scrolled. Trimmed to fit a 800px viewport. */}
+      <section className="mx-auto max-w-2xl px-5 py-8 sm:px-6 sm:py-10 lg:py-12">
         <Suspense fallback={<WaitlistFallback />}>
           <WaitlistForm />
         </Suspense>

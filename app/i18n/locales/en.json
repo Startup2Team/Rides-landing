@@ -2,11 +2,14 @@
   "nav": {
     "home": "Home",
     "features": "Features",
+    "company": "Company",
     "howItWorks": "How It Works",
     "drivers": "Drivers",
     "about": "About",
     "contact": "Contact",
-    "download": "Download App"
+    "download": "Download App",
+    "getApp": "Get App",
+    "careers": "Careers"
   },
   "hero": {
     "headlineLine1": "Your Journey. Your Choice.",
@@ -19,7 +22,7 @@
     "waitlistCta": "Join the Waitlist"
   },
   "footer": {
-    "tagline": "People-powered mobility and logistics — connecting riders, drivers, and communities across Africa and beyond.",
+    "tagline": "People-powered mobility and logistics, connecting riders, drivers, and communities across Africa and beyond.",
     "quote": "Driven by People, Powered by Choice",
     "product": "Product",
     "company": "Company",
@@ -186,11 +189,11 @@
     "nameLabel": "Your name",
     "emailLabel": "Your email",
     "messageLabel": "Enter your message",
-    "submit": "Submit now",
+    "submit": "Send",
     "sending": "Sending…",
     "sendAnother": "Send another",
     "successTitle": "Message received",
-    "successBody": "Thanks {name} — we've logged your message as {id}. We'll write back to {email}.",
+    "successBody": "Thanks {name}, we've got your message. We'll write back to {email}.",
     "errNameRequired": "Please enter your name.",
     "errEmailRequired": "Please enter your email.",
     "errEmailInvalid": "Enter a valid email address.",
@@ -201,7 +204,7 @@
   "waitlist": {
     "eyebrow": "Get early access",
     "heading": "Join the Rides waitlist",
-    "subheading": "Be first in line when Rides launches in your area — as a rider or a driver.",
+    "subheading": "Be first in line when Rides launches in your area as a rider or a driver.",
     "roleCustomerTitle": "I want a ride",
     "roleCustomerHint": "Get notified the moment Rides is live near you.",
     "roleDriverTitle": "I want to drive",
@@ -221,26 +224,985 @@
     "consentMarketingLabel": "Send me other Rides updates",
     "privacyNoteTemplate": "By joining the waitlist, you agree to our {privacyLink}.",
     "privacyLinkLabel": "Privacy Policy",
-    "turnstileUnavailable": "We couldn't load the verification check — continuing without it.",
+    "turnstileUnavailable": "We couldn't load the verification check, continuing without it.",
     "submit": "Join the waitlist",
     "submitting": "Joining…",
     "errNameRequired": "Please enter your name.",
     "errVehicleRequired": "Select your vehicle type.",
     "errTurnstileRequired": "Please complete the verification check.",
-    "err400": "We couldn't process that — please check your details and try again.",
+    "err400": "We couldn't process that. Please check your details and try again.",
     "err403": "We couldn't verify you're human. Please retry the check and try again.",
-    "err429": "Too many attempts — please wait a moment and try again.",
+    "err429": "Too many attempts. Please wait a moment and try again.",
     "genericErrorFallback": "Something went wrong. Please try again.",
     "successTitle": "You're on the list!",
-    "successBodyPhoneTemplate": "Thanks {name} — we'll text you the moment Rides launches in your area.",
-    "successBodyEmailTemplate": "Thanks {name} — we'll email you the moment Rides launches in your area.",
-    "successBodyNoContactTemplate": "Thanks {name} — we'll notify you when Rides launches in your area.",
+    "successBodyPhoneTemplate": "Thanks {name}, we'll text you the moment Rides launches in your area.",
+    "successBodyEmailTemplate": "Thanks {name}, we'll email you the moment Rides launches in your area.",
+    "successBodyNoContactTemplate": "Thanks {name}, we'll notify you when Rides launches in your area.",
     "successShareHeading": "Share your invite link",
     "successShareBody": "Share your personal link with friends and help Rides launch faster.",
-    "whatsappShareText": "I just joined the Rides waitlist — join me and let's get Rides to Rwanda faster: {link}",
+    "whatsappShareText": "I just joined the Rides waitlist, join me and let's get Rides to Rwanda faster: {link}",
     "whatsappButton": "Share on WhatsApp",
     "copyLink": "Copy link",
     "copied": "Copied!",
     "joinAnother": "Join with another number"
+  },
+  "features": {
+    "eyebrow": "Built for the trip",
+    "heading": "Everything you need, on your terms",
+    "intro": "Built around how Rwanda actually moves. Fair prices, the right vehicle, and full visibility from book to drop-off.",
+    "multiModalBadge": "Multi-modal",
+    "multiModalHeading": "Pick your ride.",
+    "multiModalBody": "A moto for a quick run. A cab for comfort. A hilux for rough roads. A fuso for a full haul. One app, four ways to move.",
+    "trackingBadge": "Real-time",
+    "trackingHeading": "Eyes on every trip.",
+    "trackingBody": "Follow your driver on the map as they approach. Share the live trip with anyone you trust.",
+    "pricingBadge": "Fair pricing",
+    "pricingHeading": "Name your price.",
+    "pricingBody": "See the suggested fare, send a counter-offer. No surge surprises.",
+    "payBadge": "Mobile money",
+    "payHeading": "Pay your way.",
+    "payBody": "MoMo, Airtel, or cash to your driver. Same flow either way."
+  },
+  "explore": {
+    "ridersHeading": "Booking a ride",
+    "tripHeading": "On your trip",
+    "offerHeading": "What you get",
+    "driversHeading": "For drivers",
+    "requirements": "Driver requirements"
+  },
+  "smartMobility": {
+    "eyebrow": "The platform",
+    "heading": "Built for real-time movement.",
+    "intro": "Live tracking, smarter matching, quick confirmations, and clear pricing. All running underneath your ride.",
+    "liveOperations": "Live operations",
+    "activeRides": "Active rides",
+    "inProgress": "In progress",
+    "onlineDrivers": "Online drivers",
+    "hotZones": "Hot zones",
+    "highDemand": "High demand",
+    "features": [
+      {
+        "title": "Live Tracking",
+        "description": "Track your driver in real time and know exactly when they'll arrive."
+      },
+      {
+        "title": "Smarter Matching",
+        "description": "Intelligent matching connects you with available drivers nearby for a faster, more reliable experience."
+      },
+      {
+        "title": "Quick Confirmations",
+        "description": "Most ride requests are confirmed within moments, getting you on the road sooner."
+      },
+      {
+        "title": "Clear Pricing",
+        "description": "See your fare before your trip starts for a simple and transparent booking experience."
+      }
+    ]
+  },
+  "howItWorks": {
+    "eyebrow": "How it works",
+    "heading": "From request to rating, in 5 steps.",
+    "intro": "Book, agree on a fair fare, ride, pay, rate. Every step on your terms.",
+    "stepLabel": "Step",
+    "steps": [
+      {
+        "title": "Book in Seconds",
+        "body": "Open the app, choose your preferred vehicle, and complete your booking in just a few taps."
+      },
+      {
+        "title": "Driver Confirmed",
+        "body": "Your request is securely matched with available drivers. Once accepted, you can track your driver in real time."
+      },
+      {
+        "title": "Confirm Your Fare",
+        "body": "Review the fare before your trip begins and confirm your booking with confidence."
+      },
+      {
+        "title": "Track Every Mile",
+        "body": "Follow your driver in real time and share your trip with trusted contacts for added peace of mind."
+      },
+      {
+        "title": "Rate Your Experience",
+        "body": "Share your feedback by rating your trip to help maintain a trusted community."
+      }
+    ]
+  },
+  "chatbot": {
+    "assistantName": "Rides Assistant",
+    "openLabel": "Open chat with Rides",
+    "closeLabel": "Close chat",
+    "chatLabel": "Chat with Rides",
+    "inputPlaceholder": "Ask me anything…",
+    "flows": {
+      "welcome": {
+        "reply": [
+          "Hey there! Welcome to Rides.\n\nI'm your smart assistant ask me anything about booking rides, becoming a driver, payments, or how Rides works across Rwanda."
+        ],
+        "next": [
+          {
+            "label": "Become a driver",
+            "flow": "driver"
+          },
+          {
+            "label": "How payments work",
+            "flow": "payments"
+          },
+          {
+            "label": "Negotiations",
+            "flow": "negotiation"
+          },
+          {
+            "label": "Where you operate",
+            "flow": "locations"
+          },
+          {
+            "label": "Ride issue",
+            "flow": "ride-issue"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      },
+      "driver": {
+        "reply": [
+          "Great, drivers are how Rides scales. Here's what you need:",
+          "• Valid Rwandan driver licence\n• Vehicle (Moto, Cab, Hilux, or Fuso)\n• SONARWA insurance + police authorisation\n• MTN MoMo or Airtel Money for payouts",
+          {
+            "body": "Drop your details on the contact form, we usually reply within 48h.",
+            "links": [
+              {
+                "label": "Driver application",
+                "href": "/contact"
+              },
+              {
+                "label": "Driver page",
+                "href": "/drivers"
+              }
+            ]
+          }
+        ],
+        "next": [
+          {
+            "label": "How payments work",
+            "flow": "payments"
+          },
+          {
+            "label": "Where you operate",
+            "flow": "locations"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      },
+      "negotiation": {
+        "reply": [
+          "Rides is the only platform in Rwanda where rider and driver agree on the fare together.",
+          "1. Rider sees a suggested fare and makes an offer\n2. Driver accepts, counter-offers, or passes\n3. Up to 4 rounds, then both settle or walk away",
+          {
+            "body": "Average uplift on first offer is ~18%. Every fare is logged.",
+            "links": [
+              {
+                "label": "See how it works",
+                "href": "/how-it-works"
+              }
+            ]
+          }
+        ],
+        "next": [
+          {
+            "label": "How payments work",
+            "flow": "payments"
+          },
+          {
+            "label": "Become a driver",
+            "flow": "driver"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      },
+      "locations": {
+        "reply": [
+          "We're live across all of Kigali: Gasabo, Kicukiro, and Nyarugenge.",
+          "Musanze is in pilot, and Huye launches Q3 2026.",
+          "Want Rides in your area? Let us know 👇"
+        ],
+        "next": [
+          {
+            "label": "Become a driver",
+            "flow": "driver"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      },
+      "payments": {
+        "reply": [
+          "We accept MTN MoMo, Airtel Money, and cash on every ride.",
+          "Drivers are paid out twice daily (06:00 and 17:00) straight to their wallet. Rides takes 12–18% commission depending on vehicle.",
+          "All payments are auditable in the driver app."
+        ],
+        "next": [
+          {
+            "label": "Negotiations",
+            "flow": "negotiation"
+          },
+          {
+            "label": "Ride issue",
+            "flow": "ride-issue"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      },
+      "ride-issue": {
+        "reply": [
+          "Sorry to hear that. We treat ride issues as priority, average response under 12 hours.",
+          {
+            "body": "File the details on the contact form under 'Complaint' category.",
+            "links": [
+              {
+                "label": "File a complaint",
+                "href": "/contact"
+              },
+              {
+                "label": "WhatsApp support",
+                "href": "https://wa.me/250788000000",
+                "external": true
+              }
+            ]
+          }
+        ],
+        "next": [
+          {
+            "label": "How payments work",
+            "flow": "payments"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      },
+      "complaint": {
+        "reply": [
+          "Sorry about that. The fastest way to get help is the contact form, average reply under 12 hours.",
+          {
+            "body": "Or reach us instantly on WhatsApp:",
+            "links": [
+              {
+                "label": "Contact form",
+                "href": "/contact"
+              },
+              {
+                "label": "WhatsApp",
+                "href": "https://wa.me/250788000000",
+                "external": true
+              }
+            ]
+          }
+        ],
+        "next": [
+          {
+            "label": "Ride issue",
+            "flow": "ride-issue"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      },
+      "human": {
+        "reply": [
+          "Want to talk to a real person? Here's the fastest way:",
+          {
+            "body": "WhatsApp is quickest during business hours (Mon–Sat · 08:00–20:00). Contact form is best for anything that needs a paper trail.",
+            "links": [
+              {
+                "label": "WhatsApp",
+                "href": "https://wa.me/250788000000",
+                "external": true
+              },
+              {
+                "label": "Contact form",
+                "href": "/contact"
+              },
+              {
+                "label": "Call support",
+                "href": "tel:+250788000000",
+                "external": true
+              }
+            ]
+          }
+        ],
+        "next": [
+          {
+            "label": "Back to start",
+            "flow": "welcome"
+          }
+        ]
+      },
+      "no-match": {
+        "reply": [
+          "Not feeling well Lol 😂\n\nTry asking me about rides, drivers, payments, or how Rides works across Rwanda!"
+        ],
+        "next": [
+          {
+            "label": "Become a driver",
+            "flow": "driver"
+          },
+          {
+            "label": "How payments work",
+            "flow": "payments"
+          },
+          {
+            "label": "Negotiations",
+            "flow": "negotiation"
+          },
+          {
+            "label": "Where you operate",
+            "flow": "locations"
+          },
+          {
+            "label": "Talk to a human",
+            "flow": "human"
+          }
+        ]
+      }
+    }
+  },
+  "deviceMockup": {
+    "comingSoon": "Coming soon",
+    "sampleDate": "Wednesday, 25 June",
+    "driverArrived": "Your driver is here!",
+    "driverWaiting": "Jean is waiting outside. Make it quick!"
+  },
+  "common": {
+    "savePdf": "Save as PDF",
+    "printAriaLabel": "Print or save this page as a PDF",
+    "selectLanguage": "Select language",
+    "fleetAlt": "Our full fleet: sedan, moto with driver and passenger, pickup, and cargo truck",
+    "driversHeroAlt": "3D illustration of Africa with the four Rides vehicles (moto, cab, hilux and fuso) positioned around a central destination pin",
+    "rideHeroAlt": "A Rides moto rider and their passenger, both helmeted, on an open road outside Kigali"
+  },
+  "privacy": {
+    "effectiveDateLabel": "June 11, 2026",
+    "sections": [
+      {
+        "id": "introduction",
+        "num": "",
+        "title": "Introduction",
+        "content": [
+          {
+            "kind": "text",
+            "value": "This Privacy Policy is designed to help you understand how {company} and its related subsidiaries and affiliates, including {website} (\"we\", \"us\" or \"our\") collects, uses, shares, and protects your personal data when you use our mobile application, website, and related services. We value your privacy, and we will not share your personal information with third parties except as described in this Privacy Policy without your consent."
+          },
+          {
+            "kind": "text",
+            "value": "By using our platforms, you agree to the practices described in this policy. If you do not agree, please do not use our websites, mobile applications, or provide us with your information."
+          }
+        ]
+      },
+      {
+        "id": "coverage",
+        "num": "",
+        "title": "What This Policy Covers",
+        "content": [
+          {
+            "kind": "text",
+            "value": "This Privacy Policy applies to our collection, use and sharing of your personal information:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "When you visit our website at {website} and its related sites and mobile applications",
+              "When you receive our communications or participate in our online or offline activities or events",
+              "When you fill out an application for admission or subscription to our mobile applications",
+              "Information we obtain from third parties such as resellers, database vendors, content publishers and suppliers"
+            ]
+          },
+          {
+            "kind": "text",
+            "value": "This Privacy Policy applies only to information gathered on and through the Site or mobile application and does not apply to any other websites not owned or operated by {company}."
+          }
+        ]
+      },
+      {
+        "id": "who-we-are",
+        "num": "1",
+        "title": "Who We Are",
+        "content": [
+          {
+            "kind": "text",
+            "value": "{company} is a technology company operating a ride-hailing and logistics platform as well as other technology-based solutions and applications in Rwanda."
+          },
+          {
+            "kind": "text",
+            "value": "We act as a data controller for personal data collected through the platform."
+          }
+        ]
+      },
+      {
+        "id": "legal-framework",
+        "num": "2",
+        "title": "Legal Framework",
+        "content": [
+          {
+            "kind": "text",
+            "value": "We comply with:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Rwanda Law No. 058/2021 relating to the protection of personal data and privacy",
+              "General Data Protection Regulation (GDPR) where applicable",
+              "Other applicable transport and digital service regulations"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "information-we-collect",
+        "num": "3",
+        "title": "Information We Collect",
+        "content": [
+          {
+            "kind": "sub",
+            "title": "3.1  Personal Information",
+            "bullets": [
+              "Full name",
+              "Phone number and Mobile money number",
+              "Email address",
+              "Profile photo",
+              "National ID or passport (for drivers)",
+              "Address details"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "3.2  Location Data",
+            "bullets": [
+              "Real-time GPS location while accessing the mobile application",
+              "Pickup and drop-off locations",
+              "Route history (for safety and service improvement)"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "3.3  Ride Information",
+            "bullets": [
+              "Trip history",
+              "Payment details (processed via third-party providers)",
+              "Ratings and feedback"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "3.4  Device and Technical Data",
+            "bullets": [
+              "Device type and operating system",
+              "IP address",
+              "App usage data and crash logs"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "3.5  Driver-Specific Data",
+            "bullets": [
+              "Driving licence details and photo",
+              "Vehicle registration document(s) and photo(s)",
+              "Insurance certificate(s) and photo(s)",
+              "Momo code number and mobile money phone number",
+              "Background verification data (if applicable)",
+              "Transportation service permit details and photo (if applicable)",
+              "Picture(s) of the vehicle(s)"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "3.6  Feedback and Correspondence",
+            "bullets": [
+              "Information you provide when requesting support, responding to surveys, or corresponding with us"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "3.7  Information From Third Parties",
+            "bullets": [
+              "Additional information from third-party sources such as service providers, vendors, social media sites, and advertising agencies to provide you with more relevant information about our services"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "how-we-use",
+        "num": "4",
+        "title": "How We Use Your Data",
+        "content": [
+          {
+            "kind": "bullets",
+            "items": [
+              "Connect riders and drivers",
+              "Provide, maintain and improve the Site and mobile applications",
+              "Process and complete trips",
+              "Process payments and payouts",
+              "Improve platform safety and performance",
+              "Provide customer support",
+              "Detect fraud and prevent misuse",
+              "Comply with legal obligations",
+              "Send important service updates",
+              "Better understand your needs and interests, and personalise your experience",
+              "Process applications submitted through the Site and mobile applications",
+              "Perform website analytics and database management services",
+              "Manage and serve interest-based advertising on our platforms and trusted third-party sites",
+              "Investigate or prevent violations of the law or your agreements with us",
+              "Protect the rights, privacy, safety or property of you, us, or others"
+            ]
+          },
+          {
+            "kind": "text",
+            "value": "We do not sell personal data."
+          }
+        ]
+      },
+      {
+        "id": "legal-basis",
+        "num": "5",
+        "title": "Legal Basis for Processing",
+        "content": [
+          {
+            "kind": "text",
+            "value": "We process data based on:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Contract necessity: to provide ride and payment services",
+              "Legal obligations: tax and transport compliance",
+              "Legitimate interest: fraud prevention, safety, and analytics",
+              "Consent: marketing communications and optional features"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-sharing",
+        "num": "6",
+        "title": "Data Sharing",
+        "content": [
+          {
+            "kind": "text",
+            "value": "We do not share your personal information with third parties without your consent, except in the following circumstances:"
+          },
+          {
+            "kind": "sub",
+            "title": "Drivers, Riders & Service Providers",
+            "bullets": [
+              "Name and pickup/drop-off location",
+              "Trip status and contact information (masked where possible)",
+              "Payment details including MomoPay code and mobile money numbers"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "{company} Affiliates",
+            "bullets": [
+              "We may share your information with {company}'s affiliates and related organisations for use consistent with this Privacy Policy"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "Business Partners",
+            "bullets": [
+              "Partners who offer a service to you jointly with us, a list is available upon request"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "Legal, Safety & Compliance",
+            "bullets": [
+              "Government or law enforcement officials for fraud prevention and legal compliance",
+              "Where permitted by law in connection with a legal investigation",
+              "To protect, investigate, and deter against fraudulent, harmful, or illegal activity"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "Business Transfers",
+            "bullets": [
+              "In connection with a merger, acquisition, reorganisation, or sale of assets, or in the event of bankruptcy"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-retention",
+        "num": "7",
+        "title": "Data Retention",
+        "content": [
+          {
+            "kind": "bullets",
+            "items": [
+              "Account data: retained while your account is active",
+              "Trip history: up to 5 years (legal and tax compliance)",
+              "Location data: limited retention for safety and dispute resolution",
+              "Marketing data: until consent is withdrawn"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "data-security",
+        "num": "8",
+        "title": "Data Security",
+        "content": [
+          {
+            "kind": "text",
+            "value": "We implement strong security measures including:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Encryption of sensitive data",
+              "Secure servers and cloud infrastructure",
+              "Access controls and authentication systems",
+              "Regular security audits"
+            ]
+          },
+          {
+            "kind": "text",
+            "value": "However, no system is 100% secure, and we cannot guarantee absolute security."
+          }
+        ]
+      },
+      {
+        "id": "your-rights",
+        "num": "9",
+        "title": "Your Rights (Rwanda + GDPR)",
+        "content": [
+          {
+            "kind": "text",
+            "value": "Rwandan Law N°058/2021 of 13/10/2021 relating to the Protection of Personal Data and Privacy gives you the following rights:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Access: Request information about our processing and access your personal information",
+              "Correct: Update or correct inaccuracies in your personal information",
+              "Delete: Request deletion of your personal information",
+              "Transfer: Receive a machine-readable copy of your personal information",
+              "Restrict: Restrict the processing of your personal information",
+              "Object: Object to our reliance on legitimate interests as the basis of our processing"
+            ]
+          },
+          {
+            "kind": "text",
+            "value": "To exercise your rights, contact us at: {email}"
+          }
+        ]
+      },
+      {
+        "id": "location-data",
+        "num": "10",
+        "title": "Location Data",
+        "content": [
+          {
+            "kind": "text",
+            "value": "We use GPS location to:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Match riders with nearby drivers",
+              "Track trip progress",
+              "Improve safety and navigation"
+            ]
+          },
+          {
+            "kind": "text",
+            "value": "You can disable location access in your device settings, but core services may not function properly."
+          }
+        ]
+      },
+      {
+        "id": "childrens-privacy",
+        "num": "11",
+        "title": "Children's Privacy",
+        "content": [
+          {
+            "kind": "text",
+            "value": "The Site is not intended for use by anyone under the age of 18, nor do we knowingly collect or solicit personal information from anyone under the age of 18. If you are under 18, you should not attempt to use the Site or send any information about yourself to us."
+          }
+        ]
+      },
+      {
+        "id": "international-transfers",
+        "num": "12",
+        "title": "International Data Transfers",
+        "content": [
+          {
+            "kind": "text",
+            "value": "Your data may be stored or processed on servers outside Rwanda. When this occurs, we ensure appropriate safeguards in line with GDPR standards."
+          }
+        ]
+      },
+      {
+        "id": "third-party-services",
+        "num": "13",
+        "title": "Third-Party Services",
+        "content": [
+          {
+            "kind": "text",
+            "value": "We may use third-party providers for:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Payments",
+              "Maps and navigation",
+              "Analytics",
+              "Messaging services",
+              "Hosting services"
+            ]
+          },
+          {
+            "kind": "text",
+            "value": "These providers have their own privacy policies, which we encourage you to review."
+          }
+        ]
+      },
+      {
+        "id": "cookie-policy",
+        "num": "14",
+        "title": "Cookie Policy",
+        "content": [
+          {
+            "kind": "text",
+            "value": "Cookies are small data files placed on your device when you visit a website. We use several different kinds of cookies:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Strictly necessary cookies: required for the Site to function and cannot be switched off",
+              "Performance cookies: allow us to count visits and traffic sources to measure and improve performance",
+              "Functional cookies: enable enhanced functionality and personalisation",
+              "Third-party cookies: from analytics providers (e.g. Google Analytics) for demographic information and usage insights"
+            ]
+          },
+          {
+            "kind": "text",
+            "value": "We may also use web beacons (sometimes called \"tracking pixels\" or \"clear gifs\"), tiny graphic files that enable us to recognise when someone has visited our Site. If you sign up to receive our emails, we may use cookies in conjunction with those emails."
+          },
+          {
+            "kind": "text",
+            "value": "Most browsers let you remove or reject cookies. To do this, follow the instructions in your browser settings."
+          }
+        ]
+      },
+      {
+        "id": "other-information",
+        "num": "15",
+        "title": "Other Important Information",
+        "content": [
+          {
+            "kind": "sub",
+            "title": "Third-Party Sites and Services",
+            "bullets": [
+              "The Site may contain links to other websites operated by third parties",
+              "We are not responsible for their actions or privacy practices",
+              "We encourage you to read their privacy policies to learn more"
+            ]
+          },
+          {
+            "kind": "sub",
+            "title": "Security",
+            "bullets": [
+              "We take organisational, technical, and physical measures to protect your personal information",
+              "Security risk is inherent in all internet and information technologies",
+              "We cannot guarantee the absolute security of your personal information"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "changes",
+        "num": "16",
+        "title": "Changes to This Policy",
+        "content": [
+          {
+            "kind": "bullets",
+            "items": [
+              "We may update this Privacy Policy from time to time",
+              "Users will be notified of significant changes via the app or email",
+              "Continued use of the app means acceptance of updates"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contact",
+        "num": "17",
+        "title": "Contact Us",
+        "content": [
+          {
+            "kind": "text",
+            "value": "If you have questions or requests regarding your data:"
+          },
+          {
+            "kind": "bullets",
+            "items": [
+              "Company: {company}",
+              "Email: {email}",
+              "Location: Kigali, Rwanda"
+            ]
+          }
+        ]
+      }
+    ],
+    "rights": [
+      {
+        "title": "Access",
+        "desc": "Request information about our processing and access your personal information"
+      },
+      {
+        "title": "Correct",
+        "desc": "Update or correct inaccuracies in your personal information"
+      },
+      {
+        "title": "Delete",
+        "desc": "Request deletion of your personal information"
+      },
+      {
+        "title": "Transfer",
+        "desc": "Receive a machine-readable copy of your personal information"
+      },
+      {
+        "title": "Restrict",
+        "desc": "Restrict the processing of your personal information"
+      },
+      {
+        "title": "Object",
+        "desc": "Object to our reliance on legitimate interests as the basis of our processing"
+      }
+    ],
+    "security": [
+      {
+        "title": "Encryption",
+        "desc": "Sensitive data encrypted"
+      },
+      {
+        "title": "Secure Servers",
+        "desc": "Cloud infrastructure"
+      },
+      {
+        "title": "Access Control",
+        "desc": "Authentication systems"
+      },
+      {
+        "title": "Security Audits",
+        "desc": "Regular assessments"
+      }
+    ],
+    "commitments": [
+      {
+        "title": "We never sell your data",
+        "body": "Your personal information is never sold to advertisers or third parties."
+      },
+      {
+        "title": "GDPR & Rwanda Law N°058/2021",
+        "body": "We comply with both local Rwandan data law and EU GDPR standards."
+      },
+      {
+        "title": "You control your data",
+        "body": "Access, correct, delete, or export your data at any time on request."
+      }
+    ]
+  },
+  "careers": {
+    "eyebrow": "Careers",
+    "heading": "Developer Internship Program 2026",
+    "tagline": "Build. Learn. Innovate. Grow.",
+    "intro": "Travelis Rwanda is looking for passionate and motivated technology enthusiasts to join our Developer Internship Program 2026.",
+    "introBody": "This is an opportunity to gain real world experience, work on practical technology projects, collaborate with other developers, and strengthen the skills you need to build a career in technology.",
+    "startsLabel": "Starts",
+    "startsValue": "13 September 2026",
+    "locationLabel": "Location",
+    "locationValue": "Onsite, Kigali, Rwanda",
+    "deadlineLabel": "Applications close",
+    "deadlineValue": "10 September 2026",
+    "sectionAbout": "About you",
+    "sectionWork": "Your work",
+    "sectionAvailability": "Availability",
+    "nameLabel": "Full name",
+    "emailLabel": "Email address",
+    "phoneLabel": "Phone / WhatsApp",
+    "cityLabel": "Current city or district",
+    "workRightLabel": "Right to work in Rwanda",
+    "workRightCitizen": "Rwandan citizen",
+    "workRightPermit": "Hold a residence or work permit",
+    "workRightNeither": "Neither",
+    "statusLabel": "Current status",
+    "statusStudent": "Student",
+    "statusGraduate": "Graduate",
+    "statusEmployed": "Employed",
+    "institutionLabel": "University or institution",
+    "graduationLabel": "Graduation year",
+    "positionLabel": "Position you are applying for",
+    "roleFullStack": "Full-Stack Developer",
+    "roleBackend": "Backend Developer",
+    "roleFrontend": "Frontend Developer",
+    "roleDevOps": "DevOps Engineer",
+    "roleGame": "Game Developer",
+    "techLabel": "Languages, frameworks and technologies you know",
+    "projectUrlLabel": "Link to a project you are proud of",
+    "projectBodyLabel": "What you built, the technologies you used, and your contribution",
+    "githubLabel": "GitHub profile URL",
+    "linkedinLabel": "LinkedIn profile URL",
+    "portfolioLabel": "Portfolio or personal site",
+    "cvLabel": "CV link (Google Drive, Dropbox)",
+    "availabilityLabel": "Can you start on 13 September 2026, onsite in Rwanda?",
+    "availabilityHelp": "The internship runs onsite in Rwanda during the required working hours.",
+    "availYes": "Yes, I am available",
+    "availNo": "No, I am not available",
+    "sourceLabel": "How did you hear about this programme?",
+    "sourceSelect": "Select an option",
+    "sourceFacebook": "Facebook",
+    "sourceInstagram": "Instagram",
+    "sourceLinkedin": "LinkedIn",
+    "sourceUniversity": "University or lecturer",
+    "sourceFriend": "Friend or colleague",
+    "sourceOther": "Other",
+    "consentLabel": "I agree that Travelis Rwanda may store and process the information above to assess my application.",
+    "consentLink": "Privacy Policy",
+    "optional": "Optional",
+    "submit": "Submit application",
+    "sending": "Sending…",
+    "successTitle": "Application received",
+    "successBody": "Thanks {name}, we have your application. We will write to {email} if we would like to take it further.",
+    "applyAnother": "Submit another application",
+    "errRequired": "This field is required.",
+    "errEmail": "Enter a valid email address.",
+    "errUrl": "Enter a full URL, starting with https://",
+    "errConsent": "Please agree before submitting.",
+    "errNotOpen": "Applications are not open yet. Please try again shortly, or write to us from the contact page.",
+    "errGeneric": "Something went wrong. Please try again.",
+    "startApplication": "Start application",
+    "next": "Next",
+    "back": "Back",
+    "stepOf": "Question {current} of {total}",
+    "reviewTitle": "Review and submit",
+    "reviewIntro": "Check your answers before sending. You can go back to change anything.",
+    "notAnswered": "Not answered"
   }
 }

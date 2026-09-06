@@ -13,9 +13,37 @@ import en from "./locales/en.json";
 import fr from "./locales/fr.json";
 import rw from "./locales/rw.json";
 
-const dictionaries = { en, fr, rw } satisfies Record<Locale, typeof en>;
+/* English is the source of truth for both STRUCTURE and fallback text.
+   fr/rw carry only translated copy — anything they omit falls through to en.
+
+   This matters because these files also hold structural values the app depends
+   on: section ids used as anchors, `kind` discriminants, chatbot flow ids and
+   hrefs. Those live in en.json only, so a translator editing fr/rw physically
+   cannot break routing or rendering, and a missing translation degrades to
+   English instead of a blank. */
+function mergeOverEn<T>(base: T, override: unknown): T {
+  if (Array.isArray(base)) {
+    const ov = Array.isArray(override) ? override : [];
+    return base.map((item, i) => mergeOverEn(item, ov[i])) as unknown as T;
+  }
+  if (base !== null && typeof base === "object") {
+    const ov = (override ?? {}) as Record<string, unknown>;
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(base as Record<string, unknown>)) {
+      out[k] = mergeOverEn(v, ov[k]);
+    }
+    return out as T;
+  }
+  return (typeof override === "string" && override !== "" ? override : base) as T;
+}
 
 export type Dictionary = typeof en;
+
+const dictionaries: Record<Locale, Dictionary> = {
+  en,
+  fr: mergeOverEn(en, fr),
+  rw: mergeOverEn(en, rw),
+};
 
 interface I18nContextValue {
   locale: Locale;

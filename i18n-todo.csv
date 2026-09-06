@@ -1,0 +1,48 @@
+section,key,english,fr,rw
+nav,nav.contact,Contact,,Twandikire
+hero,hero.appStoreLabel,App Store,,
+hero,hero.googlePlayLabel,Google Play,,
+waitlist,waitlist.vehicleRifani,Rifani (tuk-tuk),,Rifani (tuktuk)
+faq,faq.eyebrow,FAQ,,
+faq,faq.intro,"What Rides is, the vehicles we run, and how every driver is vetted before their first trip. Still not finding it?",,
+features,features.payBadge,Mobile money,,
+smartMobility,smartMobility.inProgress,In progress,,
+smartMobility,smartMobility.highDemand,High demand,,
+finalCta,finalCta.ui.cityCountry,"Kigali, Rwanda",,"Kigali, u Rwanda"
+finalCta,finalCta.ui.continueWith,Continue with Moto,,
+finalCta,finalCta.ui.notifications,Notifications,,Ubutumwa
+howItWorks,howItWorks.stepLabel,Step,,
+howItWorks,howItWorks.ui.cityCountry,"Kigali, Rwanda",,"Kigali, u Rwanda"
+howItWorks,howItWorks.ui.continueWith,Continue with Moto,,
+howItWorks,howItWorks.ui.pickup,"KG 98 Street, Kigali",,
+howItWorks,howItWorks.ui.dropoff,"Kimironko, Kigali, Rwanda",,
+howItWorks,howItWorks.ui.fromPlace,Kimironko Market,,
+howItWorks,howItWorks.ui.toPlace,Kigali Heights,,
+howItWorks,howItWorks.ui.acceptFare,"Accept 3,800 RWF",,
+howItWorks,howItWorks.ui.driverOnWay,Aiden is on the way,,
+howItWorks,howItWorks.ui.vehiclePlate,RAB 123 D · Toyota Hilux,,
+chatbot,chatbot.flows.welcome.reply.0,"Hey there! Welcome to Rides.
+
+I'm your smart assistant ask me anything about booking rides, becoming a driver, payments, or how Rides works across Rwanda.",,
+chatbot,chatbot.flows.ride-issue.reply.1.body,File the details on the contact form under 'Complaint' category.,,
+chatbot,chatbot.flows.complaint.reply.1.links.1.label,WhatsApp,,
+chatbot,chatbot.flows.human.reply.1.body,WhatsApp is quickest during business hours (Mon–Sat · 08:00–20:00). Contact form is best for anything that needs a paper trail.,,
+chatbot,chatbot.flows.human.reply.1.links.0.label,WhatsApp,,
+chatbot,chatbot.flows.no-match.reply.0,"Not feeling well Lol 😂
+
+Try asking me about rides, drivers, payments, or how Rides works across Rwanda!",,
+deviceMockup,deviceMockup.comingSoon,Coming soon,,
+deviceMockup,deviceMockup.sampleDate,"Wednesday, 25 June",,
+deviceMockup,deviceMockup.driverArrived,Your driver is here!,,
+deviceMockup,deviceMockup.driverWaiting,Jean is waiting outside. Make it quick!,,
+common,common.driversHeroAlt,"3D illustration of Africa with the four Rides vehicles — moto, cab, hilux and fuso — positioned around a central destination pin",,
+privacy,privacy.sections.0.title,Introduction,,Ijambo ry'ibanze
+privacy,privacy.sections.0.content.0.value,"This Privacy Policy is designed to help you understand how {company} and its related subsidiaries and affiliates, including {website} (""we"", ""us"" or ""our"") collects, uses, shares, and protects your personal data when you use our mobile application, website, and related services. We value your privacy, and we will not share your personal information with third parties except as described in this Privacy Policy without your consent.",,
+privacy,privacy.sections.1.content.1.items.0,When you visit our website at {website} and its related sites and mobile applications,,
+privacy,privacy.sections.1.content.2.value,This Privacy Policy applies only to information gathered on and through the Site or mobile application and does not apply to any other websites not owned or operated by {company}.,,
+privacy,privacy.sections.2.content.0.value,{company} is a technology company operating a ride-hailing and logistics platform as well as other technology-based solutions and applications in Rwanda.,,
+privacy,privacy.sections.7.content.2.title,{company} Affiliates,,
+privacy,privacy.sections.7.content.2.bullets.0,We may share your information with {company}'s affiliates and related organisations for use consistent with this Privacy Policy,,
+privacy,privacy.sections.10.content.2.value,"To exercise your rights, contact us at: {email}",,
+privacy,privacy.sections.18.content.1.items.0,Company: {company},,
+privacy,privacy.sections.18.content.1.items.1,Email: {email},,

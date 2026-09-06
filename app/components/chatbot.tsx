@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useSection } from "../i18n/context";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -24,135 +25,8 @@ type Flow = {
 
 // ── Flows ─────────────────────────────────────────────────────────────────────
 
-const FLOWS: Record<FlowId, Flow> = {
-  welcome: {
-    reply: [
-      "Hey there! Welcome to Rides.\n\nI'm your smart assistant ask me anything about booking rides, becoming a driver, payments, or how Rides works across Rwanda.",
-    ],
-    next: [
-      { label: "Become a driver", flow: "driver" },
-      { label: "How payments work", flow: "payments" },
-      { label: "Negotiations", flow: "negotiation" },
-      { label: "Where you operate", flow: "locations" },
-      { label: "Ride issue", flow: "ride-issue" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-  driver: {
-    reply: [
-      "Great — drivers are how Rides scales. Here's what you need:",
-      "• Valid Rwandan driver licence\n• Vehicle (Moto, Cab, Hilux, or Fuso)\n• SONARWA insurance + police authorisation\n• MTN MoMo or Airtel Money for payouts",
-      {
-        body: "Drop your details on the contact form — we usually reply within 48h.",
-        links: [
-          { label: "Driver application", href: "/contact" },
-          { label: "Driver page", href: "/drivers" },
-        ],
-      },
-    ],
-    next: [
-      { label: "How payments work", flow: "payments" },
-      { label: "Where you operate", flow: "locations" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-  negotiation: {
-    reply: [
-      "Rides is the only platform in Rwanda where rider and driver agree on the fare together.",
-      "1. Rider sees a suggested fare and makes an offer\n2. Driver accepts, counter-offers, or passes\n3. Up to 4 rounds — then both settle or walk away",
-      {
-        body: "Average uplift on first offer is ~18%. Every fare is logged.",
-        links: [{ label: "See how it works", href: "/#how-it-works" }],
-      },
-    ],
-    next: [
-      { label: "How payments work", flow: "payments" },
-      { label: "Become a driver", flow: "driver" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-  locations: {
-    reply: [
-      "We're live across all of Kigali — Gasabo, Kicukiro, and Nyarugenge.",
-      "Musanze is in pilot, and Huye launches Q3 2026.",
-      "Want Rides in your area? Let us know 👇",
-    ],
-    next: [
-      { label: "Become a driver", flow: "driver" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-  payments: {
-    reply: [
-      "We accept MTN MoMo, Airtel Money, and cash on every ride.",
-      "Drivers are paid out twice daily — 06:00 and 17:00 — straight to their wallet. Rides takes 12–18% commission depending on vehicle.",
-      "All payments are auditable in the driver app.",
-    ],
-    next: [
-      { label: "Negotiations", flow: "negotiation" },
-      { label: "Ride issue", flow: "ride-issue" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-  "ride-issue": {
-    reply: [
-      "Sorry to hear that. We treat ride issues as priority — average response under 12 hours.",
-      {
-        body: "File the details on the contact form under 'Complaint' category.",
-        links: [
-          { label: "File a complaint", href: "/contact" },
-          { label: "WhatsApp support", href: "https://wa.me/250788000000", external: true },
-        ],
-      },
-    ],
-    next: [
-      { label: "How payments work", flow: "payments" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-  complaint: {
-    reply: [
-      "Sorry about that. The fastest way to get help is the contact form — average reply under 12 hours.",
-      {
-        body: "Or reach us instantly on WhatsApp:",
-        links: [
-          { label: "Contact form", href: "/contact" },
-          { label: "WhatsApp", href: "https://wa.me/250788000000", external: true },
-        ],
-      },
-    ],
-    next: [
-      { label: "Ride issue", flow: "ride-issue" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-  human: {
-    reply: [
-      "Want to talk to a real person? Here's the fastest way:",
-      {
-        body: "WhatsApp is quickest during business hours (Mon–Sat · 08:00–20:00). Contact form is best for anything that needs a paper trail.",
-        links: [
-          { label: "WhatsApp", href: "https://wa.me/250788000000", external: true },
-          { label: "Contact form", href: "/contact" },
-          { label: "Call support", href: "tel:+250788000000", external: true },
-        ],
-      },
-    ],
-    next: [{ label: "Back to start", flow: "welcome" }],
-  },
-  "no-match": {
-    reply: [
-      "Not feeling well Lol 😂\n\nTry asking me about rides, drivers, payments, or how Rides works across Rwanda!",
-    ],
-    next: [
-      { label: "Become a driver", flow: "driver" },
-      { label: "How payments work", flow: "payments" },
-      { label: "Negotiations", flow: "negotiation" },
-      { label: "Where you operate", flow: "locations" },
-      { label: "Talk to a human", flow: "human" },
-    ],
-  },
-};
+/* Flow copy now lives in i18n (chatbot.flows) so it follows the picked
+   language. Shape is unchanged — see Flow / QuickReply above. */
 
 // ── Keyword matcher ───────────────────────────────────────────────────────────
 
@@ -185,6 +59,8 @@ function flowToMessages(flow: Flow): Message[] {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function Chatbot() {
+  const cb = useSection("chatbot");
+  const FLOWS = cb.flows as unknown as Record<FlowId, Flow>;
   const [open, setOpen] = useState(false);
   const [hasNew, setHasNew] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -267,7 +143,7 @@ export function Chatbot() {
       <button
         type="button"
         onClick={() => { setOpen((v) => !v); setHasNew(false); }}
-        aria-label={open ? "Close chat" : "Open chat with Rides"}
+        aria-label={open ? cb.closeLabel : cb.openLabel}
         className="fixed bottom-6 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-primary-strong text-primary-foreground shadow-2xl shadow-primary/40 transition-all duration-300 hover:scale-[1.05] active:scale-[0.95]"
       >
         {/* Close icon */}
@@ -290,7 +166,7 @@ export function Chatbot() {
       {/* ── Chat panel ──────────────────────────────────────────────────── */}
       <div
         role="dialog"
-        aria-label="Chat with Rides"
+        aria-label={cb.chatLabel}
         aria-hidden={!open}
         className={`fixed bottom-24 z-50 flex flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-2xl shadow-black/20 transition-all duration-300 ease-out inset-x-4 sm:inset-x-auto sm:right-6 sm:w-80 ${
           open ? "translate-y-0 scale-100 opacity-100" : "pointer-events-none translate-y-4 scale-95 opacity-0"
@@ -301,7 +177,7 @@ export function Chatbot() {
         <div className="flex items-center gap-3 bg-primary px-4 py-3">
           <img src="/ridelogo.png" alt="Rides" className="h-8 w-8 shrink-0 object-contain brightness-0 invert" />
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-white leading-none">Rides Assistant</p>
+            <p className="text-sm font-bold text-white leading-none">{cb.assistantName}</p>
           </div>
         </div>
 
@@ -341,16 +217,16 @@ export function Chatbot() {
           <input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask me anything…"
-            className="h-9 flex-1 rounded-xl border border-border bg-surface px-3 text-xs text-foreground outline-none transition-colors focus:border-primary"
+            placeholder={cb.inputPlaceholder}
+            className="h-11 flex-1 rounded-xl border border-border bg-surface px-3 text-sm text-foreground outline-none transition-colors focus:border-primary"
           />
           <button
             type="submit"
             disabled={!input.trim()}
             aria-label="Send"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/30 transition-transform hover:scale-105 active:scale-95 disabled:opacity-30 disabled:hover:scale-100"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-white shadow-md shadow-primary/30 transition-transform hover:scale-105 active:scale-95 disabled:opacity-30 disabled:hover:scale-100"
           >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-3.5 w-3.5" aria-hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden>
               <line x1="22" y1="2" x2="11" y2="13" />
               <polygon points="22 2 15 22 11 13 2 9 22 2" />
             </svg>

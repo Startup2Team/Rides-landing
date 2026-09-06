@@ -28,7 +28,6 @@ export function ContactForm() {
   const [message, setMessage] = useState("");
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [state, setState] = useState<State>("idle");
-  const [submittedId, setSubmittedId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const errors: Record<"name" | "email" | "message", string | null> = {
@@ -59,14 +58,13 @@ export function ContactForm() {
     setState("sending");
     setErrorMessage(null);
     try {
-      const receipt = await submitContact({
+      await submitContact({
         name: name.trim(),
         email: email.trim(),
         subject: deriveSubject(message),
         category: "General",
-        body: message.trim(),
+        message: message.trim(),
       });
-      setSubmittedId(receipt.id);
       setState("success");
     } catch (err) {
       setErrorMessage(err instanceof Error ? err.message : t("genericErrorFallback"));
@@ -79,7 +77,6 @@ export function ContactForm() {
     setEmail("");
     setMessage("");
     setTouched({});
-    setSubmittedId(null);
     setErrorMessage(null);
     setState("idle");
   }
@@ -92,17 +89,12 @@ export function ContactForm() {
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
-        <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-foreground">
+        <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-heading">
           {t("successTitle")}
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
           {renderTemplate(t("successBody"), {
             name: name.split(" ")[0],
-            id: (
-              <span className="font-mono text-xs font-semibold text-foreground">
-                {submittedId?.slice(0, 8)}
-              </span>
-            ),
             email: (
               <span className="font-semibold text-foreground">{email}</span>
             ),
@@ -184,7 +176,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={state === "sending"}
-          className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-primary-strong px-10 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-primary-strong sm:w-auto"
+          className="inline-flex h-12 w-full items-center justify-center rounded-full bg-primary-strong px-10 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:bg-primary-strong sm:w-auto"
         >
           {state === "sending" ? (
             <>

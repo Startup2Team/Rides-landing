@@ -265,7 +265,7 @@ export function WaitlistForm() {
             <polyline points="20 6 9 17 4 12" />
           </svg>
         </div>
-        <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-foreground">
+        <h3 className="mt-5 text-xl font-bold tracking-[-0.02em] text-heading">
           {t("successTitle")}
         </h3>
         <p className="mt-2 text-sm text-muted-foreground">
@@ -276,7 +276,7 @@ export function WaitlistForm() {
 
         {shareLink && whatsappHref ? (
           <div className="mt-6 rounded-xl border border-border bg-card p-5">
-            <h4 className="text-sm font-bold text-foreground">{t("successShareHeading")}</h4>
+            <h4 className="text-sm font-bold text-heading">{t("successShareHeading")}</h4>
             <p className="mt-1 text-xs text-muted-foreground">{t("successShareBody")}</p>
 
             <div className="mt-3 flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2">
@@ -331,7 +331,7 @@ export function WaitlistForm() {
             <span className="h-px w-8 bg-border" />
             {t("eyebrow")}
           </div>
-          <h1 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-foreground sm:text-4xl">
+          <h1 className="mt-4 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.03em] text-heading sm:text-4xl">
             {t("heading")}
           </h1>
           <p className="mt-3 max-w-xl text-pretty text-sm leading-relaxed text-muted-foreground">
@@ -345,7 +345,7 @@ export function WaitlistForm() {
             onClick={() => setRole("CUSTOMER")}
             className="rounded-2xl border border-border bg-card p-6 text-left transition-all hover:border-primary hover:shadow-md active:scale-[0.99]"
           >
-            <h3 className="text-lg font-bold tracking-tight text-foreground">
+            <h3 className="text-lg font-bold tracking-tight text-heading">
               {t("roleCustomerTitle")}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -357,7 +357,7 @@ export function WaitlistForm() {
             onClick={() => setRole("DRIVER")}
             className="rounded-2xl border border-border bg-card p-6 text-left transition-all hover:border-primary hover:shadow-md active:scale-[0.99]"
           >
-            <h3 className="text-lg font-bold tracking-tight text-foreground">
+            <h3 className="text-lg font-bold tracking-tight text-heading">
               {t("roleDriverTitle")}
             </h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
@@ -383,7 +383,7 @@ export function WaitlistForm() {
         {role === "CUSTOMER" ? t("roleCustomerTitle") : t("roleDriverTitle")}
       </button>
 
-      <h1 className="mt-4 text-balance text-2xl font-bold leading-[1.05] tracking-[-0.03em] text-foreground sm:text-3xl">
+      <h1 className="mt-4 text-balance text-2xl font-bold leading-[1.05] tracking-[-0.03em] text-heading sm:text-3xl">
         {t("heading")}
       </h1>
 

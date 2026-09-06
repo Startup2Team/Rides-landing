@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocale } from "../i18n/context";
 import type { Locale } from "../i18n/config";
+import { useSection } from "../i18n/context";
 
 /* ── Language metadata ───────────────────────────────────────────────────── */
 
@@ -19,6 +20,7 @@ const LANGUAGES: ReadonlyArray<{
 /* ── Component ───────────────────────────────────────────────────────────── */
 
 export function LanguageSwitcher() {
+  const c = useSection("common");
   const [open, setOpen] = useState(false);
   const { locale: current, setLocale } = useLocale();
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -72,7 +74,7 @@ export function LanguageSwitcher() {
 
       <div
         role="menu"
-        aria-label="Select language"
+        aria-label={c.selectLanguage}
         className={`absolute right-0 top-full z-50 mt-2 min-w-[200px] origin-top-right overflow-hidden rounded-xl border border-border bg-card shadow-xl shadow-foreground/5 transition-all duration-200 ease-out ${
           open
             ? "scale-100 opacity-100"
@@ -89,7 +91,7 @@ export function LanguageSwitcher() {
                   type="button"
                   role="menuitem"
                   onClick={() => selectLanguage(lang.code)}
-                  className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                  className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                     isActive
                       ? "bg-primary/10 text-primary"
                       : "text-foreground hover:bg-surface"
