@@ -1,5 +1,8 @@
+"use client";
+
 import type { ReactNode } from "react";
-import { CarIcon, FusoIcon, HiluxIcon, MotoIcon } from "./vehicle-icons";
+import Image from "next/image";
+import { useSection, useTranslations } from "../i18n/context";
 
 // ── Shared claymorphism filter / gradient defs ────────────────────────────────
 //
@@ -122,46 +125,48 @@ function PayArt() {
   );
 }
 
-function MultiModalArt({ size = "lg" }: { size?: "lg" | "sm" }) {
-  // Large variant — bigger tiles, more padding. Used in the hero card.
-  const tile =
-    size === "lg"
-      ? "h-20 w-20 sm:h-24 sm:w-24 lg:h-28 lg:w-28"
-      : "h-14 w-14 sm:h-16 sm:w-16";
-  const gap = size === "lg" ? "gap-5 sm:gap-6" : "gap-3";
-  const icon =
-    size === "lg"
-      ? "h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14"
-      : "h-7 w-7 sm:h-8 sm:w-8";
-  return (
-    <div className={`grid grid-cols-2 ${gap} text-foreground/80`}>
-      <ClayTile className={tile}>
-        <MotoIcon className={icon} />
-      </ClayTile>
-      <ClayTile className={tile}>
-        <CarIcon className={icon} />
-      </ClayTile>
-      <ClayTile className={tile}>
-        <HiluxIcon className={icon} />
-      </ClayTile>
-      <ClayTile className={tile}>
-        <FusoIcon className={icon} />
-      </ClayTile>
-    </div>
-  );
-}
+/* The five vehicle types the app dispatches, as photographs.
 
-function ClayTile({ children, className = "" }: { children: ReactNode; className?: string }) {
+   Alt text is deliberately borrowed from the `waitlist` namespace: it already
+   names every vehicle in all three locales ("Moto (motorcycle taxi)", "Rifani
+   (tuk-tuk)"…), so reusing it beats duplicating the same nouns into `features`
+   and letting the two drift.
+
+   Dimensions are the real asset sizes so next/image reserves the right box and
+   builds a correct srcset instead of guessing. */
+const VEHICLES = [
+  { src: "/images/vehicles/moto.png", w: 655, h: 653, key: "vehicleMoto" },
+  { src: "/images/vehicles/rifani.png", w: 450, h: 288, key: "vehicleRifani" },
+  { src: "/images/vehicles/cab.png", w: 258, h: 199, key: "vehicleCab" },
+  { src: "/images/vehicles/hilux.png", w: 355, h: 166, key: "vehicleHilux" },
+  { src: "/images/vehicles/fuso.png", w: 474, h: 269, key: "vehicleFuso" },
+] as const;
+
+function MultiModalArt({ size = "lg" }: { size?: "lg" | "sm" }) {
+  const tv = useTranslations("waitlist");
+  const gap = size === "lg" ? "gap-3 sm:gap-4" : "gap-2";
   return (
-    <span
-      className={`flex items-center justify-center rounded-2xl ${className}`}
-      style={{
-        background: "linear-gradient(to bottom, var(--art-tile-from), var(--art-tile-to))",
-        boxShadow: "var(--art-tile-shadow)",
-      }}
-    >
-      {children}
-    </span>
+    <div className={`grid grid-cols-6 ${gap}`}>
+      {VEHICLES.map((v, i) => (
+        <div
+          key={v.src}
+          /* Six columns so both rows fill the width evenly: three across the
+             top at two columns each, two along the bottom at three each. No
+             tile behind them — a cut-out photograph already reads as an object,
+             so a surface would only add a frame. */
+          className={i < 3 ? "col-span-2" : "col-span-3"}
+        >
+          <Image
+            src={v.src}
+            alt={tv(v.key)}
+            width={v.w}
+            height={v.h}
+            sizes="(min-width: 1024px) 200px, 160px"
+            className="vehicle-art h-full w-full object-contain"
+          />
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -179,20 +184,18 @@ function Badge({ children }: { children: ReactNode }) {
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function Features() {
+  const f = useSection("features");
   return (
     <section id="features" className="relative py-12 lg:py-16">
       <div className="mx-auto max-w-7xl px-6">
         {/* Intro */}
         <div className="max-w-2xl">
-          <p className="type-eyebrow">
-            Built for the trip
-          </p>
+          <p className="type-eyebrow">{f.eyebrow}</p>
           <h2 className="mt-3 text-balance text-3xl font-bold tracking-[-0.02em] text-heading sm:text-4xl lg:text-5xl">
-            Everything you need, on your terms
+            {f.heading}
           </h2>
           <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground lg:text-lg">
-            Built around how Rwanda actually moves. Fair prices, the right
-            vehicle, and full visibility from book to drop-off.
+            {f.intro}
           </p>
         </div>
 
@@ -206,7 +209,7 @@ export default function Features() {
           >
             {/* Illustration anchored TOP — sits in the upper portion */}
             <div className="flex items-start justify-center pb-4">
-              <div className="w-full max-w-[15rem]">
+              <div className="w-full">
                 <MultiModalArt size="lg" />
               </div>
             </div>
@@ -214,13 +217,12 @@ export default function Features() {
             <div className="flex-1" />
             {/* Copy anchored BOTTOM */}
             <div>
-              <Badge>Multi-modal</Badge>
-              <h3 className="mt-3 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.02em] text-foreground sm:text-4xl lg:text-[2.5rem]">
-                Pick your ride.
+              <Badge>{f.multiModalBadge}</Badge>
+              <h3 className="mt-3 text-balance text-3xl font-bold leading-[1.05] tracking-[-0.02em] text-heading sm:text-4xl lg:text-[2.5rem]">
+                {f.multiModalHeading}
               </h3>
               <p className="mt-3 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-                A moto for a quick run. A cab for comfort. A hilux for rough
-                roads. A fuso for a full haul. One app, four ways to move.
+                {f.multiModalBody}
               </p>
             </div>
           </article>
@@ -232,13 +234,12 @@ export default function Features() {
           >
             <div className="grid h-full gap-6 sm:grid-cols-[1.1fr_1fr] sm:items-center">
               <div className="flex flex-col">
-                <Badge>Real-time</Badge>
-                <h3 className="mt-3 text-balance text-2xl font-bold leading-[1.1] tracking-[-0.02em] text-foreground sm:text-3xl lg:text-[2rem]">
-                  Eyes on every trip.
+                <Badge>{f.trackingBadge}</Badge>
+                <h3 className="mt-3 text-balance text-2xl font-bold leading-[1.1] tracking-[-0.02em] text-heading sm:text-3xl lg:text-[2rem]">
+                  {f.trackingHeading}
                 </h3>
                 <p className="mt-3 max-w-md text-pretty text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  Follow your driver on the map as they approach. Share the
-                  live trip with anyone you trust.
+                  {f.trackingBody}
                 </p>
               </div>
               {/* Illustration — sized to the wide-card row height */}
@@ -255,12 +256,12 @@ export default function Features() {
           >
             <div className="grid h-full grid-cols-[1fr_auto] items-center gap-3">
               <div className="flex flex-col">
-                <Badge>Fair pricing</Badge>
-                <h3 className="mt-3 text-balance text-xl font-bold leading-[1.1] tracking-[-0.02em] text-foreground sm:text-2xl">
-                  Name your price.
+                <Badge>{f.pricingBadge}</Badge>
+                <h3 className="mt-3 text-balance text-xl font-bold leading-[1.1] tracking-[-0.02em] text-heading sm:text-2xl">
+                  {f.pricingHeading}
                 </h3>
                 <p className="mt-2 text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                  See the suggested fare, send a counter-offer. No surge surprises.
+                  {f.pricingBody}
                 </p>
               </div>
               <div className="relative h-28 w-28 shrink-0 sm:h-32 sm:w-32">
@@ -276,12 +277,12 @@ export default function Features() {
           >
             <div className="grid h-full grid-cols-[1fr_auto] items-center gap-3">
               <div className="flex flex-col">
-                <Badge>Mobile money</Badge>
-                <h3 className="mt-3 text-balance text-xl font-bold leading-[1.1] tracking-[-0.02em] text-foreground sm:text-2xl">
-                  Pay your way.
+                <Badge>{f.payBadge}</Badge>
+                <h3 className="mt-3 text-balance text-xl font-bold leading-[1.1] tracking-[-0.02em] text-heading sm:text-2xl">
+                  {f.payHeading}
                 </h3>
                 <p className="mt-2 text-pretty text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                  MoMo, Airtel, or cash to your driver. Same flow either way.
+                  {f.payBody}
                 </p>
               </div>
               <div className="relative h-28 w-28 shrink-0 sm:h-32 sm:w-32">

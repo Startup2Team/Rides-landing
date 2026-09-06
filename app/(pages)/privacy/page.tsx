@@ -2,8 +2,16 @@
 
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
+import { useSection } from "../../i18n/context";
 
 const EFFECTIVE_DATE = "June 11, 2026";
+
+/** Legal copy stores {company} / {email} / {website} rather than baking the
+ *  values in, so a translator never has to retype them. */
+const fill = (t: string) =>
+  t.replace(/\{company\}/g, COMPANY)
+   .replace(/\{email\}/g, CONTACT_EMAIL)
+   .replace(/\{website\}/g, WEBSITE);
 const COMPANY = "TRAVELIS Rwanda Ltd";
 const CONTACT_EMAIL = "info@rides.rw";
 const WEBSITE = "www.rides.rw";
@@ -252,8 +260,10 @@ const SECTION_ICONS: Record<string, SectionVisual> = {
 
 // ── Collect sub-section icons for visual data cards ──────────────────────────
 
-const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; textClass: string }> = {
-  "3.1  Personal Information": {
+/* Ordered to match the `sub` items inside the "information-we-collect"
+   section. Keyed by position, not by title — titles are translated. */
+const DATA_CATEGORY_VISUALS: { icon: ReactNode; bgClass: string; textClass: string }[] = [
+  {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" />
@@ -262,7 +272,7 @@ const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; 
     bgClass: "bg-blue-50 dark:bg-blue-950/30",
     textClass: "text-blue-600 dark:text-blue-400",
   },
-  "3.2  Location Data": {
+  {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
@@ -271,7 +281,7 @@ const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; 
     bgClass: "bg-red-50 dark:bg-red-950/30",
     textClass: "text-red-500 dark:text-red-400",
   },
-  "3.3  Ride Information": {
+  {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
         <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
@@ -281,7 +291,7 @@ const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; 
     bgClass: "bg-emerald-50 dark:bg-emerald-950/30",
     textClass: "text-emerald-600 dark:text-emerald-400",
   },
-  "3.4  Device and Technical Data": {
+  {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
         <rect x="5" y="2" width="14" height="20" rx="2" ry="2" /><line x1="12" y1="18" x2="12.01" y2="18" />
@@ -290,7 +300,7 @@ const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; 
     bgClass: "bg-violet-50 dark:bg-violet-950/30",
     textClass: "text-violet-600 dark:text-violet-400",
   },
-  "3.5  Driver-Specific Data": {
+  {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
         <rect x="2" y="5" width="20" height="14" rx="2" /><line x1="2" y1="10" x2="22" y2="10" />
@@ -299,7 +309,7 @@ const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; 
     bgClass: "bg-amber-50 dark:bg-amber-950/30",
     textClass: "text-amber-600 dark:text-amber-400",
   },
-  "3.6  Feedback and Correspondence": {
+  {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -309,7 +319,7 @@ const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; 
     bgClass: "bg-cyan-50 dark:bg-cyan-950/30",
     textClass: "text-cyan-600 dark:text-cyan-400",
   },
-  "3.7  Information From Third Parties": {
+  {
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-4.5 w-4.5">
         <circle cx="12" cy="12" r="10" /><line x1="2" y1="12" x2="22" y2="12" />
@@ -319,14 +329,12 @@ const DATA_CATEGORY_VISUALS: Record<string, { icon: ReactNode; bgClass: string; 
     bgClass: "bg-sky-50 dark:bg-sky-950/30",
     textClass: "text-sky-600 dark:text-sky-400",
   },
-};
+];
 
 // ── Rights visual data ───────────────────────────────────────────────────────
 
-const RIGHTS_VISUALS: { title: string; desc: string; icon: ReactNode; bgClass: string; textClass: string }[] = [
+const RIGHTS_VISUALS = [
   {
-    title: "Access",
-    desc: "Request information about our processing and access your personal information",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" />
@@ -336,8 +344,6 @@ const RIGHTS_VISUALS: { title: string; desc: string; icon: ReactNode; bgClass: s
     textClass: "text-blue-600 dark:text-blue-400",
   },
   {
-    title: "Correct",
-    desc: "Update or correct inaccuracies in your personal information",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
@@ -348,8 +354,6 @@ const RIGHTS_VISUALS: { title: string; desc: string; icon: ReactNode; bgClass: s
     textClass: "text-emerald-600 dark:text-emerald-400",
   },
   {
-    title: "Delete",
-    desc: "Request deletion of your personal information",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -359,8 +363,6 @@ const RIGHTS_VISUALS: { title: string; desc: string; icon: ReactNode; bgClass: s
     textClass: "text-red-500 dark:text-red-400",
   },
   {
-    title: "Transfer",
-    desc: "Receive a machine-readable copy of your personal information",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
@@ -370,8 +372,6 @@ const RIGHTS_VISUALS: { title: string; desc: string; icon: ReactNode; bgClass: s
     textClass: "text-violet-600 dark:text-violet-400",
   },
   {
-    title: "Restrict",
-    desc: "Restrict the processing of your personal information",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" />
@@ -381,8 +381,6 @@ const RIGHTS_VISUALS: { title: string; desc: string; icon: ReactNode; bgClass: s
     textClass: "text-amber-600 dark:text-amber-400",
   },
   {
-    title: "Object",
-    desc: "Object to our reliance on legitimate interests as the basis of our processing",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M18 6 6 18" /><path d="m6 6 12 12" />
@@ -397,8 +395,6 @@ const RIGHTS_VISUALS: { title: string; desc: string; icon: ReactNode; bgClass: s
 
 const SECURITY_STEPS = [
   {
-    title: "Encryption",
-    desc: "Sensitive data encrypted",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" />
@@ -406,8 +402,6 @@ const SECURITY_STEPS = [
     ),
   },
   {
-    title: "Secure Servers",
-    desc: "Cloud infrastructure",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <rect x="2" y="2" width="20" height="8" rx="2" ry="2" /><rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
@@ -416,8 +410,6 @@ const SECURITY_STEPS = [
     ),
   },
   {
-    title: "Access Control",
-    desc: "Authentication systems",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" />
@@ -425,8 +417,6 @@ const SECURITY_STEPS = [
     ),
   },
   {
-    title: "Security Audits",
-    desc: "Regular assessments",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -438,460 +428,8 @@ const SECURITY_STEPS = [
 
 // ── Content ──────────────────────────────────────────────────────────────────
 
-const SECTIONS: Section[] = [
-  {
-    id: "introduction",
-    num: "",
-    title: "Introduction",
-    content: [
-      {
-        kind: "text",
-        value: `This Privacy Policy is designed to help you understand how ${COMPANY} and its related subsidiaries and affiliates, including ${WEBSITE} ("we", "us" or "our") collects, uses, shares, and protects your personal data when you use our mobile application, website, and related services. We value your privacy, and we will not share your personal information with third parties except as described in this Privacy Policy without your consent.`,
-      },
-      {
-        kind: "text",
-        value:
-          "By using our platforms, you agree to the practices described in this policy. If you do not agree, please do not use our websites, mobile applications, or provide us with your information.",
-      },
-    ],
-  },
-  {
-    id: "coverage",
-    num: "",
-    title: "What This Policy Covers",
-    content: [
-      {
-        kind: "text",
-        value: "This Privacy Policy applies to our collection, use and sharing of your personal information:",
-      },
-      {
-        kind: "bullets",
-        items: [
-          `When you visit our website at ${WEBSITE} and its related sites and mobile applications`,
-          "When you receive our communications or participate in our online or offline activities or events",
-          "When you fill out an application for admission or subscription to our mobile applications",
-          "Information we obtain from third parties such as resellers, database vendors, content publishers and suppliers",
-        ],
-      },
-      {
-        kind: "text",
-        value: `This Privacy Policy applies only to information gathered on and through the Site or mobile application and does not apply to any other websites not owned or operated by ${COMPANY}.`,
-      },
-    ],
-  },
-  {
-    id: "who-we-are",
-    num: "1",
-    title: "Who We Are",
-    content: [
-      {
-        kind: "text",
-        value: `${COMPANY} is a technology company operating a ride-hailing and logistics platform as well as other technology-based solutions and applications in Rwanda.`,
-      },
-      {
-        kind: "text",
-        value: "We act as a data controller for personal data collected through the platform.",
-      },
-    ],
-  },
-  {
-    id: "legal-framework",
-    num: "2",
-    title: "Legal Framework",
-    content: [
-      { kind: "text", value: "We comply with:" },
-      {
-        kind: "bullets",
-        items: [
-          "Rwanda Law No. 058/2021 relating to the protection of personal data and privacy",
-          "General Data Protection Regulation (GDPR) where applicable",
-          "Other applicable transport and digital service regulations",
-        ],
-      },
-    ],
-  },
-  {
-    id: "information-we-collect",
-    num: "3",
-    title: "Information We Collect",
-    content: [
-      {
-        kind: "sub",
-        title: "3.1  Personal Information",
-        bullets: [
-          "Full name",
-          "Phone number and Mobile money number",
-          "Email address",
-          "Profile photo",
-          "National ID or passport (for drivers)",
-          "Address details",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "3.2  Location Data",
-        bullets: [
-          "Real-time GPS location while accessing the mobile application",
-          "Pickup and drop-off locations",
-          "Route history (for safety and service improvement)",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "3.3  Ride Information",
-        bullets: [
-          "Trip history",
-          "Payment details (processed via third-party providers)",
-          "Ratings and feedback",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "3.4  Device and Technical Data",
-        bullets: [
-          "Device type and operating system",
-          "IP address",
-          "App usage data and crash logs",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "3.5  Driver-Specific Data",
-        bullets: [
-          "Driving licence details and photo",
-          "Vehicle registration document(s) and photo(s)",
-          "Insurance certificate(s) and photo(s)",
-          "Momo code number and mobile money phone number",
-          "Background verification data (if applicable)",
-          "Transportation service permit details and photo (if applicable)",
-          "Picture(s) of the vehicle(s)",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "3.6  Feedback and Correspondence",
-        bullets: [
-          "Information you provide when requesting support, responding to surveys, or corresponding with us",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "3.7  Information From Third Parties",
-        bullets: [
-          "Additional information from third-party sources such as service providers, vendors, social media sites, and advertising agencies to provide you with more relevant information about our services",
-        ],
-      },
-    ],
-  },
-  {
-    id: "how-we-use",
-    num: "4",
-    title: "How We Use Your Data",
-    content: [
-      {
-        kind: "bullets",
-        items: [
-          "Connect riders and drivers",
-          "Provide, maintain and improve the Site and mobile applications",
-          "Process and complete trips",
-          "Process payments and payouts",
-          "Improve platform safety and performance",
-          "Provide customer support",
-          "Detect fraud and prevent misuse",
-          "Comply with legal obligations",
-          "Send important service updates",
-          "Better understand your needs and interests, and personalise your experience",
-          "Process applications submitted through the Site and mobile applications",
-          "Perform website analytics and database management services",
-          "Manage and serve interest-based advertising on our platforms and trusted third-party sites",
-          "Investigate or prevent violations of the law or your agreements with us",
-          "Protect the rights, privacy, safety or property of you, us, or others",
-        ],
-      },
-      {
-        kind: "text",
-        value: "We do not sell personal data.",
-      },
-    ],
-  },
-  {
-    id: "legal-basis",
-    num: "5",
-    title: "Legal Basis for Processing",
-    content: [
-      { kind: "text", value: "We process data based on:" },
-      {
-        kind: "bullets",
-        items: [
-          "Contract necessity — to provide ride and payment services",
-          "Legal obligations — tax and transport compliance",
-          "Legitimate interest — fraud prevention, safety, and analytics",
-          "Consent — marketing communications and optional features",
-        ],
-      },
-    ],
-  },
-  {
-    id: "data-sharing",
-    num: "6",
-    title: "Data Sharing",
-    content: [
-      {
-        kind: "text",
-        value:
-          "We do not share your personal information with third parties without your consent, except in the following circumstances:",
-      },
-      {
-        kind: "sub",
-        title: "Drivers, Riders & Service Providers",
-        bullets: [
-          "Name and pickup/drop-off location",
-          "Trip status and contact information (masked where possible)",
-          "Payment details including MomoPay code and mobile money numbers",
-        ],
-      },
-      {
-        kind: "sub",
-        title: `${COMPANY} Affiliates`,
-        bullets: [
-          `We may share your information with ${COMPANY}'s affiliates and related organisations for use consistent with this Privacy Policy`,
-        ],
-      },
-      {
-        kind: "sub",
-        title: "Business Partners",
-        bullets: [
-          "Partners who offer a service to you jointly with us — a list is available upon request",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "Legal, Safety & Compliance",
-        bullets: [
-          "Government or law enforcement officials for fraud prevention and legal compliance",
-          "Where permitted by law in connection with a legal investigation",
-          "To protect, investigate, and deter against fraudulent, harmful, or illegal activity",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "Business Transfers",
-        bullets: [
-          "In connection with a merger, acquisition, reorganisation, or sale of assets, or in the event of bankruptcy",
-        ],
-      },
-    ],
-  },
-  {
-    id: "data-retention",
-    num: "7",
-    title: "Data Retention",
-    content: [
-      {
-        kind: "bullets",
-        items: [
-          "Account data: retained while your account is active",
-          "Trip history: up to 5 years (legal and tax compliance)",
-          "Location data: limited retention for safety and dispute resolution",
-          "Marketing data: until consent is withdrawn",
-        ],
-      },
-    ],
-  },
-  {
-    id: "data-security",
-    num: "8",
-    title: "Data Security",
-    content: [
-      { kind: "text", value: "We implement strong security measures including:" },
-      {
-        kind: "bullets",
-        items: [
-          "Encryption of sensitive data",
-          "Secure servers and cloud infrastructure",
-          "Access controls and authentication systems",
-          "Regular security audits",
-        ],
-      },
-      {
-        kind: "text",
-        value:
-          "However, no system is 100% secure, and we cannot guarantee absolute security.",
-      },
-    ],
-  },
-  {
-    id: "your-rights",
-    num: "9",
-    title: "Your Rights (Rwanda + GDPR)",
-    content: [
-      {
-        kind: "text",
-        value:
-          "Rwandan Law N°058/2021 of 13/10/2021 relating to the Protection of Personal Data and Privacy gives you the following rights:",
-      },
-      {
-        kind: "bullets",
-        items: [
-          "Access — Request information about our processing and access your personal information",
-          "Correct — Update or correct inaccuracies in your personal information",
-          "Delete — Request deletion of your personal information",
-          "Transfer — Receive a machine-readable copy of your personal information",
-          "Restrict — Restrict the processing of your personal information",
-          "Object — Object to our reliance on legitimate interests as the basis of our processing",
-        ],
-      },
-      { kind: "text", value: `To exercise your rights, contact us at: ${CONTACT_EMAIL}` },
-    ],
-  },
-  {
-    id: "location-data",
-    num: "10",
-    title: "Location Data",
-    content: [
-      { kind: "text", value: "We use GPS location to:" },
-      {
-        kind: "bullets",
-        items: [
-          "Match riders with nearby drivers",
-          "Track trip progress",
-          "Improve safety and navigation",
-        ],
-      },
-      {
-        kind: "text",
-        value:
-          "You can disable location access in your device settings, but core services may not function properly.",
-      },
-    ],
-  },
-  {
-    id: "childrens-privacy",
-    num: "11",
-    title: "Children's Privacy",
-    content: [
-      {
-        kind: "text",
-        value:
-          "The Site is not intended for use by anyone under the age of 18, nor do we knowingly collect or solicit personal information from anyone under the age of 18. If you are under 18, you should not attempt to use the Site or send any information about yourself to us.",
-      },
-    ],
-  },
-  {
-    id: "international-transfers",
-    num: "12",
-    title: "International Data Transfers",
-    content: [
-      {
-        kind: "text",
-        value:
-          "Your data may be stored or processed on servers outside Rwanda. When this occurs, we ensure appropriate safeguards in line with GDPR standards.",
-      },
-    ],
-  },
-  {
-    id: "third-party-services",
-    num: "13",
-    title: "Third-Party Services",
-    content: [
-      { kind: "text", value: "We may use third-party providers for:" },
-      {
-        kind: "bullets",
-        items: ["Payments", "Maps and navigation", "Analytics", "Messaging services", "Hosting services"],
-      },
-      {
-        kind: "text",
-        value: "These providers have their own privacy policies, which we encourage you to review.",
-      },
-    ],
-  },
-  {
-    id: "cookie-policy",
-    num: "14",
-    title: "Cookie Policy",
-    content: [
-      {
-        kind: "text",
-        value:
-          "Cookies are small data files placed on your device when you visit a website. We use several different kinds of cookies:",
-      },
-      {
-        kind: "bullets",
-        items: [
-          "Strictly necessary cookies — required for the Site to function and cannot be switched off",
-          "Performance cookies — allow us to count visits and traffic sources to measure and improve performance",
-          "Functional cookies — enable enhanced functionality and personalisation",
-          "Third-party cookies — from analytics providers (e.g. Google Analytics) for demographic information and usage insights",
-        ],
-      },
-      {
-        kind: "text",
-        value:
-          'We may also use web beacons (sometimes called "tracking pixels" or "clear gifs") — tiny graphic files that enable us to recognise when someone has visited our Site. If you sign up to receive our emails, we may use cookies in conjunction with those emails.',
-      },
-      {
-        kind: "text",
-        value: "Most browsers let you remove or reject cookies. To do this, follow the instructions in your browser settings.",
-      },
-    ],
-  },
-  {
-    id: "other-information",
-    num: "15",
-    title: "Other Important Information",
-    content: [
-      {
-        kind: "sub",
-        title: "Third-Party Sites and Services",
-        bullets: [
-          "The Site may contain links to other websites operated by third parties",
-          "We are not responsible for their actions or privacy practices",
-          "We encourage you to read their privacy policies to learn more",
-        ],
-      },
-      {
-        kind: "sub",
-        title: "Security",
-        bullets: [
-          "We take organisational, technical, and physical measures to protect your personal information",
-          "Security risk is inherent in all internet and information technologies",
-          "We cannot guarantee the absolute security of your personal information",
-        ],
-      },
-    ],
-  },
-  {
-    id: "changes",
-    num: "16",
-    title: "Changes to This Policy",
-    content: [
-      {
-        kind: "bullets",
-        items: [
-          "We may update this Privacy Policy from time to time",
-          "Users will be notified of significant changes via the app or email",
-          "Continued use of the app means acceptance of updates",
-        ],
-      },
-    ],
-  },
-  {
-    id: "contact",
-    num: "17",
-    title: "Contact Us",
-    content: [
-      { kind: "text", value: "If you have questions or requests regarding your data:" },
-      {
-        kind: "bullets",
-        items: [
-          `Company: ${COMPANY}`,
-          `Email: ${CONTACT_EMAIL}`,
-          "Location: Kigali, Rwanda",
-        ],
-      },
-    ],
-  },
-];
+/* Section copy now lives in i18n (privacy.sections) so it follows the
+   picked language. Shape matches the Section type above. */
 
 // ── Commitments strip ────────────────────────────────────────────────────────
 
@@ -902,8 +440,6 @@ const COMMITMENTS = [
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       </svg>
     ),
-    title: "We never sell your data",
-    body: "Your personal information is never sold to advertisers or third parties.",
     bgClass: "bg-emerald-50 dark:bg-emerald-950/30",
     textClass: "text-emerald-600 dark:text-emerald-400",
     borderHover: "hover:border-emerald-300 dark:hover:border-emerald-700",
@@ -914,8 +450,6 @@ const COMMITMENTS = [
         <polyline points="20 6 9 17 4 12" />
       </svg>
     ),
-    title: "GDPR & Rwanda Law N°058/2021",
-    body: "We comply with both local Rwandan data law and EU GDPR standards.",
     bgClass: "bg-blue-50 dark:bg-blue-950/30",
     textClass: "text-blue-600 dark:text-blue-400",
     borderHover: "hover:border-blue-300 dark:hover:border-blue-700",
@@ -927,8 +461,6 @@ const COMMITMENTS = [
         <path d="M7 11V7a5 5 0 0 1 10 0v4" />
       </svg>
     ),
-    title: "You control your data",
-    body: "Access, correct, delete, or export your data at any time on request.",
     bgClass: "bg-violet-50 dark:bg-violet-950/30",
     textClass: "text-violet-600 dark:text-violet-400",
     borderHover: "hover:border-violet-300 dark:hover:border-violet-700",
@@ -959,7 +491,7 @@ function SectionContent({ content, sectionId }: { content: PolicyItem[]; section
         if (item.kind === "text") {
           return (
             <p key={i} className="text-[15px] leading-[1.8] text-muted-foreground">
-              {item.value}
+              {fill(item.value)}
             </p>
           );
         }
@@ -969,14 +501,15 @@ function SectionContent({ content, sectionId }: { content: PolicyItem[]; section
               {item.items.map((b, bi) => (
                 <li key={bi} className="flex gap-3">
                   <span className="mt-[0.55rem] h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
-                  <span className="text-[15px] leading-[1.8] text-muted-foreground">{b}</span>
+                  <span className="text-[15px] leading-[1.8] text-muted-foreground">{fill(b)}</span>
                 </li>
               ))}
             </ul>
           );
         }
         if (item.kind === "sub") {
-          const visual = DATA_CATEGORY_VISUALS[item.title];
+          const subIndex = content.slice(0, i).filter((c) => c.kind === "sub").length;
+          const visual = DATA_CATEGORY_VISUALS[subIndex];
           return (
             <div
               key={i}
@@ -989,7 +522,7 @@ function SectionContent({ content, sectionId }: { content: PolicyItem[]; section
                   </div>
                 )}
                 <p className="text-[12px] font-bold uppercase tracking-[0.14em] text-foreground/70">
-                  {item.title}
+                  {fill(item.title)}
                 </p>
               </div>
               <ul className="space-y-2 pl-0">
@@ -1012,6 +545,8 @@ function SectionContent({ content, sectionId }: { content: PolicyItem[]; section
 // ── Rights Section — Visual Grid ─────────────────────────────────────────────
 
 function RightsSection({ content }: { content: PolicyItem[] }) {
+  const pv = useSection("privacy");
+  const sections = pv.sections as unknown as Section[];
   // Extract intro and outro text
   const introText = content.find((c) => c.kind === "text");
   const outroItems = content.filter((c, i) => c.kind === "text" && i > 0);
@@ -1023,17 +558,17 @@ function RightsSection({ content }: { content: PolicyItem[] }) {
       )}
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        {RIGHTS_VISUALS.map((right) => (
+        {RIGHTS_VISUALS.map((right, ri) => (
           <div
-            key={right.title}
+            key={ri}
             className="group flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-lg hover:shadow-primary/5"
           >
             <div className={`flex h-11 w-11 items-center justify-center rounded-xl ${right.bgClass} ${right.textClass} transition-transform duration-300 group-hover:scale-110`}>
               {right.icon}
             </div>
             <div>
-              <h4 className="text-sm font-bold text-foreground">{right.title}</h4>
-              <p className="mt-1 text-[13px] leading-[1.65] text-muted-foreground">{right.desc}</p>
+              <h4 className="text-sm font-bold text-heading">{pv.rights[ri].title}</h4>
+              <p className="mt-1 text-[13px] leading-[1.65] text-muted-foreground">{pv.rights[ri].desc}</p>
             </div>
           </div>
         ))}
@@ -1051,6 +586,8 @@ function RightsSection({ content }: { content: PolicyItem[] }) {
 // ── Security Section — Pipeline Flow ─────────────────────────────────────────
 
 function SecuritySection({ content }: { content: PolicyItem[] }) {
+  const pv = useSection("privacy");
+  const sections = pv.sections as unknown as Section[];
   const introText = content.find((c) => c.kind === "text");
   const outroItems = content.filter((c, i) => c.kind === "text" && i > 0);
 
@@ -1068,7 +605,7 @@ function SecuritySection({ content }: { content: PolicyItem[] }) {
         <div className="grid gap-4 sm:grid-cols-4">
           {SECURITY_STEPS.map((step, i) => (
             <div
-              key={step.title}
+              key={i}
               className="group relative flex flex-col items-center text-center"
               style={{ animationDelay: `${i * 100}ms` }}
             >
@@ -1081,8 +618,8 @@ function SecuritySection({ content }: { content: PolicyItem[] }) {
                   {step.icon}
                 </div>
               </div>
-              <p className="mt-3 text-[13px] font-bold text-foreground">{step.title}</p>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">{step.desc}</p>
+              <p className="mt-3 text-[13px] font-bold text-foreground">{pv.security[i].title}</p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">{pv.security[i].desc}</p>
             </div>
           ))}
         </div>
@@ -1106,6 +643,8 @@ function SecuritySection({ content }: { content: PolicyItem[] }) {
 // ── Contact Section — CTA Card ───────────────────────────────────────────────
 
 function ContactSection({ content }: { content: PolicyItem[] }) {
+  const pv = useSection("privacy");
+  const sections = pv.sections as unknown as Section[];
   const introText = content.find((c) => c.kind === "text");
 
   return (
@@ -1174,6 +713,8 @@ function ContactSection({ content }: { content: PolicyItem[] }) {
 // ── Sticky TOC ───────────────────────────────────────────────────────────────
 
 function TableOfContents({ activeId }: { activeId: string | null }) {
+  const pv = useSection("privacy");
+  const sections = pv.sections as unknown as Section[];
   return (
     <aside className="hidden xl:block">
       <div className="sticky top-28">
@@ -1182,7 +723,7 @@ function TableOfContents({ activeId }: { activeId: string | null }) {
         </p>
         <nav>
           <ul className="space-y-0">
-            {SECTIONS.map((s) => {
+            {sections.map((s) => {
               const isActive = activeId === s.id;
               const visual = SECTION_ICONS[s.id];
               return (
@@ -1351,7 +892,9 @@ function PrivacyShieldHero() {
 // ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function PrivacyPage() {
-  const sectionIds = SECTIONS.map((s) => s.id);
+  const pv = useSection("privacy");
+  const sections = pv.sections as unknown as Section[];
+  const sectionIds = sections.map((s) => s.id);
   const activeId = useActiveSection(sectionIds);
   const heroRef = useRef<HTMLDivElement>(null);
   const [heroVisible, setHeroVisible] = useState(false);
@@ -1417,7 +960,7 @@ export default function PrivacyPage() {
               </div>
 
               {/* Headline */}
-              <h1 className="text-balance text-4xl font-bold leading-[1.08] tracking-[-0.03em] text-foreground sm:text-5xl lg:text-6xl">
+              <h1 className="text-balance text-4xl font-bold leading-[1.08] tracking-[-0.03em] text-heading sm:text-5xl lg:text-6xl">
                 Privacy Policy
               </h1>
 
@@ -1473,17 +1016,17 @@ export default function PrivacyPage() {
       <section className="border-b border-border bg-muted/20">
         <div className="mx-auto max-w-4xl px-6 py-10 sm:px-10">
           <div className="grid gap-3 sm:grid-cols-3">
-            {COMMITMENTS.map((c) => (
+            {COMMITMENTS.map((c, ci) => (
               <div
-                key={c.title}
+                key={ci}
                 className={`group flex gap-4 rounded-2xl border border-border/60 bg-background p-5 shadow-sm transition-all hover:-translate-y-0.5 ${c.borderHover} hover:shadow-md`}
               >
                 <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${c.bgClass} ${c.textClass} transition-transform duration-300 group-hover:scale-110`}>
                   {c.icon}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-foreground">{c.title}</p>
-                  <p className="mt-1 text-[13px] leading-[1.6] text-muted-foreground">{c.body}</p>
+                  <p className="text-sm font-semibold text-foreground">{pv.commitments[ci].title}</p>
+                  <p className="mt-1 text-[13px] leading-[1.6] text-muted-foreground">{pv.commitments[ci].body}</p>
                 </div>
               </div>
             ))}
@@ -1500,7 +1043,7 @@ export default function PrivacyPage() {
 
           {/* Sections */}
           <div className="min-w-0 space-y-16">
-            {SECTIONS.map((section) => {
+            {sections.map((section) => {
               const visual = SECTION_ICONS[section.id];
               return (
                 <article key={section.id} id={section.id} className="scroll-mt-28">
@@ -1519,7 +1062,7 @@ export default function PrivacyPage() {
                         </span>
                       )}
                       <h2
-                        className={`text-balance font-bold tracking-[-0.02em] text-foreground ${
+                        className={`text-balance font-bold tracking-[-0.02em] text-heading ${
                           section.num
                             ? "text-2xl sm:text-3xl"
                             : "text-xl sm:text-2xl text-heading"

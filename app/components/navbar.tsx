@@ -4,8 +4,13 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { LanguageSwitcher } from "./language-switcher";
+import { AppStoreGlyph, GooglePlayGlyph, StoreBadges } from "./store-badges";
 import { useTranslations, type Dictionary } from "../i18n/context";
 import { RidesWordmark } from "./rides-logo";
+
+/** Horizontal padding on each nav link (px-4). The active rule insets by
+ *  this much so it underlines the label rather than the whole hit area. */
+const LINK_PAD_X = 16;
 
 function isLinkActive(href: string, pathname: string): boolean {
   if (href === "/") return pathname === "/";
@@ -28,17 +33,14 @@ function isItemActive(item: NavItem, pathname: string): boolean {
   return isLinkActive(item.href, pathname);
 }
 
+/* The About dropdown (About / How It Works / Drivers) was removed from the bar
+   at the client's request. Those three pages all still exist and are still
+   linked from the footer, so nothing became unreachable. The `children`
+   machinery below is intentionally left in place — nothing currently uses it,
+   but re-adding a dropdown is a matter of putting the entry back here. */
 const navLinks: readonly NavItem[] = [
   { labelKey: "home", href: "/" },
-  {
-    labelKey: "about",
-    href: "/about",
-    children: [
-      { labelKey: "company", href: "/about" },
-      { labelKey: "howItWorks", href: "/how-it-works" },
-      { labelKey: "drivers", href: "/drivers" },
-    ],
-  },
+  { labelKey: "careers", href: "/careers" },
   { labelKey: "contact", href: "/contact" },
 ];
 
@@ -72,6 +74,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("nav");
+  const th = useTranslations("hero");
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navRef = useRef<HTMLElement>(null);
@@ -217,7 +220,7 @@ export default function Navbar() {
         }`}
       >
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6">
-        <Link href="/" className="group relative flex items-center">
+        <Link href="/" className="group relative -my-2 flex items-center py-2">
           {/* One typeface throughout, three brand colours: blue R, pink id,
               green es. All clear the 3:1 large-text bar at this size. */}
           <RidesWordmark className="text-xl sm:text-2xl" />
@@ -229,7 +232,7 @@ export default function Navbar() {
         >
           {navLinks.map((item) => {
             const isActive = isItemActive(item, pathname);
-            const linkClass = `relative z-10 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+            const linkClass = `relative z-10 rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
               isActive
                 ? "text-primary"
                 : "text-muted-foreground hover:text-foreground"
@@ -327,14 +330,14 @@ export default function Navbar() {
             );
           })}
 
-          {/* Same measured left/width as before, grown from a 2px underline into
-              a pill that slides between links. */}
+          {/* A 2px rule under the active link, sliding between them on the same
+              measured left/width. Reads as navigation rather than a button. */}
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 rounded-full bg-primary/10 ring-1 ring-inset ring-primary/20 transition-[left,width,opacity] duration-300 ease-out motion-reduce:transition-none"
+            className="pointer-events-none absolute bottom-0 h-[2px] rounded-full bg-primary transition-[left,width,opacity] duration-300 ease-out motion-reduce:transition-none"
             style={{
-              left: indicator.left,
-              width: indicator.width,
+              left: indicator.left + LINK_PAD_X,
+              width: Math.max(0, indicator.width - LINK_PAD_X * 2),
               opacity: indicator.ready ? 1 : 0,
             }}
           />
@@ -343,12 +346,31 @@ export default function Navbar() {
         <div className="relative flex items-center gap-2">
           <LanguageSwitcher />
 
+          {/* Outlined, not filled: "Get App" beside it is the solid primary, and
+              two solid pills in one bar read as a choice rather than a
+              hierarchy. Mirrors the hero's secondary CTA. Reuses the hero's
+              `waitlistCta` string, already translated in en/fr/rw. */}
           <Link
-            href="/#download"
-            onClick={(e) => handleNavClick(e, "/#download")}
-            className="hidden h-11 items-center justify-center rounded-full bg-primary-strong px-5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:bg-foreground active:scale-[0.98] sm:inline-flex"
+            href="/waitlist"
+            onClick={() => setMobileOpen(false)}
+            className="hidden h-11 items-center rounded-full border-2 border-foreground/15 px-4 text-sm font-semibold text-foreground transition-all hover:border-primary hover:text-primary-text active:scale-[0.98] lg:inline-flex"
           >
-            {t("download")}
+            {th("waitlistCta")}
+          </Link>
+
+          {/* One bar rather than two buttons: the label carries the intent and
+              the marks show which platforms it covers. Both stores route to the
+              footer, which carries both store badges. */}
+          <Link
+            href="/#site-footer"
+            onClick={(e) => handleNavClick(e, "/#site-footer")}
+            className="hidden h-11 items-center gap-2.5 rounded-full bg-primary-strong pl-4 pr-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:scale-[1.02] hover:bg-foreground active:scale-[0.98] sm:inline-flex"
+          >
+            {t("getApp")}
+            <span aria-hidden className="flex items-center gap-1.5">
+              <AppStoreGlyph className="h-[1.15rem] w-[1.15rem]" />
+              <GooglePlayGlyph className="h-[1.15rem] w-[1.15rem]" />
+            </span>
           </Link>
 
           <button
@@ -448,17 +470,27 @@ export default function Navbar() {
                 </div>
               );
             })}
+            {/* The desktop pill is lg:inline-flex, so below that width this is
+                the only route to the waitlist from the bar. Filled here — it is
+                the sheet's primary action and has no neighbour to compete
+                with. */}
             <Link
-              href="/#download"
-              onClick={(e) => {
-                setMobileOpen(false);
-                handleNavClick(e, "/#download");
-              }}
+              href="/waitlist"
+              onClick={(e) => handleNavClick(e, "/waitlist")}
               tabIndex={mobileOpen ? 0 : -1}
-              className="mt-2 flex h-12 items-center justify-center rounded-full bg-primary-strong text-sm font-semibold text-primary-foreground shadow-md shadow-primary/30 sm:hidden"
+              className="mt-2 flex min-h-11 items-center justify-center rounded-full bg-primary-strong px-4 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/30 transition-transform active:scale-[0.98]"
             >
-              {t("download")}
+              {th("waitlistCta")}
             </Link>
+
+            <StoreBadges
+              className="mt-2 sm:hidden"
+              href="/#site-footer"
+              appStoreEyebrow={th("appStoreEyebrow")}
+              appStoreLabel={th("appStoreLabel")}
+              googlePlayEyebrow={th("googlePlayEyebrow")}
+              googlePlayLabel={th("googlePlayLabel")}
+            />
           </nav>
         </div>
       </div>

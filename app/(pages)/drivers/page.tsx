@@ -11,6 +11,7 @@ import { StoreBadges } from "../../components/store-badges";
 /* ───────────────────────────────────────────────────────────────────────── */
 
 function DriversHeroArt() {
+  const common = useSection("common");
   return (
     <div className="relative w-full max-w-[520px]">
       <div
@@ -23,7 +24,7 @@ function DriversHeroArt() {
       />
       <Image
         src="/images/drivers-fleet-africa.png"
-        alt="3D illustration of Africa with the four Rides vehicles — moto, cab, hilux and fuso — positioned around a central destination pin"
+        alt={common.driversHeroAlt}
         width={1040}
         height={1040}
         priority
@@ -154,7 +155,7 @@ export default function DriversPage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-base font-bold text-primary">
                     {s.n}
                   </span>
-                  <h4 className="mt-4 text-base font-bold text-foreground">
+                  <h4 className="mt-4 text-base font-bold text-heading">
                     {s.title}
                   </h4>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">

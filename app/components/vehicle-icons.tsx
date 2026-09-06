@@ -77,3 +77,19 @@ export function HiluxIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+
+/* Rifani — the three-wheeled cargo tuk-tuk. Drawn with a narrow upright cab
+   under a canopy and an OPEN tray, which is what separates it at a glance from
+   FusoIcon's closed box. */
+export function RifaniIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden>
+      <circle cx="4.5" cy="17.5" r="2" />
+      <circle cx="17" cy="17.5" r="2.5" />
+      <path d="M2.5 15.5V11l1.5-2.5h4V15.5" />
+      <path d="M2 8.5h7" />
+      <path d="M6.5 17.5h8" />
+      <path d="M8.5 11v6.5h13V11" />
+    </svg>
+  );
+}

@@ -154,7 +154,11 @@
 
 :root {
   --background: var(--gray-100);
-  --foreground: var(--gray-950);
+  /* Softened from --gray-950 (#0a0a0a, effectively pure black) to --gray-900
+     (#2b2b2b). Black text on a near-white ground reads harsh at large sizes;
+     a dark muted ink keeps the weight without the glare. Contrast is still
+     far past AAA: 13.0:1 on --background, 14.2:1 on --card. */
+  --foreground: var(--gray-900);
   --card: #ffffff;
   --surface: var(--gray-50);
   --surface-alt: var(--gray-150);
@@ -164,9 +168,18 @@
   /* Headings. Previously every marketing heading was painted with
      --muted-foreground, so headline and body were the same colour and the
      pages had no vertical hierarchy at all. This token exists so that can
-     never silently happen again. */
-  --heading: var(--gray-950);
-  --heading-subtle: var(--gray-900);
+     never silently happen again.
+
+     Softened twice at the client's direction: --gray-950 (near-black) →
+     --gray-900 → --gray-800 (#4a4a4a). Still 8.1:1 on --background and 8.9:1
+     on --card, so AAA for large text and past AA for anything smaller. It sits
+     a clear step above --muted-foreground (#6e6e6e) for body copy, which is
+     the separation this token exists to protect. */
+  --heading: var(--gray-800);
+  /* Now the same value as --heading. Kept as a separate token because it is
+     what a component reaches for when a heading needs to sit *below* the main
+     one; nothing uses it today, so there is nothing to pull apart yet. */
+  --heading-subtle: var(--gray-800);
 
   /* Body copy. Was #737373 → 4.35:1 on --background, i.e. below AA.
      #6e6e6e is a hair deeper, visually near-identical, and clears it:
@@ -290,12 +303,6 @@
   --art-glyph:     var(--gray-700);
   --art-chip:      var(--gray-600);
   --art-highlight: #ffffff;
-  --art-tile-from: var(--gray-50);
-  --art-tile-to:   #e1e1e1;
-  --art-tile-shadow:
-    0 12px 24px -10px rgb(0 0 0 / 0.18),
-    inset 0 1px 2px rgb(255 255 255 / 0.9),
-    inset 0 -2px 2px rgb(0 0 0 / 0.05);
 
   /* Map illustration — the Kigali street render. These five values were
      duplicated by hand in final-cta.tsx and smart-mobility.tsx; the two
@@ -357,24 +364,14 @@
   --footer-link: var(--gray-800);
   --footer-link-hover: var(--primary-text);
 
-  /* Footer mark — the extruded Rides R. Pale gradient faces with a brand-blue
-     keyline, so it reads as drawn rather than rendered.
 
-     Two knobs control how it sits in the footer:
-       --mark-height  how tall the whole mark would be, uncropped.
-       --mark-reveal  the fraction of that height actually shown, 0–1.
-                      1 = the whole letter; lower values let the footer's
-                      bottom edge crop it. Below about 0.6 the R's legs go and
-                      it stops reading as a letter — which may be what you
-                      want, but it is a deliberate choice, not a free dial. */
-  --mark-height: 20rem;
-  --mark-reveal: 1;
-
-  --mark-stroke:    var(--primary);
-  --mark-face-from: #ffffff;
-  --mark-face-to:   #eef6ff;
-  --mark-wall-from: #e8f2ff;
-  --mark-wall-to:   #d3e6ff;
+  /* Vehicle photography. A drop-shadow (not box-shadow) so it follows the
+     cut-out silhouette rather than a rectangle — that is what stops the
+     vehicles looking like stickers floating on the card. */
+  --vehicle-shadow: drop-shadow(0 14px 12px rgb(15 23 42 / 0.16))
+                    drop-shadow(0 3px 4px rgb(15 23 42 / 0.10));
+  --vehicle-shadow-hover: drop-shadow(0 22px 18px rgb(0 122 255 / 0.22))
+                          drop-shadow(0 4px 6px rgb(15 23 42 / 0.12));
 
   /* Focus ring */
   --focus-ring-width: 2px;
@@ -550,12 +547,20 @@ body {
   color: var(--primary-text);
 }
 
-/* Footer mark sizing. Height and crop both derive from the two --mark-*
-   knobs, so the amount of the R on show is a single number to change. */
-.footer-mark {
-  height: var(--mark-height);
-  width: auto;
-  margin-bottom: calc(var(--mark-height) * (var(--mark-reveal) - 1));
+/* Vehicle photograph: grounded, and it lifts toward the reader on hover. */
+.vehicle-art {
+  filter: var(--vehicle-shadow);
+  transition: transform var(--duration-slow) var(--ease-out),
+              filter var(--duration-slow) var(--ease-out);
+  will-change: transform;
+}
+.vehicle-art:hover {
+  transform: translateY(-6px) scale(1.05);
+  filter: var(--vehicle-shadow-hover);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vehicle-art { transition: none; }
+  .vehicle-art:hover { transform: none; }
 }
 
 /* Dotted hairline. `border-dotted` at 1px renders 1px dots with 1px gaps,

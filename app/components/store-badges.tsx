@@ -25,21 +25,21 @@ const GOOGLE_PLAY_BRAND = {
   yellow: "#ffce00",
 } as const;
 
-function AppStoreGlyph() {
+export function AppStoreGlyph({ className = "h-6 w-6" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6 fill-current">
+    <svg viewBox="0 0 24 24" aria-hidden className={`${className} fill-current`}>
       <path d="M17.05 12.5c-.03-2.94 2.4-4.36 2.51-4.43-1.37-2-3.5-2.27-4.25-2.3-1.81-.18-3.53 1.07-4.45 1.07-.93 0-2.34-1.04-3.85-1.01-1.98.03-3.81 1.15-4.83 2.92-2.06 3.58-.53 8.86 1.48 11.76 1 1.42 2.18 3.01 3.74 2.95 1.5-.06 2.07-.97 3.89-.97s2.34.97 3.93.94c1.62-.03 2.65-1.45 3.65-2.88 1.15-1.65 1.62-3.25 1.65-3.33-.04-.02-3.16-1.21-3.19-4.72z M14.45 4.07c.83-1 1.39-2.4 1.23-3.78-1.19.05-2.63.79-3.48 1.79-.77.89-1.44 2.31-1.26 3.67 1.32.1 2.68-.67 3.51-1.68z" />
     </svg>
   );
 }
 
-function GooglePlayGlyph() {
+export function GooglePlayGlyph({ className = "h-6 w-6" }: { className?: string }) {
   // Scoped so two badges on the same page cannot collide.
   const uid = useId().replace(/:/g, "");
   const topId = `${uid}-gp-top`;
   const bottomId = `${uid}-gp-bottom`;
   return (
-    <svg viewBox="0 0 24 24" aria-hidden className="h-6 w-6">
+    <svg viewBox="0 0 24 24" aria-hidden className={className}>
       <defs>
         <linearGradient id={topId} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor={GOOGLE_PLAY_BRAND.topFrom} />
@@ -118,7 +118,7 @@ export function StoreBadges({
   appStoreLabel,
   googlePlayEyebrow,
   googlePlayLabel,
-  href = "#download",
+  href = "/waitlist",
   variant = "primary",
   className = "",
 }: StoreBadgesProps) {

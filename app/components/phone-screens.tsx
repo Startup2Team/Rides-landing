@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * Phone screen content for the hero iPhone 16 Pro mockups.
  * Rider screen: "where do you want to go" booking flow.
@@ -9,6 +11,7 @@
  */
 
 import { RidesWordmark } from "./rides-logo";
+import { useSection } from "../i18n/context";
 
 function StatusBar({ time = "9:41" }: { time?: string }) {
   return (
@@ -39,6 +42,7 @@ function StatusBar({ time = "9:41" }: { time?: string }) {
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export function RiderScreen() {
+  const dm = useSection("deviceMockup");
   return (
     <div className="absolute inset-0 overflow-hidden bg-white">
       <style>{`
@@ -80,6 +84,7 @@ export function RiderScreen() {
 /* ────────────────────────────────────────────────────────────────────────── */
 
 export function DriverScreen() {
+  const dm = useSection("deviceMockup");
   return (
     <div className="absolute inset-0 flex flex-col overflow-hidden">
       {/* Wallpaper */}
@@ -96,7 +101,7 @@ export function DriverScreen() {
       {/* Date + time */}
       <div className="relative z-10 mt-8 flex flex-col items-center">
         <p className="text-[9px] font-medium text-white" style={{ textShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
-          Wednesday, 25 June
+          {dm.sampleDate}
         </p>
         <p className="mt-0.5 text-[52px] font-light leading-none tracking-[-0.03em] text-white" style={{ textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}>
           9:41
@@ -118,10 +123,10 @@ export function DriverScreen() {
                 <span className="text-[6.5px] text-white/45">just now</span>
               </div>
               <p className="mt-0.5 text-[8px] font-semibold leading-tight text-white">
-                Your driver is here!
+                {dm.driverArrived}
               </p>
               <p className="mt-0.5 text-[7px] leading-snug text-white/65">
-                Jean is waiting outside. Make it quick!
+                {dm.driverWaiting}
               </p>
             </div>
           </div>

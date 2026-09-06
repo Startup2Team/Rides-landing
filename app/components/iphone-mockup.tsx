@@ -1,4 +1,7 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useSection } from "../i18n/context";
 
 type IphoneMockupProps = {
   label: string;
@@ -30,6 +33,7 @@ export function IphoneMockup({
   flat = false,
   children,
 }: IphoneMockupProps) {
+  const dm = useSection("deviceMockup");
   return (
     <div
       className={`relative ${flat ? "" : "iphone-float"} ${className}`}
@@ -183,7 +187,7 @@ export function IphoneMockup({
                     className="mt-1.5 text-[11px]"
                     style={{ color: "rgba(40,60,90,0.4)" }}
                   >
-                    Coming soon
+                    {dm.comingSoon}
                   </p>
                 </div>
               </div>

@@ -214,6 +214,7 @@ export default function AboutPage() {
   const r2 = useReveal();
   const r3 = useReveal();
   const about = useSection("about");
+  const common = useSection("common");
 
   return (
     <main className="flex-1 overflow-x-hidden bg-background">
@@ -259,7 +260,7 @@ export default function AboutPage() {
             </div>
             <Photo
               src="/images/about-fleet.png"
-              alt="Our full fleet: sedan, moto with driver and passenger, pickup, and cargo truck"
+              alt={common.fleetAlt}
               className="mt-8 w-full scale-105 lg:scale-110"
               fit="contain"
               priority
@@ -355,7 +356,7 @@ export default function AboutPage() {
                     <Icon name={VALUE_ICONS[i] ?? "star"} className="h-6 w-6" />
                   </span>
                   <div>
-                    <h3 className="text-sm font-bold text-foreground sm:text-base">
+                    <h3 className="text-sm font-bold text-heading sm:text-base">
                       {i + 1}. {v.title}
                     </h3>
                     <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">

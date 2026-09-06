@@ -234,7 +234,7 @@ export default function Drivers() {
           <p className="type-eyebrow">
             For Drivers
           </p>
-          <h2 className="mt-3 text-balance text-3xl font-bold tracking-[-0.02em] text-foreground sm:text-4xl lg:text-5xl">
+          <h2 className="mt-3 text-balance text-3xl font-bold tracking-[-0.02em] text-heading sm:text-4xl lg:text-5xl">
             Drive on your{" "}
             <span className="text-primary">own terms</span>
           </h2>
