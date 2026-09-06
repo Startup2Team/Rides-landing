@@ -17,7 +17,9 @@
     "subheadline": "Porté par les gens, propulsé par le choix.",
     "appStoreEyebrow": "Télécharger sur l'",
     "googlePlayEyebrow": "Disponible sur",
-    "waitlistCta": "Rejoindre la liste d'attente"
+    "waitlistCta": "Rejoindre la liste d'attente",
+    "appStoreLabel": "App Store",
+    "googlePlayLabel": "Google Play"
   },
   "footer": {
     "tagline": "Une mobilité et une logistique portées par les gens, connectant passagers, chauffeurs et communautés à travers l'Afrique et au-delà.",
@@ -44,19 +46,24 @@
     "visionTitle": "Notre vision",
     "visionParts": [
       {
-        "text": "Devenir l'écosystème de mobilité, de logistique et de technologie centré sur les personnes le plus fiable au monde, en connectant plus de "
+        "text": "Devenir l'écosystème de mobilité, de logistique et de technologie centré sur les personnes le plus fiable au monde, en connectant plus de ",
+        "highlight": false
       },
       {
-        "text": "500 millions d'utilisateurs"
+        "text": "500 millions d'utilisateurs",
+        "highlight": true
       },
       {
-        "text": " tout en permettant à plus de "
+        "text": " tout en permettant à plus de ",
+        "highlight": false
       },
       {
-        "text": "5 millions de personnes"
+        "text": "5 millions de personnes",
+        "highlight": true
       },
       {
-        "text": " de générer des revenus durables en Afrique et au-delà."
+        "text": " de générer des revenus durables en Afrique et au-delà.",
+        "highlight": false
       }
     ],
     "missionTitle": "Notre mission",
@@ -108,16 +115,20 @@
     "impactBody": "Nous construisons l'un des plus grands écosystèmes technologiques d'Afrique. Il donne des moyens d'agir à des millions d'entrepreneurs, de chauffeurs, d'entreprises et de communautés grâce à des plateformes numériques innovantes.",
     "impactStats": [
       {
-        "label": "Utilisateurs connectés"
+        "label": "Utilisateurs connectés",
+        "value": "500M+"
       },
       {
-        "label": "Opportunités de revenus"
+        "label": "Opportunités de revenus",
+        "value": "5M+"
       },
       {
-        "label": "En Afrique et au-delà"
+        "label": "En Afrique et au-delà",
+        "value": ""
       },
       {
-        "label": "Des communautés plus fortes"
+        "label": "Des communautés plus fortes",
+        "value": ""
       }
     ],
     "promiseHeading": "Notre promesse",
@@ -232,7 +243,8 @@
     "whatsappButton": "Partager sur WhatsApp",
     "copyLink": "Copier le lien",
     "copied": "Copié !",
-    "joinAnother": "S'inscrire avec un autre numéro"
+    "joinAnother": "S'inscrire avec un autre numéro",
+    "vehicleRifani": "Rifani (tuk-tuk)"
   },
   "features": {
     "eyebrow": "Pensé pour le trajet",

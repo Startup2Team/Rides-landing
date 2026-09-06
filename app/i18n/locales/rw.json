@@ -17,7 +17,9 @@
     "subheadline": "Duyobowe n'abantu, dushyigikiwe n'amahitamo.",
     "appStoreEyebrow": "Kuramo kuri",
     "googlePlayEyebrow": "Iboneka kuri",
-    "waitlistCta": "Iyandikishe ku rutonde"
+    "waitlistCta": "Iyandikishe ku rutonde",
+    "appStoreLabel": "App Store",
+    "googlePlayLabel": "Google Play"
   },
   "footer": {
     "tagline": "Ubwikorezi n'ibikorwa bishingiye ku bantu, duhuza abagenzi, abashoferi n'imiryango muri Afurika no hanze yayo.",
@@ -44,19 +46,24 @@
     "visionTitle": "Icyerekezo cyacu",
     "visionParts": [
       {
-        "text": "Kuba urusobe rw'ingendo, ubwikorezi n'ikoranabuhanga rushingiye ku bantu rwizewe kurusha izindi ku isi, duhuza abakoresha barenga "
+        "text": "Kuba urusobe rw'ingendo, ubwikorezi n'ikoranabuhanga rushingiye ku bantu rwizewe kurusha izindi ku isi, duhuza abakoresha barenga ",
+        "highlight": false
       },
       {
-        "text": "miliyoni 500"
+        "text": "miliyoni 500",
+        "highlight": true
       },
       {
-        "text": " tunafasha abantu barenga "
+        "text": " tunafasha abantu barenga ",
+        "highlight": false
       },
       {
-        "text": "miliyoni 5"
+        "text": "miliyoni 5",
+        "highlight": true
       },
       {
-        "text": " kubona amahirwe yo kwinjiza arambye muri Afurika no hanze yayo."
+        "text": " kubona amahirwe yo kwinjiza arambye muri Afurika no hanze yayo.",
+        "highlight": false
       }
     ],
     "missionTitle": "Inshingano yacu",
@@ -108,16 +115,20 @@
     "impactBody": "Turimo kubaka rumwe mu nsobe z'ikoranabuhanga nini muri Afurika. Ruha imbaraga ba rwiyemezamirimo, abashoferi, ubucuruzi n'imiryango babarirwa muri za miliyoni binyuze ku mbuga za digitale z'udushya.",
     "impactStats": [
       {
-        "label": "Abakoresha bahujwe"
+        "label": "Abakoresha bahujwe",
+        "value": "500M+"
       },
       {
-        "label": "Amahirwe yo kwinjiza"
+        "label": "Amahirwe yo kwinjiza",
+        "value": "5M+"
       },
       {
-        "label": "Muri Afurika no hanze yayo"
+        "label": "Muri Afurika no hanze yayo",
+        "value": ""
       },
       {
-        "label": "Imiryango ikomeye kurushaho"
+        "label": "Imiryango ikomeye kurushaho",
+        "value": ""
       }
     ],
     "promiseHeading": "Isezerano ryacu",
