@@ -5,6 +5,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   ApplicationError,
   submitApplication,
+  getCareersConfig,
+  type CareersConfig,
   type ApplicantStatus,
   type ApplicationPosition,
   type WorkRight,
@@ -414,9 +416,19 @@ export function CareersForm() {
     ? t("reviewTitle")
     : renderTemplate(t("stepOf"), { current: String(shownStep), total: String(total) });
 
+  const [config, setConfig] = useState<CareersConfig | null>(null);
+
+  useEffect(() => {
+    getCareersConfig().then((data) => {
+      if (data) setConfig(data);
+    });
+  }, []);
+
+  const isClosed = config ? (!config.is_open || (config.max_applications > 0 && config.total_submitted >= config.max_applications)) : false;
+
   return (
-    <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
-      {/* Panel first in the DOM so it reads before the questions, and so it
+    <div className="grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-12">
+      {/* Visual / context panel. Rendered first so its desktop sticky position
           lands above them when the columns stack. */}
       <div className="lg:col-span-5">
         <CareersPanel
@@ -425,13 +437,39 @@ export function CareersForm() {
           total={total}
           pct={pct}
           label={progressLabel}
+          customHeading={config?.hero_title}
+          customSubheading={config?.hero_subtitle}
         />
       </div>
 
       <div className="lg:col-span-7">
-        {step === INTRO ? (
+        {isClosed ? (
           <div className="lg:py-4">
-            <CareersIntroCopy />
+            <CareersIntroCopy
+              customHeading={config?.hero_title}
+              customSubheading={config?.hero_subtitle}
+            />
+            <div className="mt-8 rounded-3xl border border-amber-200 bg-amber-50/70 p-7 shadow-sm space-y-3">
+              <div className="flex items-center gap-3 text-amber-800 font-bold text-lg">
+                <svg className="w-6 h-6 shrink-0 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Applications Currently Closed
+              </div>
+              <p className="text-sm text-amber-900 leading-relaxed font-medium">
+                {config?.closed_message || "Applications for our software engineering and internship programs are currently closed for this hiring cycle. Please check back for future openings!"}
+              </p>
+              <div className="pt-2 text-xs text-amber-700 font-medium">
+                Thank you for your interest in joining Rides.
+              </div>
+            </div>
+          </div>
+        ) : step === INTRO ? (
+          <div className="lg:py-4">
+            <CareersIntroCopy
+              customHeading={config?.hero_title}
+              customSubheading={config?.hero_subtitle}
+            />
             <button
               type="button"
               onClick={() => setStep(0)}
