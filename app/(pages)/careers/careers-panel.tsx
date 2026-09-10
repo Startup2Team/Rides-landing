@@ -20,15 +20,22 @@ export function CareersPanel({
   total,
   pct,
   label,
+  customHeading,
+  customSubheading,
 }: {
   started: boolean;
   shownStep: number;
   total: number;
   pct: number;
   label: ReactNode;
+  customHeading?: string;
+  customSubheading?: string;
 }) {
   const t = useTranslations("careers");
   const tc = useTranslations("common");
+
+  const headingText = customHeading || t("heading");
+  const taglineText = customSubheading || t("tagline");
 
   const facts = [
     { label: t("startsLabel"), value: t("startsValue") },
@@ -47,8 +54,6 @@ export function CareersPanel({
         className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
         priority
       />
-      {/* Keeps the copy legible over whatever part of the photo lands behind
-          it — the sky at the top is bright, the road at the bottom is not. */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-t from-foreground via-foreground/85 to-foreground/40"
@@ -60,9 +65,9 @@ export function CareersPanel({
             {t("eyebrow")}
           </p>
           <p className="mt-4 text-balance text-2xl font-bold leading-[1.1] tracking-[-0.02em] lg:text-3xl">
-            {t("heading")}
+            {headingText}
           </p>
-          <p className="mt-3 text-sm font-semibold text-background/80">{t("tagline")}</p>
+          <p className="mt-3 text-sm font-semibold text-background/80">{taglineText}</p>
         </div>
 
         <div>
@@ -108,12 +113,21 @@ export function CareersPanel({
 }
 
 /** The opening copy, shown beside the panel until the applicant starts. */
-export function CareersIntroCopy() {
+export function CareersIntroCopy({
+  customHeading,
+  customSubheading,
+}: {
+  customHeading?: string;
+  customSubheading?: string;
+} = {}) {
   const t = useTranslations("careers");
+  const headingText = customHeading || t("heading");
+  const taglineText = customSubheading || t("tagline");
+
   return (
     <div>
-      <h1 className="type-section-title text-balance">{t("heading")}</h1>
-      <p className="mt-4 text-lg font-semibold text-primary-text">{t("tagline")}</p>
+      <h1 className="type-section-title text-balance">{headingText}</h1>
+      <p className="mt-4 text-lg font-semibold text-primary-text">{taglineText}</p>
       <p className="mt-6 text-pretty text-base leading-relaxed text-muted-foreground">
         {t("intro")}
       </p>

@@ -177,3 +177,26 @@ export async function submitApplication(
   }
   return (json?.data ?? {}) as ApplicationReceipt;
 }
+
+export type CareersConfig = {
+  is_open: boolean;
+  max_applications: number;
+  total_submitted: number;
+  hero_title: string;
+  hero_subtitle: string;
+  open_at?: string;
+  close_at?: string;
+  closed_message: string;
+  updated_at: string;
+};
+
+export async function getCareersConfig(): Promise<CareersConfig | null> {
+  try {
+    const res = await fetch(`${BASE_URL}/careers/config`, { cache: "no-store" });
+    if (!res.ok) return null;
+    const json = await res.json().catch(() => null);
+    return (json?.data ?? json) as CareersConfig;
+  } catch {
+    return null;
+  }
+}
