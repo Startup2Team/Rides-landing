@@ -144,6 +144,13 @@ export function CareersForm() {
   const [showErrors, setShowErrors] = useState(false);
   const [state, setState] = useState<State>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [config, setConfig] = useState<CareersConfig | null>(null);
+
+  useEffect(() => {
+    getCareersConfig().then((data) => {
+      if (data) setConfig(data);
+    });
+  }, []);
 
   const req = (v: string) => (v.trim() ? null : t("errRequired"));
   const reqUrl = (v: string) => (!v.trim() ? t("errRequired") : isValidUrl(v) ? null : t("errUrl"));
@@ -415,15 +422,6 @@ export function CareersForm() {
   const progressLabel = onReview
     ? t("reviewTitle")
     : renderTemplate(t("stepOf"), { current: String(shownStep), total: String(total) });
-
-  const [config, setConfig] = useState<CareersConfig | null>(null);
-
-  useEffect(() => {
-    getCareersConfig().then((data) => {
-      if (data) setConfig(data);
-    });
-  }, []);
-
   const isClosed = config ? (!config.is_open || (config.max_applications > 0 && config.total_submitted >= config.max_applications)) : false;
 
   return (
