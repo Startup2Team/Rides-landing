@@ -180,9 +180,23 @@ export function CareersForm() {
     },
     {
       title: t("phoneLabel"),
-      error: req(phone),
+      error: !phone.trim() ? t("errRequired") : /^\d{10}$/.test(phone.trim()) ? null : "Phone number must be exactly 10 digits (e.g. 0781234567)",
       summary: phone,
-      node: <input autoFocus type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} autoComplete="tel" className={inputClass(showErrors && !phone.trim())} />,
+      node: (
+        <div>
+          <input
+            autoFocus
+            type="tel"
+            maxLength={10}
+            placeholder="078XXXXXXX (10 digits)"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value.replace(/\D/g, "").slice(0, 10))}
+            autoComplete="tel"
+            className={inputClass(Boolean(showErrors && (!phone.trim() || !/^\d{10}$/.test(phone.trim()))))}
+          />
+          <p className="mt-2 text-xs text-muted-foreground">Enter a 10-digit phone number without country code or spaces.</p>
+        </div>
+      ),
     },
     {
       title: t("cityLabel"),
@@ -248,7 +262,45 @@ export function CareersForm() {
       title: t("techLabel"),
       error: req(technologies),
       summary: technologies,
-      node: <textarea autoFocus rows={4} value={technologies} onChange={(e) => setTechnologies(e.target.value)} className={`${inputClass(showErrors && !technologies.trim())} resize-none`} />,
+      node: (
+        <div className="space-y-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Select popular options below or type your own:</p>
+          <div className="flex flex-wrap gap-2">
+            {["React", "Next.js", "Node.js", "Go", "TypeScript", "Python", "Docker", "PostgreSQL", "React Native", "Tailwind CSS", "Java", "C++", "AWS"].map((tech) => {
+              const selected = technologies.split(",").map(s => s.trim().toLowerCase()).includes(tech.toLowerCase());
+              return (
+                <button
+                  type="button"
+                  key={tech}
+                  onClick={() => {
+                    const list = technologies.split(",").map(s => s.trim()).filter(Boolean);
+                    const idx = list.findIndex(s => s.toLowerCase() === tech.toLowerCase());
+                    if (idx >= 0) {
+                      list.splice(idx, 1);
+                    } else {
+                      list.push(tech);
+                    }
+                    setTechnologies(list.join(", "));
+                  }}
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-all ${
+                    selected ? "border-primary bg-primary/10 text-primary font-bold shadow-sm" : "border-border bg-card text-muted-foreground hover:bg-surface-alt"
+                  }`}
+                >
+                  {selected ? "✓ " : "+ "}{tech}
+                </button>
+              );
+            })}
+          </div>
+          <textarea
+            autoFocus
+            rows={3}
+            placeholder="Click technologies above or write yours (e.g. React, Go, Docker, PostgreSQL...)"
+            value={technologies}
+            onChange={(e) => setTechnologies(e.target.value)}
+            className={`${inputClass(showErrors && !technologies.trim())} resize-none`}
+          />
+        </div>
+      ),
     },
     {
       title: t("projectUrlLabel"),
@@ -259,7 +311,13 @@ export function CareersForm() {
         <div className="space-y-6">
           <input autoFocus type="url" inputMode="url" placeholder="https://" value={projectUrl} onChange={(e) => setProjectUrl(e.target.value)} className={inputClass(Boolean(showErrors && reqUrl(projectUrl)))} />
           <Sub label={t("projectBodyLabel")}>
-            <textarea rows={4} value={projectBody} onChange={(e) => setProjectBody(e.target.value)} className={`${inputClass(showErrors && !projectBody.trim())} resize-none`} />
+            <textarea
+              rows={5}
+              placeholder="Describe a key project you built: What was the goal? What technical stack did you use? What was your specific personal contribution?"
+              value={projectBody}
+              onChange={(e) => setProjectBody(e.target.value)}
+              className={`${inputClass(showErrors && !projectBody.trim())} resize-none`}
+            />
           </Sub>
         </div>
       ),
