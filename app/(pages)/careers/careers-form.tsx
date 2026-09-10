@@ -480,107 +480,101 @@ export function CareersForm() {
             </button>
           </div>
         ) : (
-          <FormBody />
+          <form onSubmit={handleSubmit} noValidate>
+            <h1 className="sr-only">{t("heading")}</h1>
+
+            <div className="min-h-[21rem]">
+              {onReview ? (
+                <div>
+                  <p ref={headingRef} tabIndex={-1} className="text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-heading outline-none sm:text-3xl">
+                    {t("reviewTitle")}
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground">{t("reviewIntro")}</p>
+                  <dl className="mt-6 divide-y divide-border rounded-2xl border border-border bg-card">
+                    {questions.map((q, i) => (
+                      <div key={q.title} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-5 py-3">
+                        <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">{q.title}</dt>
+                        <dd className="flex items-center gap-3 text-sm text-foreground">
+                          <span className={q.summary ? "" : "text-faint-foreground"}>
+                            {q.summary || t("notAnswered")}
+                          </span>
+                          <button type="button" onClick={() => setStep(i)} className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-text underline underline-offset-2">
+                            {t("back")}
+                          </button>
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+
+                  <div className="mt-8">
+                    <label className="flex cursor-pointer items-start gap-3">
+                      <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[var(--primary-strong)]" />
+                      <span className="text-sm leading-relaxed text-muted-foreground">
+                        {t("consentLabel")}{" "}
+                        <Link href="/privacy" className="font-medium text-primary-text underline underline-offset-2">
+                          {t("consentLink")}
+                        </Link>
+                      </span>
+                    </label>
+                    {showErrors && !consent ? (
+                      <p role="alert" className="mt-2 text-[11px] font-medium text-red-600">{t("errConsent")}</p>
+                    ) : null}
+                  </div>
+                </div>
+              ) : current ? (
+                <div>
+                  <p ref={headingRef} tabIndex={-1} className="text-balance text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-heading outline-none sm:text-3xl">
+                    {current.title}
+                  </p>
+                  {current.help ? <p className="mt-2 text-sm text-muted-foreground">{current.help}</p> : null}
+                  <div className="mt-6">{current.node}</div>
+                  {showErrors && current.error ? (
+                    <p role="alert" className="mt-2 text-[11px] font-medium text-red-600">{current.error}</p>
+                  ) : null}
+                </div>
+              ) : null}
+            </div>
+
+            <div className="mt-10 flex items-center gap-3 border-t border-border pt-6">
+              <button
+                type="button"
+                onClick={() => setStep((s) => Math.max(s - 1, 0))}
+                disabled={step === 0}
+                className="inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-medium text-foreground transition-colors hover:bg-surface-alt disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                <Arrow className="h-4 w-4" back />
+                {t("back")}
+              </button>
+
+              <button
+                type="submit"
+                disabled={state === "sending"}
+                className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-primary-strong px-7 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"
+              >
+                {state === "sending" ? (
+                  <>
+                    <span className="mr-2 inline-block h-3 w-3 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
+                    {t("sending")}
+                  </>
+                ) : onReview ? (
+                  t("submit")
+                ) : (
+                  <>
+                    {t("next")}
+                    <Arrow className="h-4 w-4" />
+                  </>
+                )}
+              </button>
+            </div>
+
+            {state === "error" ? (
+              <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs font-semibold text-red-700">
+                {errorMessage ?? t("errGeneric")}
+              </p>
+            ) : null}
+          </form>
         )}
       </div>
     </div>
   );
-
-  function FormBody() {
-    return (
-    <form onSubmit={handleSubmit} noValidate>
-      <h1 className="sr-only">{t("heading")}</h1>
-
-      <div className="min-h-[21rem]">
-        {onReview ? (
-          <div>
-            <p ref={headingRef} tabIndex={-1} className="text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-heading outline-none sm:text-3xl">
-              {t("reviewTitle")}
-            </p>
-            <p className="mt-2 text-sm text-muted-foreground">{t("reviewIntro")}</p>
-            <dl className="mt-6 divide-y divide-border rounded-2xl border border-border bg-card">
-              {questions.map((q, i) => (
-                <div key={q.title} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-5 py-3">
-                  <dt className="text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">{q.title}</dt>
-                  <dd className="flex items-center gap-3 text-sm text-foreground">
-                    <span className={q.summary ? "" : "text-faint-foreground"}>
-                      {q.summary || t("notAnswered")}
-                    </span>
-                    <button type="button" onClick={() => setStep(i)} className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-text underline underline-offset-2">
-                      {t("back")}
-                    </button>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            <div className="mt-8">
-              <label className="flex cursor-pointer items-start gap-3">
-                <input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-[var(--primary-strong)]" />
-                <span className="text-sm leading-relaxed text-muted-foreground">
-                  {t("consentLabel")}{" "}
-                  <Link href="/privacy" className="font-medium text-primary-text underline underline-offset-2">
-                    {t("consentLink")}
-                  </Link>
-                </span>
-              </label>
-              {showErrors && !consent ? (
-                <p role="alert" className="mt-2 text-[11px] font-medium text-red-600">{t("errConsent")}</p>
-              ) : null}
-            </div>
-          </div>
-        ) : current ? (
-          <div>
-            <p ref={headingRef} tabIndex={-1} className="text-balance text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-heading outline-none sm:text-3xl">
-              {current.title}
-            </p>
-            {current.help ? <p className="mt-2 text-sm text-muted-foreground">{current.help}</p> : null}
-            <div className="mt-6">{current.node}</div>
-            {showErrors && current.error ? (
-              <p role="alert" className="mt-2 text-[11px] font-medium text-red-600">{current.error}</p>
-            ) : null}
-          </div>
-        ) : null}
-      </div>
-
-      <div className="mt-10 flex items-center gap-3 border-t border-border pt-6">
-        <button
-          type="button"
-          onClick={() => setStep((s) => Math.max(s - 1, 0))}
-          disabled={step === 0}
-          className="inline-flex h-12 items-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-medium text-foreground transition-colors hover:bg-surface-alt disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          <Arrow className="h-4 w-4" back />
-          {t("back")}
-        </button>
-
-        <button
-          type="submit"
-          disabled={state === "sending"}
-          className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-primary-strong px-7 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:flex-none"
-        >
-          {state === "sending" ? (
-            <>
-              <span className="mr-2 inline-block h-3 w-3 animate-spin rounded-full border-2 border-primary-foreground/40 border-t-primary-foreground" />
-              {t("sending")}
-            </>
-          ) : onReview ? (
-            t("submit")
-          ) : (
-            <>
-              {t("next")}
-              <Arrow className="h-4 w-4" />
-            </>
-          )}
-        </button>
-      </div>
-
-      {state === "error" ? (
-        <p role="alert" className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-xs font-semibold text-red-700">
-          {errorMessage ?? t("errGeneric")}
-        </p>
-      ) : null}
-    </form>
-    );
-  }
 }
