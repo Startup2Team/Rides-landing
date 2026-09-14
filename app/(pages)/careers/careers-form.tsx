@@ -11,7 +11,7 @@ import {
 } from "@/lib/api";
 import { renderTemplate } from "@/lib/i18n-template";
 import { useTranslations } from "../../i18n/context";
-import { CareersIntroCopy, CareersPanel } from "./careers-panel";
+import { CareersPanel } from "./careers-panel";
 
 type State = "idle" | "sending" | "success" | "error";
 
@@ -118,7 +118,7 @@ function Choice({
 export function CareersForm() {
   const t = useTranslations("careers");
 
-  const [step, setStep] = useState<number>(INTRO);
+  const [step, setStep] = useState<number>(0);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -415,37 +415,25 @@ export function CareersForm() {
     : renderTemplate(t("stepOf"), { current: String(shownStep), total: String(total) });
 
   return (
-    <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
-      {/* Panel first in the DOM so it reads before the questions, and so it
-          lands above them when the columns stack. */}
-      <div className="lg:col-span-5">
-        <CareersPanel
-          started={started}
-          shownStep={shownStep}
-          total={total}
-          pct={pct}
-          label={progressLabel}
-        />
-      </div>
+    <section className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-12 lg:py-16">
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-14">
+        {/* Panel first in the DOM so it reads before the questions, and so it
+            lands above them when the columns stack. */}
+        <div className="lg:col-span-5">
+          <CareersPanel
+            started={started}
+            shownStep={shownStep}
+            total={total}
+            pct={pct}
+            label={progressLabel}
+          />
+        </div>
 
-      <div className="lg:col-span-7">
-        {step === INTRO ? (
-          <div className="lg:py-4">
-            <CareersIntroCopy />
-            <button
-              type="button"
-              onClick={() => setStep(0)}
-              className="mt-10 inline-flex h-12 items-center gap-2 rounded-full bg-primary-strong px-7 text-[11px] font-bold uppercase tracking-[0.18em] text-primary-foreground shadow-lg shadow-primary/30 transition-all hover:bg-primary/90 active:scale-[0.98]"
-            >
-              {t("startApplication")}
-              <Arrow className="h-4 w-4" />
-            </button>
-          </div>
-        ) : (
+        <div className="lg:col-span-7">
           <FormBody />
-        )}
+        </div>
       </div>
-    </div>
+    </section>
   );
 
   function FormBody() {

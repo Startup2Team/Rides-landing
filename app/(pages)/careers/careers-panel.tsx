@@ -107,19 +107,3 @@ export function CareersPanel({
   );
 }
 
-/** The opening copy, shown beside the panel until the applicant starts. */
-export function CareersIntroCopy() {
-  const t = useTranslations("careers");
-  return (
-    <div>
-      <h1 className="type-section-title text-balance">{t("heading")}</h1>
-      <p className="mt-4 text-lg font-semibold text-primary-text">{t("tagline")}</p>
-      <p className="mt-6 text-pretty text-base leading-relaxed text-muted-foreground">
-        {t("intro")}
-      </p>
-      <p className="mt-4 text-pretty text-base leading-relaxed text-muted-foreground">
-        {t("introBody")}
-      </p>
-    </div>
-  );
-}

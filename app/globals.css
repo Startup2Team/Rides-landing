@@ -509,6 +509,21 @@ body {
 @media (min-width: 640px)  { .type-feature-title { font-size: 2.25rem; } }
 @media (min-width: 1024px) { .type-feature-title { font-size: 2.75rem; } }
 
+/* Panel heading — a section title inside a card or band. Fills a real gap in
+   the scale: .type-card-title tops out at 24px and .type-feature-title starts
+   at 30px and reaches 44px, which competes with the page h1 when it sits
+   inside a panel. */
+.type-panel-title {
+  font-size: 1.5rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--heading);
+  text-wrap: balance;
+}
+@media (min-width: 640px)  { .type-panel-title { font-size: 1.75rem; } }
+@media (min-width: 1024px) { .type-panel-title { font-size: 2rem; } }
+
 /* Card heading. */
 .type-card-title {
   font-size: 1.25rem;
@@ -561,6 +576,190 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .vehicle-art { transition: none; }
   .vehicle-art:hover { transform: none; }
+}
+
+/* Faint graph-paper field behind the careers hero. Two hairline gradients
+   rather than an image: it scales to any viewport, costs no request, and
+   recolours with the theme because it is drawn from --border. The mask fades
+   the lines out at the edges so the block ends softly instead of being clipped
+   mid-square. */
+.grid-field {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 11rem 11rem;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, #000 55%, transparent 100%);
+}
+
+.careers-map-wash {
+  background-image: url('/images/hero-map.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.12;
+  filter: grayscale(100%) brightness(1.08) contrast(0.92);
+  -webkit-mask-image: radial-gradient(ellipse 85% 85% at center, #000 20%, transparent 94%);
+  mask-image: radial-gradient(ellipse 85% 85% at center, #000 20%, transparent 94%);
+  animation: careers-map-pan 7s var(--ease-in-out) infinite alternate;
+  transform: translate3d(var(--career-cursor-x, 0px), var(--career-cursor-y, 0px), 0) scale(var(--career-map-scale, 1));
+  transition: transform 180ms var(--ease-out);
+}
+
+.careers-cursor-glow {
+  z-index: 0;
+  background: radial-gradient(
+    circle 18rem at var(--career-glow-x, 50%) var(--career-glow-y, 50%),
+    rgb(0 0 0 / 0.1),
+    transparent 72%
+  );
+  mix-blend-mode: multiply;
+  opacity: calc(var(--career-cursor-active, 0) * 0.9);
+  transition: background-position 180ms var(--ease-out), opacity 180ms var(--ease-out);
+}
+
+.careers-cursor-shadow {
+  z-index: 0;
+  background: radial-gradient(
+    ellipse 12rem 8rem at var(--career-glow-x, 50%) var(--career-glow-y, 50%),
+    rgb(0 0 0 / 0.12),
+    transparent 70%
+  );
+  filter: blur(12px);
+  mix-blend-mode: multiply;
+  opacity: calc(var(--career-cursor-active, 0) * 0.8);
+  transition: opacity 180ms var(--ease-out);
+}
+
+@keyframes careers-map-pan {
+  from { background-position: 40% 44%; }
+  to { background-position: 60% 56%; }
+}
+
+.careers-hero-content {
+  opacity: var(--career-copy-opacity, 1);
+  transform: translateY(var(--career-copy-y, 0rem)) scale(var(--career-copy-scale, 1));
+  transition: opacity 120ms linear, transform 120ms linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .careers-map-wash,
+  .careers-cursor-glow,
+  .careers-cursor-shadow,
+  .careers-hero-content {
+    animation: none;
+    transform: none;
+    transition: none;
+  }
+
+  .careers-hero-content {
+    opacity: 1;
+  }
+
+  .careers-cursor-glow {
+    opacity: 0;
+  }
+
+  .careers-cursor-shadow {
+    opacity: 0;
+  }
+}
+
+.careers-apply-poster {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.careers-apply-poster::before,
+.careers-apply-poster::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+}
+
+.careers-apply-poster::before {
+  z-index: 0;
+  background: url('/images/vehicles/send_cv.png') center / cover no-repeat;
+  filter: blur(0) grayscale(15%) saturate(0.9) opacity(0.9);
+  transform: scale(1.02);
+}
+
+.careers-apply-poster::after {
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.86) 0%,
+    rgba(255, 255, 255, 0.62) 36%,
+    rgba(255, 255, 255, 0.14) 76%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+}
+
+.careers-apply-poster > * {
+  position: relative;
+  z-index: 2;
+}
+
+.careers-page-section > .careers-hero {
+  border-bottom: 1px solid var(--border);
+}
+
+body:has(.careers-page-section) {
+  scrollbar-width: none;
+}
+
+body:has(.careers-page-section)::-webkit-scrollbar {
+  display: none;
+}
+
+.careers-apply-top {
+  position: relative;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+}
+
+.careers-apply-top::after {
+  position: absolute;
+  right: var(--space-6);
+  bottom: 0;
+  left: var(--space-6);
+  height: 1px;
+  background: linear-gradient(to right, rgba(15, 23, 42, 0.16), transparent 70%);
+  content: "";
+  opacity: 0.8;
+}
+
+.careers-apply-title {
+  color: var(--heading);
+  font-size: clamp(2rem, 1.3rem + 2.4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.careers-apply-bottom {
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+}
+
+.careers-include-list li {
+  padding: 0.45rem 0.6rem 0.45rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+}
+
+.careers-apply-button {
+  background: #ffffff;
+  color: #111827;
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.08);
+}
+
+.careers-apply-button:hover {
+  background: #111827;
+  color: #ffffff;
+  border-color: rgba(17, 24, 39, 0.9);
+  box-shadow: 0 16px 28px rgba(17, 24, 39, 0.16);
 }
 
 /* Dotted hairline. `border-dotted` at 1px renders 1px dots with 1px gaps,
