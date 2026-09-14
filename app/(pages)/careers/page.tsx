@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { CareersForm } from "./careers-form";
+import { CareersHero } from "./careers-hero";
+import { CareersResume } from "./careers-resume";
 
 export const metadata: Metadata = {
   title: "Developer Internship Program 2026 — Rides",
@@ -10,8 +11,9 @@ export const metadata: Metadata = {
 export default function CareersPage() {
   return (
     <main className="relative flex-1">
-      <section className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-12 lg:py-16">
-        <CareersForm />
+      <section className="careers-page-section">
+        <CareersHero />
+        <CareersResume />
       </section>
     </main>
   );
