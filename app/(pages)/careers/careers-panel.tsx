@@ -20,15 +20,22 @@ export function CareersPanel({
   total,
   pct,
   label,
+  customHeading,
+  customSubheading,
 }: {
   started: boolean;
   shownStep: number;
   total: number;
   pct: number;
   label: ReactNode;
+  customHeading?: string;
+  customSubheading?: string;
 }) {
   const t = useTranslations("careers");
   const tc = useTranslations("common");
+
+  const headingText = customHeading || t("heading");
+  const taglineText = customSubheading || t("tagline");
 
   const facts = [
     { label: t("startsLabel"), value: t("startsValue") },
@@ -47,8 +54,6 @@ export function CareersPanel({
         className="absolute inset-0 -z-10 h-full w-full object-cover opacity-40"
         priority
       />
-      {/* Keeps the copy legible over whatever part of the photo lands behind
-          it — the sky at the top is bright, the road at the bottom is not. */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-gradient-to-t from-foreground via-foreground/85 to-foreground/40"
@@ -60,9 +65,9 @@ export function CareersPanel({
             {t("eyebrow")}
           </p>
           <p className="mt-4 text-balance text-2xl font-bold leading-[1.1] tracking-[-0.02em] lg:text-3xl">
-            {t("heading")}
+            {headingText}
           </p>
-          <p className="mt-3 text-sm font-semibold text-background/80">{t("tagline")}</p>
+          <p className="mt-3 text-sm font-semibold text-background/80">{taglineText}</p>
         </div>
 
         <div>
@@ -106,4 +111,3 @@ export function CareersPanel({
     </div>
   );
 }
-
