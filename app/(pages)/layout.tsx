@@ -1,6 +1,7 @@
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import { Chatbot } from "../components/chatbot";
+import { CareersAnnouncement } from "../components/careers-announcement";
 
 export default function MarketingLayout({
   children,
@@ -15,6 +16,7 @@ export default function MarketingLayout({
       {/* Clears the fixed bar: 3.5rem tall, 4rem at sm. The hero cancels this
           with a matching negative margin so its map can run under the bar. */}
       <div className="pt-14 sm:pt-16">
+        <CareersAnnouncement />
         {children}
       </div>
       <div className="print:hidden">

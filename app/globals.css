@@ -440,6 +440,216 @@ body {
   color: var(--foreground);
 }
 
+/* Pinned directly under the fixed navbar (h-14, sm:h-16). Left in normal flow
+   it scrolled up behind the navbar's see-through glass, which frosted the text
+   away and left a bare blue strip across the top of the page. z-40 keeps it
+   over page content but under the header (z-50), so the mobile menu sheet
+   still drops down over it. */
+.careers-announcement {
+  position: sticky;
+  top: 3.5rem;
+  z-index: 40;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--primary-foreground);
+  background-color: var(--primary-strong);
+  background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.1) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+@media (min-width: 640px) {
+  .careers-announcement {
+    top: 4rem;
+  }
+}
+
+/* While the banner shows, the hero stops pulling itself up under the navbar:
+   that pull-up exists so the map runs behind the glass bar, but with the
+   banner in between it only slid the headline under the banner instead. The
+   hero sits below both and gives back the navbar's height so it still ends
+   near the fold. Dismiss the banner and the selector stops matching, so the
+   original bleed returns. */
+body:has(.careers-announcement) .hero-bleed {
+  height: calc(100svh - 3.5rem);
+  margin-top: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 640px) {
+  body:has(.careers-announcement) .hero-bleed {
+    height: calc(100svh - 4rem);
+  }
+}
+
+/* Anchor jumps have to clear the banner as well as the navbar, or the target's
+   first lines land underneath it. The banner is 4rem at sm and up and wraps to
+   about 7rem on phones. */
+html:has(.careers-announcement) {
+  scroll-padding-top: 11.5rem;
+}
+
+@media (min-width: 640px) {
+  html:has(.careers-announcement) {
+    scroll-padding-top: 9rem;
+  }
+}
+
+.careers-announcement-strip {
+  display: block;
+  width: 100%;
+  height: 20px;
+  min-height: 20px;
+  padding: 0;
+}
+
+.careers-announcement-inner {
+  position: relative;
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  gap: var(--space-5);
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0.5rem var(--gutter);
+}
+
+.careers-announcement-icon {
+  display: grid;
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+}
+
+.careers-announcement-icon svg {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.careers-announcement-message {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+  font-size: var(--text-body-lg);
+  line-height: 1.35;
+}
+
+.careers-announcement-message strong {
+  font-size: inherit;
+  font-weight: 400;
+}
+
+.careers-announcement-divider {
+  width: 1px;
+  height: 1.75rem;
+  flex: 0 0 auto;
+  background: rgb(255 255 255 / 0.38);
+}
+
+.careers-announcement-link {
+  display: inline-flex;
+  min-height: 2.25rem;
+  align-items: center;
+  gap: 0.55rem;
+  flex: 0 0 auto;
+  border: 1px solid rgb(255 255 255 / 0.55);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 0.9rem;
+  color: var(--primary-foreground);
+  font-size: var(--text-body-sm);
+  font-weight: 700;
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.careers-announcement-link:hover {
+  background: var(--primary-foreground);
+  color: var(--primary-strong);
+}
+
+.careers-announcement-link svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.careers-announcement-link:hover svg {
+  transform: translateX(0.15rem);
+}
+
+.careers-announcement-close {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-left: auto;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: var(--radius-full);
+  color: rgb(255 255 255 / 0.78);
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+
+.careers-announcement-close:hover {
+  background: rgb(255 255 255 / 0.12);
+  color: var(--primary-foreground);
+}
+
+.careers-announcement-close svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+@media (max-width: 639px) {
+  .careers-announcement-inner {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--space-3);
+    padding: 0.65rem 3.75rem 0.65rem var(--gutter);
+  }
+
+  .careers-announcement-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    grid-row: span 2;
+  }
+
+  .careers-announcement-icon svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  .careers-announcement-message {
+    display: block;
+    font-size: var(--text-caption);
+  }
+
+  .careers-announcement-message strong {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: inherit;
+    font-weight: 400;
+  }
+
+  .careers-announcement-divider {
+    display: none;
+  }
+
+  .careers-announcement-link {
+    min-height: 2.4rem;
+    justify-self: start;
+    padding: 0.45rem 0.7rem;
+    font-size: var(--text-caption);
+  }
+
+  .careers-announcement-close {
+    position: absolute;
+    top: 50%;
+    right: 0.5rem;
+    transform: translateY(-50%);
+  }
+}
+
 @layer base {
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),

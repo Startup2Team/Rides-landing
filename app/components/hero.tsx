@@ -17,7 +17,7 @@ function ArrowRightIcon() {
 export default function Hero() {
   const t = useTranslations("hero");
   return (
-    <section className="relative -mt-14 flex h-[100svh] items-center overflow-hidden pt-14 sm:-mt-16 sm:pt-16">
+    <section className="hero-bleed relative -mt-14 flex h-[100svh] items-center overflow-hidden pt-14 sm:-mt-16 sm:pt-16">
       {/* Real Kigali street map background — fades out at edges */}
       <div
         aria-hidden
