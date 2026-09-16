@@ -1047,6 +1047,11 @@
       "Votre date de disponibilité"
     ],
     "resumeCta": "Envoyez-nous votre CV",
-    "resumeSubject": "Candidature — Developer Internship Program 2026"
+    "resumeSubject": "Candidature — Developer Internship Program 2026",
+    "announcementLabel": "Annonce carrières",
+    "announcementLead": "Rejoignez notre équipe et construisez votre avenir avec Travelis Rwanda LTD.",
+    "announcementHighlight": "Les candidatures sont ouvertes.",
+    "announcementCta": "Découvrir les carrières",
+    "announcementDismiss": "Fermer l'annonce carrières"
   }
 }

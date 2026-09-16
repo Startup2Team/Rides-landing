@@ -1213,6 +1213,11 @@
       "When you could start"
     ],
     "resumeCta": "Send us your CV",
-    "resumeSubject": "Application — Developer Internship Program 2026"
+    "resumeSubject": "Application — Developer Internship Program 2026",
+    "announcementLabel": "Careers announcement",
+    "announcementLead": "Join our team and build your future with Travelis Rwanda LTD.",
+    "announcementHighlight": "Applications are open now.",
+    "announcementCta": "Explore careers",
+    "announcementDismiss": "Dismiss careers announcement"
   }
 }
